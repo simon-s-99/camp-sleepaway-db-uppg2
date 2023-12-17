@@ -4,8 +4,4 @@ Gruppuppgift av:
 
 ⛺👩‍👧‍👦🏕️
 
-
-Camper = Samuel
-Councelor = Adam
-NextOfKin = Simon
-Cabin = gör efter Camper & NextOfKin är klara
+Link to this projects board on Trello: https://trello.com/b/zJkVoxCf/camp-sleepaway-databaser-gruppuppgift-adam-k-samuel-l-simon-s

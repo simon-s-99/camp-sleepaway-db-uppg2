@@ -73,7 +73,7 @@ namespace camp_sleepaway
                     //EditNextOfKin(nextOfKin);
                 }
             }
-            else if (mainMenuChoice == "Search for camper")
+            else if (mainMenuChoice == "Search camper")
             {
                 var searchChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
