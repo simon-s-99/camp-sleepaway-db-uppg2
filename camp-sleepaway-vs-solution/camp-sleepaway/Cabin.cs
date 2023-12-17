@@ -8,6 +8,7 @@ namespace camp_sleepaway
 {
     public class Cabin
     {
+        public required int CabinId { get; set; }
         public required string CabinName { get; set; }
         public Counselor ?AssignedCounselorId { get; set; }
 
@@ -26,8 +27,7 @@ namespace camp_sleepaway
 
 
         public Cabin()
-        {
-            //Generate a random cabin name and assign it to CabinName
+        {           
             CabinName = GetRandomCabinName(); 
             AssignedCabinNames.Add(CabinName);
         }
