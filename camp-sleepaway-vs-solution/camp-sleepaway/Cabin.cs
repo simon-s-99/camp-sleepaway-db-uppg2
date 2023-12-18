@@ -8,9 +8,9 @@ namespace camp_sleepaway
 {
     public class Cabin
     {
-        public required int CabinId { get; set; }
+        public int Id { get; set; }
         public required string CabinName { get; set; }
-        public Counselor ?Id { get; set; }
+        public Counselor? CounselorId { get; set; }
 
         private static readonly List<string> AvailableCabinNames = new List<string>
         {
