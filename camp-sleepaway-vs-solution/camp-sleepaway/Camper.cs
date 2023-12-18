@@ -10,7 +10,7 @@ namespace camp_sleepaway
     {
         public required int Id { get; set; }
         public required DateTime BirthDate { get; set; }
-        public required DateTime JoinedDate { get; set; }
+        public required DateTime JoinDate { get; set; }
         public DateTime? LeaveDate { get; set; }
 
     }
