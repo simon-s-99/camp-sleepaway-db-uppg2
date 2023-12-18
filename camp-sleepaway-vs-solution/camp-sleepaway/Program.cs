@@ -2,15 +2,15 @@
 
 namespace camp_sleepaway
 {
-    internal class Program
+    public class Program
     {
         // Samuel Lööf, Simon Sörqvist, Adam Kumlin
-        static void Main()
+        public static void Main()
         {
             ShowMainMenu();
         }
 
-        static void ShowMainMenu()
+        internal static void ShowMainMenu()
         {
             var mainMenuChoice = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
@@ -93,7 +93,7 @@ namespace camp_sleepaway
                     //SearchCamper(cabin);
                 }
             }
-
         }
+
     }
 }
