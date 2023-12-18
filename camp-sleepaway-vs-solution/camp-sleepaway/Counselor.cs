@@ -18,7 +18,7 @@ namespace camp_sleepaway
         public DateTime? TerminationDate { get; set; }
 
         // Reference navigation to Cabin
-        public Cabin? Cabin { get; set; } = null!;
+        public Cabin? Cabin { get; set; }
 
         [SetsRequiredMembers]
         public Counselor(string firstName, string lastName, string phoneNumber,
@@ -86,9 +86,9 @@ namespace camp_sleepaway
 
         public Counselor ChooseCounselorToEdit()
         {
-            var context = new Context();
+            var counselorContext = new Context();
 
-            List<Counselor> counselors = context.Campers.ToList();
+            List<Counselor> counselors = counselorContext.Campers.ToList();
 
             foreach (Counselor counselor in counselors)
             {
@@ -98,7 +98,7 @@ namespace camp_sleepaway
             Console.Write("Enter ID for camper you wish to edit: ");
             int counselorID = int.Parse(Console.ReadLine());
 
-            Counselor selectedCounselor = context.Counselor.Where(c => c.Id == counselorID).FirstOrDefault();
+            Counselor selectedCounselor = counselorContext.Counselor.Where(c => c.Id == counselorID).FirstOrDefault();
 
             return selectedCounselor;
         }
