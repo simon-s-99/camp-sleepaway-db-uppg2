@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace camp_sleepaway
 {
@@ -24,7 +19,7 @@ namespace camp_sleepaway
             .Build();
             // Read options from .json-file
 
-            var connectionString = configuration.GetConnectionString("Local");
+            var connectionString = configuration.GetConnectionString("local");
             // Build connection string
 
             optionsBuilder.UseSqlServer(connectionString)
