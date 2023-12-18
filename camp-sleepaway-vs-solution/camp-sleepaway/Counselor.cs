@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace camp_sleepaway
 {
@@ -9,11 +13,10 @@ namespace camp_sleepaway
 
     public class Counselor : Person
     {
-        [Key]
-        public int Id { get; set; }
+        public int CounselorID { get; set; }
         public required WorkTitle WorkTitle { get; set; }
-        public required DateTime HiredDate { get; set; }
-        public DateTime? TerminationDate { get; set; }
+        public required DateTime JoinDate { get; set; }
+        public required DateTime LeaveDate { get; set; }
 
     }
 }
