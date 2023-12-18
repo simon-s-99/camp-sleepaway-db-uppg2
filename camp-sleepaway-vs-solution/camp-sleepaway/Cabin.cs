@@ -37,7 +37,7 @@ namespace camp_sleepaway
             Console.Write("CounselorID: ");
             int counselorID = int.Parse(Console.ReadLine());
 
-            var context = new Context();
+            var context = new CampContext();
 
             Counselor counselor = context.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
 

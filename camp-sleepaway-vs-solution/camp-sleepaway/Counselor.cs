@@ -86,21 +86,22 @@ namespace camp_sleepaway
 
         public Counselor ChooseCounselorToEdit()
         {
-            var counselorContext = new Context();
-
-            List<Counselor> counselors = counselorContext.Campers.ToList();
-
-            foreach (Counselor counselor in counselors)
+            using (var counselorContext = new CampContext())
             {
-                Console.WriteLine(counselor.Id + " | " + counselor.FirstName + " " + counselor.LastName + " | " + counselor.PhoneNumber);
+                List<Counselor> counselors = counselorContext.Counselors.ToList();
+
+                foreach (Counselor counselor in counselors)
+                {
+                    Console.WriteLine(counselor.Id + " | " + counselor.FirstName + " " + counselor.LastName + " | " + counselor.PhoneNumber);
+                }
+
+                Console.Write("Enter ID for camper you wish to edit: ");
+                int counselorID = int.Parse(Console.ReadLine());
+
+                Counselor selectedCounselor = counselorContext.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
+
+                return selectedCounselor;
             }
-
-            Console.Write("Enter ID for camper you wish to edit: ");
-            int counselorID = int.Parse(Console.ReadLine());
-
-            Counselor selectedCounselor = counselorContext.Counselor.Where(c => c.Id == counselorID).FirstOrDefault();
-
-            return selectedCounselor;
         }
     }
 }

@@ -18,9 +18,9 @@ namespace camp_sleepaway
 
         public Camper ChooseCamperToEdit()
         {
-            using (var context = new Context())
+            using (var camperContext = new CampContext())
             {
-                List<Camper> campers = context.Campers.ToList();
+                List<Camper> campers = camperContext.Campers.ToList();
             
                 foreach (Camper camper in campers)
                 {
@@ -30,7 +30,7 @@ namespace camp_sleepaway
                 Console.Write("Enter ID for camper you wish to edit: ");
                 int camperID = int.Parse(Console.ReadLine());
 
-                Camper selectedCamper = context.Campers.Where(c => c.Id == camperID).FirstOrDefault();
+                Camper selectedCamper = camperContext.Campers.Where(c => c.Id == camperID).FirstOrDefault();
 
                 return selectedCamper;
             }

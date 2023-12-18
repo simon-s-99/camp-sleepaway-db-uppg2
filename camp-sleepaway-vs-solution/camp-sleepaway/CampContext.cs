@@ -4,9 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace camp_sleepaway
 {
-    public class Context : DbContext
+    public class CampContext : DbContext
     {
-        public DbSet<Counselor> Campers { get; set; }
+        public DbSet<Camper> Campers { get; set; }
         public DbSet<Counselor> Counselors { get; set;}
         public DbSet<NextOfKin> NextOfKins { get; set; }
         public DbSet<Cabin> Cabins { get; set; }
