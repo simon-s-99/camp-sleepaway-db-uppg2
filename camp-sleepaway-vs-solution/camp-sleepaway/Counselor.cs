@@ -11,10 +11,11 @@ namespace camp_sleepaway
 
     public class Counselor : Person
     {
-        public int CounselorID { get; set; }
+        [Key]
+        public int Id { get; set; }
         public required WorkTitle WorkTitle { get; set; }
-        public required DateTime JoinDate { get; set; }
-        public required DateTime LeaveDate { get; set; }
+        public required DateTime HiredDate { get; set; }
+        public DateTime? TerminationDate { get; set; }
 
         // Reference navigation to Cabin
         public Cabin? Cabin { get; set; } = null!;
