@@ -15,8 +15,8 @@ namespace camp_sleepaway
     {
         public int CounselorID { get; set; }
         public required WorkTitle WorkTitle { get; set; }
-        public required DateTime JoinDate { get; set; }
-        public DateTime? LeaveDate { get; set; }
+        public required DateTime HiredDate { get; set; }
+        public DateTime? TerminationDate { get; set; }
 
     }
 }
