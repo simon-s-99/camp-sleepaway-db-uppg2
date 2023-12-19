@@ -84,6 +84,15 @@ namespace camp_sleepaway
             return counselor;
         }
 
+        public void AddCounselor(Counselor counselor)
+        {
+            using (var counselorContext = new CampContext())
+            {
+                counselorContext.Counselors.Add(counselor);
+                counselorContext.SaveChanges();
+            }
+        }
+
         public Counselor ChooseCounselorToEdit()
         {
             using (var counselorContext = new CampContext())
