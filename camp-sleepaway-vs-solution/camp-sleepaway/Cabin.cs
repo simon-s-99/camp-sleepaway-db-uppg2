@@ -9,6 +9,8 @@ namespace camp_sleepaway
 
         [Key]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Invalid cabin name.")]
         public string CabinName { get; set; }
 
         // Foreign key property to Counselor
