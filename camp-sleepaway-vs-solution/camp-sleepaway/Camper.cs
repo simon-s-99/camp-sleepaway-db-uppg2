@@ -33,7 +33,7 @@ namespace camp_sleepaway
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
-            BirthDate = birthDate;
+            DateOfBirth = birthDate;
             JoinDate = joinDate;
             LeaveDate = leaveDate;          
         }
