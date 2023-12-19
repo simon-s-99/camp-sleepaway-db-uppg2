@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace camp_sleepaway
 {
-    public class Context : DbContext
+    public class CampContext : DbContext
     {
         public DbSet<Camper> Campers { get; set; }
         public DbSet<Counselor> Counselors { get; set;}
@@ -13,21 +13,21 @@ namespace camp_sleepaway
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
             // Read options from .json-file
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            var connectionString = configuration.GetConnectionString("local");
             // Build connection string
+            var connectionString = configuration.GetConnectionString("local");
 
+            // Connect to database
             optionsBuilder.UseSqlServer(connectionString)
                 .LogTo(Console.WriteLine,
                 new[] { DbLoggerCategory.Database.Name },
                 LogLevel.Information)
                 .EnableSensitiveDataLogging();
-            // Connect to database
         }
     }
 }
