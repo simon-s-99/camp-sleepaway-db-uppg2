@@ -57,20 +57,23 @@ namespace camp_sleepaway
                     Console.WriteLine("Birth date: " + result.BirthDate);
                     Console.WriteLine("Date joined: " + result.JoinDate);
                     Console.WriteLine("Date left/date to leave: " + result.LeaveDate);
-                    Console.WriteLine("Cabin: " + result.Cabin.CabinName);
+                    Console.WriteLine("Cabin: " + result.Cabin.Id + " " + result.Cabin.CabinName);
 
                     Console.WriteLine(result.Cabin.Counselor != null ? "Cabin counselor: " + result.Cabin.Counselor.FirstName + " " + result.Cabin.Counselor.LastName : "Warning! This cabin has no active counselor!");
-                    // If counselor is not null then print out normally, if not then warn the user
-
-                    Console.Write("NextOfKins: ");
-                    foreach (NextOfKin nextOfKin in result.NextOfKins)
-                    {
-                        Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
-                    }
-                    // Print each NextOfKin, for each result
+                    // If counselor is not null then print out normally, if it is null then warn the user
                 }
             }
 
+        }
+
+        public void DisplayCampersAndNextOfKins()
+        {
+            Console.Write("NextOfKins: ");
+            foreach (NextOfKin nextOfKin in result.NextOfKins)
+            {
+                Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
+            }
+            // Print each NextOfKin, for each result
         }
     }
 }
