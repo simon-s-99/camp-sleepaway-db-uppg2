@@ -102,14 +102,7 @@ namespace camp_sleepaway
             }
         }
 
-        static void AddCounselor(Counselor counselor)
-        {
-            using (var counselorContext = new CampContext())
-            {
-                counselorContext.Counselors.Add(counselor);
-                counselorContext.SaveChanges();
-            }
-        }
+        
 
         static void AddNextOfKin(NextOfKin nextOfKin)
         {

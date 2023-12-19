@@ -103,5 +103,14 @@ namespace camp_sleepaway
                 return selectedCounselor;
             }
         }
+
+        public void AddCounselor()
+        {
+            using (var counselorContext = new CampContext())
+            {
+                counselorContext.Counselors.Add(counselor);
+                counselorContext.SaveChanges();
+            }
+        }
     }
 }
