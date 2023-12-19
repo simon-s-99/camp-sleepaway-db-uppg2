@@ -24,8 +24,12 @@ namespace camp_sleepaway
         // Collection navigation to NextOfKin
         public List<NextOfKin> NextOfKins { get; set; } = new();
 
-        // Constructor for camper     
+        // empty constructor for Entity Framework
+        public Camper()
+        {
+        }
 
+        // Constructor for camper
         [SetsRequiredMembers]
         public Camper (string firstName, string lastName, string phoneNumber,
         DateTime dateOfBirth, DateTime joinDate, DateTime? leaveDate = null)

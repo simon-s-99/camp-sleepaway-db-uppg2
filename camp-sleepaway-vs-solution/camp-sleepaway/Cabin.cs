@@ -19,6 +19,11 @@ namespace camp_sleepaway
         // Collection reference to Camper
         public List<Camper> Campers { get; set; } = new();
 
+        // empty constructor for Entity Framework
+        public Cabin()
+        {
+        }
+
         [SetsRequiredMembers]
         public Cabin(string cabinName, Counselor counselor)
         {
