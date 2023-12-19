@@ -14,7 +14,7 @@ namespace camp_sleepaway
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Invalid work title.")]
+        [Required(ErrorMessage = "Invalid work title."), EnumDataType(typeof(WorkTitle))]
         public WorkTitle WorkTitle { get; set; }
 
         [Required(ErrorMessage = "Invalid hire date.")]
@@ -72,15 +72,15 @@ namespace camp_sleepaway
 
             if (workTitleChoice == "Teacher")
             {
-                WorkTitle = WorkTitle.Teacher;
+                workTitle = WorkTitle.Teacher;
             }
             else if (workTitleChoice == "Parent")
             {
-                WorkTitle = WorkTitle.Parent;
+                workTitle = WorkTitle.Parent;
             }
             else if (workTitleChoice == "Coach")
             {
-                WorkTitle = WorkTitle.Coach;
+                workTitle = WorkTitle.Coach;
             }
 
             Console.Write("Join date: ");
