@@ -5,8 +5,6 @@ namespace camp_sleepaway
 {
     public class Cabin
     {
-        private static readonly HashSet<string> AssignedCabinNames = new HashSet<string>();
-
         [Key]
         public int Id { get; set; }
 
@@ -20,9 +18,6 @@ namespace camp_sleepaway
 
         // Collection reference to Camper
         public List<Camper> Campers { get; set; } = new();
-
-        // Parameterless constructor required by EF Core
-        public Cabin() { }
 
         [SetsRequiredMembers]
         public Cabin(string cabinName, Counselor counselor)
@@ -53,10 +48,13 @@ namespace camp_sleepaway
             return cabin;
         }
 
+        // used hashset to guarantee unique names 
+        private static readonly HashSet<string> AssignedCabinNames = new HashSet<string>();
+
         // Method that generates a random cabin name. Could always add more names if needed.
         public static string GenerateRandomCabinName()
         {
-            string[] attributes =
+            string[] namesPrefix =
             {
                 "Lion", "Power", "Lone",
                 "Forest", "Lake", "Destiny",
@@ -67,7 +65,7 @@ namespace camp_sleepaway
                 "Blazing", "Mystic", "Epic"
             };
 
-            string[] nouns =
+            string[] namesSuffix =
             {
                 "Hearts", "Rangers", "Wolves",
                 "Retreat", "Bungalow", "End",
@@ -80,21 +78,23 @@ namespace camp_sleepaway
 
             Random random = new Random();
 
-            string attribute, noun;
+            string prefix = string.Empty;
+            string suffix = string.Empty;
+
             do
             {
-                int attributeIndex = random.Next(attributes.Length);
-                int nounIndex = random.Next(nouns.Length);
+                int prefixIndex = random.Next(namesPrefix.Length);
+                int suffixIndex = random.Next(namesSuffix.Length);
 
-                attribute = attributes[attributeIndex];
-                noun = nouns[nounIndex];
+                prefix = namesPrefix[prefixIndex];
+                suffix = namesSuffix[suffixIndex];
 
-            } while (!IsNameUnique(attribute, noun));
+            } while (!IsNameUnique(prefix, suffix));
 
             // If a name gets taken it gets added to the list and cannot be used again.
-            AssignedCabinNames.Add($"{attribute} {noun}");
+            AssignedCabinNames.Add($"{prefix} {suffix}");
 
-            return $"{attribute} {noun}";
+            return $"{prefix} {suffix}";
         }
 
         private static bool IsNameUnique(string attribute, string noun)
