@@ -28,7 +28,7 @@ namespace camp_sleepaway
         }
 
         // Asks user for input via console, should primarily be called from main menu 
-        public NextOfKin InputCounselorData()
+        public NextOfKin InputNextOfKinData()
         {
             Console.Clear();
             Console.WriteLine("Add NextOfKin");

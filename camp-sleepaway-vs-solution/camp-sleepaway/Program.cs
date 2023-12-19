@@ -22,15 +22,15 @@ namespace camp_sleepaway
                     "Search camper"
                 }));
 
-            if (mainMenuChoice == "Add new individual")
+            if (mainMenuChoice == "Add new object")
             {
                 var addIndividualChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[red]What type of individual do you want to add[/]?")
+                    .Title("[red]What type of object do you want to add[/]?")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                     .AddChoices(new[] {
-                        "Camper", "Councelor", "NextOfKin"
+                        "Camper", "Councelor", "NextOfKin", "Cabin"
                     }));
 
                 if (addIndividualChoice == "Camper")
@@ -39,11 +39,18 @@ namespace camp_sleepaway
                 }
                 else if (addIndividualChoice == "Councelor")
                 {
-                    //AddNewCouncelor();
+                    Counselor newCounselor = new Counselor("undefined", "undefined", "undefined", WorkTitle.Other, DateTime.Now, DateTime.Now);
+                    newCounselor.InputCounselorData();
+
+                    AddCounselor(newCounselor);
                 }
                 else if (addIndividualChoice == "NextOfKin")
                 {
-                    //AddNewNextOfKin();
+                    NextOfKin nextOfKin = new NextOfKin("undefined", "undefined", "undefined", 0, "Father");
+
+                    nextOfKin.InputNextOfKinData();
+
+                    AddNextOfKin(nextOfKin);
                 }
             }
             else if (mainMenuChoice == "Edit individual's phone number")
@@ -95,5 +102,31 @@ namespace camp_sleepaway
             }
         }
 
+        static void AddCounselor(Counselor counselor)
+        {
+            using (var counselorContext = new CampContext())
+            {
+                counselorContext.Counselors.Add(counselor);
+                counselorContext.SaveChanges();
+            }
+        }
+
+        static void AddNextOfKin(NextOfKin nextOfKin)
+        {
+            using (var nextOfKinContext = new CampContext())
+            {
+                 nextOfKinContext.NextOfKins.Add(nextOfKin);
+                nextOfKinContext.SaveChanges();
+            }
+        }
+
+        static void AddCabin(Cabin cabin)
+        {
+            using (var cabinContext = new CampContext())
+            {
+                cabinContext.Cabins.Add(cabin);
+                cabinContext.SaveChanges();
+            }
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace camp_sleepaway
             }
         }
 
+
         public void SearchCamper()
         {
             Console.Write("Search for camper by cabin or counselor: ");
@@ -68,11 +69,11 @@ namespace camp_sleepaway
 
         public void DisplayCampersAndNextOfKins()
         {
-            Console.Write("NextOfKins: ");
+            /*Console.Write("NextOfKins: ");
             foreach (NextOfKin nextOfKin in result.NextOfKins)
             {
                 Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
-            }
+            }*/
             // Print each NextOfKin, for each result
         }
     }
