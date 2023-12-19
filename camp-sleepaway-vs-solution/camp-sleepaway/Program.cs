@@ -22,33 +22,40 @@ namespace camp_sleepaway
                     "Search camper"
                 }));
 
-            if (mainMenuChoice == "Add new individual")
+            if (mainMenuChoice == "Add new object")
             {
                 var addIndividualChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[red]What type of individual do you want to add[/]?")
+                    .Title("[red]What type of object do you want to add[/]?")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                     .AddChoices(new[] {
-                        "Camper", "Councelor", "NextOfKin"
+                        "Camper", "Councelor", "NextOfKin", "Cabin"
                     }));
 
                 if (addIndividualChoice == "Camper")
                 {
-                    Camper camperInstance = Camper.InputCamperData();
-                    using (var context = new CampContext())
-                    {
-                        context.Campers.Add(camperInstance);
-                        context.SaveChanges();
-                    }
+                    Camper camper = Camper.InputCamperData();
+
+                    camper.SaveToDb();
                 }
                 else if (addIndividualChoice == "Councelor")
                 {
-                    //AddNewCouncelor();
+                    Counselor counselor = Counselor.InputCounselorData();
+
+                    counselor.SaveToDb();
                 }
                 else if (addIndividualChoice == "NextOfKin")
                 {
-                    //AddNewNextOfKin();
+                    NextOfKin nextOfKin = NextOfKin.InputNextOfKinData();
+
+                    nextOfKin.SaveToDb();
+                }
+                else if (addIndividualChoice == "Cabin")
+                {
+                    Cabin cabin = Cabin.InputCabinData();
+
+                    cabin.SaveToDb();
                 }
             }
             else if (mainMenuChoice == "Edit individual's phone number")
@@ -100,5 +107,6 @@ namespace camp_sleepaway
             }
         }
 
+        
     }
 }
