@@ -33,7 +33,7 @@ namespace camp_sleepaway
         }
 
         // Asks user for input via console, should primarily be called from main menu 
-        public Counselor InputCounselorData()
+        public static Counselor InputCounselorData()
         {
             Console.Clear();
             Console.WriteLine("Add counselor");

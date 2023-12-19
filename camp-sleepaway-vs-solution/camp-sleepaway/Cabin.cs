@@ -25,7 +25,7 @@ namespace camp_sleepaway
         }
 
         // Asks user for input via console, should primarily be called from main menu 
-        public Cabin InputCabinData()
+        public static Cabin InputCabinData()
         {
             Console.Clear();
             Console.WriteLine("Add cabin");
@@ -46,5 +46,13 @@ namespace camp_sleepaway
             return cabin;
         }
 
+        public void SaveToDb()
+        {
+            using (var cabinContext = new CampContext())
+            {
+                cabinContext.Cabins.Add(this);
+                cabinContext.SaveChanges();
+            }
+        }
     }
 }

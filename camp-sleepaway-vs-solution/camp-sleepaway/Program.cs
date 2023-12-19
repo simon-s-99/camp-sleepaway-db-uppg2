@@ -35,22 +35,27 @@ namespace camp_sleepaway
 
                 if (addIndividualChoice == "Camper")
                 {
-                    //AddNewCamper();
+                    Camper camper = Camper.InputCamperData();
+
+                    camper.SaveToDb();
                 }
                 else if (addIndividualChoice == "Councelor")
                 {
-                    Counselor newCounselor = new Counselor("undefined", "undefined", "undefined", WorkTitle.Other, DateTime.Now, DateTime.Now);
-                    newCounselor.InputCounselorData();
+                    Counselor counselor = Counselor.InputCounselorData();
 
-                    AddCounselor(newCounselor);
+                    counselor.SaveToDb();
                 }
                 else if (addIndividualChoice == "NextOfKin")
                 {
-                    NextOfKin nextOfKin = new NextOfKin("undefined", "undefined", "undefined", 0, "Father");
+                    NextOfKin nextOfKin = NextOfKin.InputNextOfKinData();
 
-                    nextOfKin.InputNextOfKinData();
+                    nextOfKin.SaveToDb();
+                }
+                else if (addIndividualChoice == "Cabin")
+                {
+                    Cabin cabin = Cabin.InputCabinData();
 
-                    AddNextOfKin(nextOfKin);
+                    cabin.SaveToDb();
                 }
             }
             else if (mainMenuChoice == "Edit individual's phone number")
@@ -103,23 +108,5 @@ namespace camp_sleepaway
         }
 
         
-
-        static void AddNextOfKin(NextOfKin nextOfKin)
-        {
-            using (var nextOfKinContext = new CampContext())
-            {
-                 nextOfKinContext.NextOfKins.Add(nextOfKin);
-                nextOfKinContext.SaveChanges();
-            }
-        }
-
-        static void AddCabin(Cabin cabin)
-        {
-            using (var cabinContext = new CampContext())
-            {
-                cabinContext.Cabins.Add(cabin);
-                cabinContext.SaveChanges();
-            }
-        }
     }
 }

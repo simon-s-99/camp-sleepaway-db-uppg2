@@ -28,7 +28,7 @@ namespace camp_sleepaway
         }
 
         // Asks user for input via console, should primarily be called from main menu 
-        public NextOfKin InputNextOfKinData()
+        public static NextOfKin InputNextOfKinData()
         {
             Console.Clear();
             Console.WriteLine("Add NextOfKin");
@@ -50,6 +50,15 @@ namespace camp_sleepaway
             NextOfKin nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper, relationType);
 
             return nextOfKin;
+        }
+
+        public void SaveToDb()
+        {
+            using (var nextOfKinContext = new CampContext())
+            {
+                nextOfKinContext.NextOfKins.Add(this);
+                nextOfKinContext.SaveChanges();
+            }
         }
     }
 }
