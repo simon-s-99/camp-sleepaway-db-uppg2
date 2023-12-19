@@ -6,8 +6,13 @@ namespace camp_sleepaway
     {
         [Key]
         public int Id { get; set; }
-        public required DateTime BirthDate { get; set; }
-        public required DateTime JoinDate { get; set; }
+
+        [Required(ErrorMessage = "Invalid date of birth.")]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required(ErrorMessage = "Invalid join date.")]
+        public DateTime JoinDate { get; set; }
+
         public DateTime? LeaveDate { get; set; }
 
         // Reference navigation to Cabin
