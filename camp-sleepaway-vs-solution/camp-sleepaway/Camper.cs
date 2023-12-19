@@ -9,6 +9,8 @@ namespace camp_sleepaway
 {
     public class Camper : Person
     {
+        private object result;
+
         [Key]
         public int Id { get; set; }
 
@@ -190,7 +192,7 @@ namespace camp_sleepaway
                         Console.WriteLine("Invalid input. Please enter a name with only letter");
                         Console.Write("First name: ");
                     }
-                }        
+                }
             }
             else if (editCamperMenu == "Edit last name")
             {
@@ -257,8 +259,8 @@ namespace camp_sleepaway
                     Console.Write("Join date: ");
                 }
             }
-            
 
+        }
         public void SearchCamper()
         {
             Console.Write("Search for camper by cabin or counselor: ");
@@ -277,7 +279,7 @@ namespace camp_sleepaway
                     Console.WriteLine("Id: " + result.Id);
                     Console.WriteLine("Full name: " + result.FirstName + " " + result.LastName);
                     Console.WriteLine("Phone number: " + result.PhoneNumber);
-                    Console.WriteLine("Birth date: " + result.BirthDate);
+                    Console.WriteLine("Birth date: " + result.DateOfBirth);
                     Console.WriteLine("Date joined: " + result.JoinDate);
                     Console.WriteLine("Date left/date to leave: " + result.LeaveDate);
                     Console.WriteLine("Cabin: " + result.Cabin.Id + " " + result.Cabin.CabinName);
@@ -286,9 +288,7 @@ namespace camp_sleepaway
                     // If counselor is not null then print out normally, if it is null then warn the user
                 }
             }
-
         }
-
         public void DisplayCampersAndNextOfKins()
         {
             Console.Write("NextOfKins: ");
@@ -298,5 +298,5 @@ namespace camp_sleepaway
             }
             // Print each NextOfKin, for each result
         }
-    }
+    } 
 }
