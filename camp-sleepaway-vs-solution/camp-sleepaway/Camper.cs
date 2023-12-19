@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 
 namespace camp_sleepaway
 {
@@ -32,6 +33,11 @@ namespace camp_sleepaway
             LeaveDate = leaveDate;          
         }
 
+        private static bool IsLettersOnly(string input)
+        {
+            return !string.IsNullOrWhiteSpace(input) && Regex.IsMatch(input, "^[a-zA-ZåäöÅÄÖ]+$");
+        }
+
         public Camper InputCamperData()
         {
             Console.Clear();
@@ -48,14 +54,39 @@ namespace camp_sleepaway
             string phoneNumber = Console.ReadLine();
 
             Console.Write("Birth date: ");
-            DateTime birthDate = DateTime.Parse(Console.ReadLine());
+            DateTime birthDate;
+            while (!DateTime.TryParse(Console.ReadLine(), out birthDate))
+            {
+                Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
+                Console.Write("Birth date: ");
+            }
 
             Console.Write("Join date: ");
-            DateTime joinDate = DateTime.Parse(Console.ReadLine());
+            DateTime joinDate;
+            while (!DateTime.TryParse(Console.ReadLine(), out joinDate))
+            {
+                Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd.");
+                Console.Write("Join date: ");
+            }
 
-            Console.Write("Leave date (if there is no leave date, just press 'Enter' to skip: ");
-            DateTime? leaveDate = DateTime.TryParse(Console.ReadLine(),
-            out var parsedLeaveDate) ? parsedLeaveDate: null;
+            Console.Write("Leave date (if there is no leave date, just press 'Enter' to skip): ");
+            DateTime? leaveDate = null;
+            string leaveDateInput = Console.ReadLine();
+            DateTime parsedLeaveDate;
+
+            if (!string.IsNullOrEmpty(leaveDateInput))
+            {
+                while (!DateTime.TryParse(leaveDateInput, out parsedLeaveDate))
+                {
+                    Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd' or 'Enter' to skip.");
+                    Console.Write("Leave date: ");
+                    leaveDateInput = Console.ReadLine();
+                }
+
+                leaveDate = parsedLeaveDate;
+            }
+
+
 
             // Code for once we have a method to create a cabin
             // Cabin cabin = CreateCabin():
