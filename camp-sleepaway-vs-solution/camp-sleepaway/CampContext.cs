@@ -10,7 +10,6 @@ namespace camp_sleepaway
         public DbSet<Counselor> Counselors { get; set;}
         public DbSet<NextOfKin> NextOfKins { get; set; }
         public DbSet<Cabin> Cabins { get; set; }
-        public DbSet<CamperCabin> CamperCabins { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

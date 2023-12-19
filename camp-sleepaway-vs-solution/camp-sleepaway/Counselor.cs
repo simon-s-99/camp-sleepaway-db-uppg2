@@ -22,9 +22,6 @@ namespace camp_sleepaway
 
         public DateTime? TerminationDate { get; set; }
 
-        // foreign key property to Cabin
-        public int? CabinId { get; set; }
-
         // Reference navigation to Cabin
         public Cabin? Cabin { get; set; }
 
@@ -35,14 +32,14 @@ namespace camp_sleepaway
 
         [SetsRequiredMembers]
         public Counselor(string firstName, string lastName, string phoneNumber,
-            WorkTitle workTitle, DateTime hiredDate, int? cabinId = null, DateTime? terminationDate = null)
+            WorkTitle workTitle, DateTime hiredDate, Cabin? cabin = null, DateTime? terminationDate = null)
         {
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
             WorkTitle = workTitle;
             HiredDate = hiredDate;
-            CabinId = cabinId;
+            Cabin = cabin;
             TerminationDate = terminationDate;
         }
 
@@ -151,7 +148,12 @@ namespace camp_sleepaway
                 Console.Write("Leave date: ");
             }
 
-            Counselor counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, hiredDate, cabinId, terminationDate);
+            var tempCabin = new Cabin();
+            using (var context = new CampContext()) 
+            {
+                // add code to get cabin from context here 
+            }
+            Counselor counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, hiredDate, tempCabin, terminationDate);
 
             return counselor;
         }
@@ -186,7 +188,7 @@ namespace camp_sleepaway
                     .AddChoices(new[]
                     {
                 "Edit first name", "Edit last name", "Edit phone number", "Edit work title",
-                "Edit hire date", "Edit termination date"
+                "Edit cabin id", "Edit hire date", "Edit termination date"
                     }));
 
             if (editCounselorMenu == "Edit first name")
@@ -268,6 +270,13 @@ namespace camp_sleepaway
 
                 counselorToEdit.WorkTitle = workTitle;
             }
+
+            else if (editCounselorMenu == "Edit cabin id")
+            {
+                Console.Write("Enter cabin id: ");
+                
+            }
+
             else if (editCounselorMenu == "Edit hire date")
             {
                 Console.Write("Hire date: ");

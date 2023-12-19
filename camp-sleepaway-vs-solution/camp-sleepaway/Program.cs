@@ -81,8 +81,6 @@ namespace camp_sleepaway
                         Console.WriteLine("No camper has been selected for editing. ");
                     }
 
-                    //ChooseCamperToEdit();
-                    //EditCamper(camper);
                 }
                 else if (editIndividualChoice == "Councelor")
                 {
