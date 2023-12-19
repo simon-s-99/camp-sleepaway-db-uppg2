@@ -13,12 +13,22 @@ namespace camp_sleepaway
     {
         [Key]
         public int Id { get; set; }
-        public required WorkTitle WorkTitle { get; set; }
-        public required DateTime HiredDate { get; set; }
+
+        [Required(ErrorMessage = "Invalid work title.")]
+        public WorkTitle WorkTitle { get; set; }
+
+        [Required(ErrorMessage = "Invalid hire date.")]
+        public DateTime HiredDate { get; set; }
+
         public DateTime? TerminationDate { get; set; }
 
         // Reference navigation to Cabin
         public Cabin? Cabin { get; set; }
+
+        // empty constructor for Entity Framework
+        public Counselor()
+        {
+        }
 
         [SetsRequiredMembers]
         public Counselor(string firstName, string lastName, string phoneNumber,

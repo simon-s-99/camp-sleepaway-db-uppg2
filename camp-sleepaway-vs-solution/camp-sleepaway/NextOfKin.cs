@@ -12,9 +12,15 @@ namespace camp_sleepaway
         public string RelationType { get; set; }
 
         // Foreign key property to Camper
-        public required int CamperId { get; set; }
+        [Required(ErrorMessage = "Invalid camper id.")]
+        public int CamperId { get; set; }
         // Reference navigation to Camper
         public Camper Camper { get; set; } = null!;
+
+        // empty constructor for Entity Framework
+        public NextOfKin()
+        {
+        }
 
         [SetsRequiredMembers]
         public NextOfKin(string firstName, string lastName, string phoneNumber,
