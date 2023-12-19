@@ -16,7 +16,7 @@ namespace camp_sleepaway
         // Reference navigation to Counselor
         public Counselor? Counselor { get; set; }
 
-        // collection reference to Camper
+        // Collection reference to Camper
         public List<Camper> Campers { get; set; } = new();
 
         [SetsRequiredMembers]
@@ -26,7 +26,7 @@ namespace camp_sleepaway
             Counselor = counselor;
         }
 
-        // Asks user for input via console, should primarily be called from main menu 
+        // Asks user for input via console, should primarily be called from the main menu 
         public Cabin InputCabinData()
         {
             Console.Clear();
@@ -48,5 +48,59 @@ namespace camp_sleepaway
             return cabin;
         }
 
+        // used hashset to guarantee unique names 
+        private static readonly HashSet<string> AssignedCabinNames = new HashSet<string>();
+
+        // Method that generates a random cabin name. Could always add more names if needed.
+        public static string GenerateRandomCabinName()
+        {
+            string[] namesPrefix =
+            {
+                "Lion", "Power", "Lone",
+                "Forest", "Lake", "Destiny",
+                "Majestic", "Eternal", "Golden",
+                "Whispering", "Enchanted", "Radiant",
+                "Sapphire", "Crimson", "Emerald",
+                "Celestial", "Tranquil", "Harmonious",
+                "Blazing", "Mystic", "Epic"
+            };
+
+            string[] namesSuffix =
+            {
+                "Hearts", "Rangers", "Wolves",
+                "Retreat", "Bungalow", "End",
+                "Harmony", "Oasis", "Serenity",
+                "Haven", "Zenith", "Eclipse",
+                "Infinity", "Horizon", "Spectra",
+                "Cascades", "Aurora", "Pinnacle",
+                "Quasar", "Nebula", "Solstice"
+            };
+
+            Random random = new Random();
+
+            string prefix = string.Empty;
+            string suffix = string.Empty;
+
+            do
+            {
+                int prefixIndex = random.Next(namesPrefix.Length);
+                int suffixIndex = random.Next(namesSuffix.Length);
+
+                prefix = namesPrefix[prefixIndex];
+                suffix = namesSuffix[suffixIndex];
+
+            } while (!IsNameUnique(prefix, suffix));
+
+            // If a name gets taken it gets added to the list and cannot be used again.
+            AssignedCabinNames.Add($"{prefix} {suffix}");
+
+            return $"{prefix} {suffix}";
+        }
+
+        private static bool IsNameUnique(string attribute, string noun)
+        {
+            return !AssignedCabinNames.Contains($"{attribute} {noun}");
+        }
     }
 }
+
