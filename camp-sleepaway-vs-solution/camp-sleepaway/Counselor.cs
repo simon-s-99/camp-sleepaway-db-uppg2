@@ -25,6 +25,11 @@ namespace camp_sleepaway
         // Reference navigation to Cabin
         public Cabin? Cabin { get; set; }
 
+        // empty constructor for Entity Framework
+        public Counselor()
+        {
+        }
+
         [SetsRequiredMembers]
         public Counselor(string firstName, string lastName, string phoneNumber,
             WorkTitle workTitle, DateTime hiredDate, DateTime? terminationDate = null)

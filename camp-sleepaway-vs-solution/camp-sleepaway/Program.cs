@@ -35,7 +35,12 @@ namespace camp_sleepaway
 
                 if (addIndividualChoice == "Camper")
                 {
-                    //AddNewCamper();
+                    Camper camperInstance = Camper.InputCamperData();
+                    using (var context = new CampContext())
+                    {
+                        context.Campers.Add(camperInstance);
+                        context.SaveChanges();
+                    }
                 }
                 else if (addIndividualChoice == "Councelor")
                 {
