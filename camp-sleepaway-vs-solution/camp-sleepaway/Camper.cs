@@ -44,7 +44,7 @@ namespace camp_sleepaway
             LeaveDate = leaveDate;
         }
 
-        private static bool IsLettersOnly(string input)
+        public static bool IsLettersOnly(string input)
         {
             // Check if a string contains only letters
             // returns true if the input string contains only english and swedish letters, false otherwise          
@@ -139,9 +139,7 @@ namespace camp_sleepaway
             return camper;
         }
 
-
-
-        public Camper ChooseCamperToEdit()
+        public static Camper ChooseCamperToEdit()
         {
             using (var camperContext = new CampContext())
             {
@@ -161,7 +159,7 @@ namespace camp_sleepaway
             }
         }
 
-        internal static void EditCamperMenu(Camper camperToEdit)
+        internal static Camper EditCamperMenu(Camper camperToEdit)
         {
             var editCamperMenu = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
@@ -235,7 +233,7 @@ namespace camp_sleepaway
                 }
             }
             else if (editCamperMenu == "Edit joined date")
-            {
+            {   
                 Console.Write("Join date: ");
                 DateTime joinDate;
                 while (!DateTime.TryParse(Console.ReadLine(), out joinDate))
@@ -249,14 +247,15 @@ namespace camp_sleepaway
                 Console.Write("Enter new leave date (if there is no leave date, just press 'Enter' to skip): ");
                 string leaveDateInput = Console.ReadLine();
 
-                Console.Write("Join date: ");
-                DateTime joinDate;
-                while (!DateTime.TryParse(Console.ReadLine(), out joinDate))
+                Console.Write("Leave date: ");
+                DateTime leaveDate;
+                while (!DateTime.TryParse(Console.ReadLine(), out leaveDate))
                 {
                     Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd.");
-                    Console.Write("Join date: ");
+                    Console.Write("Leave date: ");
                 }
             }
+            return camperToEdit;
         }
 
         public static void SearchCamper()
@@ -290,15 +289,37 @@ namespace camp_sleepaway
 
         public void DisplayCampersAndNextOfKins()
         {
-            // Temporarily commented out, implement result or other method body 
-            /*
-            Console.Write("NextOfKins: ");
-            foreach (NextOfKin nextOfKin in result.NextOfKins)
+            using (var camperContext = new CampContext()) 
             {
-                Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
+                List<Camper> campers = camperContext.Campers.OrderBy(c => c.Cabin.Id).ToList();
+                // Get every camper, and order them by CabinId
+
+                foreach (Camper camper in campers)
+                {
+                    Console.WriteLine("Id: " + camper.Id);
+                    Console.WriteLine("Full name: " + camper.FirstName + " " + camper.LastName);
+                    Console.WriteLine("Phone number: " + camper.PhoneNumber);
+                    Console.WriteLine("Birth date: " + camper.DateOfBirth);
+                    Console.WriteLine("Date joined: " + camper.JoinDate);
+                    Console.WriteLine("Date left/date to leave: " + camper.LeaveDate);
+                    Console.WriteLine("Cabin: " + camper.Cabin.Id + " " + camper.Cabin.CabinName);
+
+                    foreach (NextOfKin nextOfKin in camper.NextOfKins)
+                    {
+                        Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
+                    }
+                    // Print each NextOfKin, for each camper
+                }
             }
-            // Print each NextOfKin, for each result
-            */
+        }
+
+        public void SaveToDb()
+        {
+            using (var camperContext = new CampContext())
+            {
+                camperContext.Campers.Add(this);
+                camperContext.SaveChanges();
+            }
         }
     }
 }

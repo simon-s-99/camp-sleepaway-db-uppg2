@@ -18,7 +18,7 @@ namespace camp_sleepaway
                 .PageSize(10)
                 .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                 .AddChoices(new[] {
-                    "Add new individual", "Edit individual's phone number",
+                    "Add new individual", "Edit individual",
                     "Search camper"
                 }));
 
@@ -58,11 +58,11 @@ namespace camp_sleepaway
                     cabin.SaveToDb();
                 }
             }
-            else if (mainMenuChoice == "Edit individual's phone number")
+            else if (mainMenuChoice == "Edit individual")
             {
                 var editIndividualChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[red]Edit who's phone number[/]?")
+                    .Title("[red]Who do you wish to edit? [/]?")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                     .AddChoices(new[] {
@@ -71,8 +71,16 @@ namespace camp_sleepaway
 
                 if (editIndividualChoice == "Camper")
                 {
-                    //ChooseCamperToEdit();
-                    //EditCamper(camper);
+                    Camper camper = Camper.ChooseCamperToEdit();
+                    if (camper != null)
+                    {
+                        Camper editedCamper = Camper.EditCamperMenu(camper);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No camper has been selected for editing. ");
+                    }
+
                 }
                 else if (editIndividualChoice == "Councelor")
                 {

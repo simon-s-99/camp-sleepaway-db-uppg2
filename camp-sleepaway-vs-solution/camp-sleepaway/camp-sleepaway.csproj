@@ -31,4 +31,8 @@
     <PackageReference Include="Spectre.Console" Version="0.48.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="test_data_for_tables\" />
+  </ItemGroup>
+
 </Project>
