@@ -44,7 +44,7 @@ namespace camp_sleepaway
             LeaveDate = leaveDate;
         }
 
-        private static bool IsLettersOnly(string input)
+        public static bool IsLettersOnly(string input)
         {
             // Check if a string contains only letters
             // returns true if the input string contains only english and swedish letters, false otherwise          
@@ -139,8 +139,7 @@ namespace camp_sleepaway
             return camper;
         }
 
-
-        public Camper ChooseCamperToEdit()
+        public static Camper ChooseCamperToEdit()
         {
             using (var camperContext = new CampContext())
             {
@@ -160,7 +159,7 @@ namespace camp_sleepaway
             }
         }
 
-        internal static void EditCamperMenu(Camper camperToEdit)
+        internal static Camper EditCamperMenu(Camper camperToEdit)
         {
             var editCamperMenu = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
@@ -234,7 +233,7 @@ namespace camp_sleepaway
                 }
             }
             else if (editCamperMenu == "Edit joined date")
-            {
+            {   
                 Console.Write("Join date: ");
                 DateTime joinDate;
                 while (!DateTime.TryParse(Console.ReadLine(), out joinDate))
@@ -248,14 +247,15 @@ namespace camp_sleepaway
                 Console.Write("Enter new leave date (if there is no leave date, just press 'Enter' to skip): ");
                 string leaveDateInput = Console.ReadLine();
 
-                Console.Write("Join date: ");
-                DateTime joinDate;
-                while (!DateTime.TryParse(Console.ReadLine(), out joinDate))
+                Console.Write("Leave date: ");
+                DateTime leaveDate;
+                while (!DateTime.TryParse(Console.ReadLine(), out leaveDate))
                 {
                     Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd.");
-                    Console.Write("Join date: ");
+                    Console.Write("Leave date: ");
                 }
             }
+            return camperToEdit;
         }
 
         public static void SearchCamper()
@@ -310,6 +310,15 @@ namespace camp_sleepaway
                     }
                     // Print each NextOfKin, for each camper
                 }
+            }
+        }
+
+        public void SaveToDb()
+        {
+            using (var camperContext = new CampContext())
+            {
+                camperContext.Campers.Add(this);
+                camperContext.SaveChanges();
             }
         }
     }
