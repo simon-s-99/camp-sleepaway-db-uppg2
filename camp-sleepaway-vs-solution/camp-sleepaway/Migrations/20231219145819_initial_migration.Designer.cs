@@ -12,7 +12,7 @@ using camp_sleepaway;
 namespace camp_sleepaway.Migrations
 {
     [DbContext(typeof(CampContext))]
-    [Migration("20231219105015_initial_migration")]
+    [Migration("20231219145819_initial_migration")]
     partial class initial_migration
     {
         /// <inheritdoc />

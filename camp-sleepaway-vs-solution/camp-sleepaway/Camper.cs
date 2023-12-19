@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.Json;
+using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.RegularExpressions;
 
 namespace camp_sleepaway
@@ -31,7 +33,7 @@ namespace camp_sleepaway
 
         // Constructor for camper
         [SetsRequiredMembers]
-        public Camper (string firstName, string lastName, string phoneNumber,
+        public Camper(string firstName, string lastName, string phoneNumber,
         DateTime dateOfBirth, DateTime joinDate, DateTime? leaveDate = null)
         {
             FirstName = firstName;
@@ -39,10 +41,10 @@ namespace camp_sleepaway
             PhoneNumber = phoneNumber;
             DateOfBirth = dateOfBirth;
             JoinDate = joinDate;
-            LeaveDate = leaveDate;          
+            LeaveDate = leaveDate;
         }
 
-        private static bool IsLettersOnly(string input)
+        public static bool IsLettersOnly(string input)
         {
             // Check if a string contains only letters
             // returns true if the input string contains only english and swedish letters, false otherwise          
@@ -83,8 +85,19 @@ namespace camp_sleepaway
                 Console.Write("Last name: ");
             }
 
-            Console.Write("Phone number: ");
-            string phoneNumber = Console.ReadLine();
+            string phoneNumber;
+            while (true)
+            {
+                Console.Write("Phone number: ");
+                phoneNumber = Console.ReadLine();
+
+                if (phoneNumber.Length > 7 && phoneNumber.Length < 17)
+                {
+                    break;
+                }
+
+                Console.WriteLine("Please enter a phone number between 8 and 16 digits.");
+            }
 
             Console.Write("Birth date: ");
             DateTime dateOfBirth;
@@ -126,7 +139,7 @@ namespace camp_sleepaway
             return camper;
         }
 
-        public Camper ChooseCamperToEdit()
+        public static Camper ChooseCamperToEdit()
         {
             using (var camperContext = new CampContext())
             {
@@ -146,8 +159,106 @@ namespace camp_sleepaway
             }
         }
 
+        internal static Camper EditCamperMenu(Camper camperToEdit)
+        {
+            var editCamperMenu = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("[red]What do you want to do[/]?")
+                .PageSize(10)
+                .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                .AddChoices(new[] {
+                    "Edit first name", "Edit last name", "Edit phone number", "Edit birth date",
+                    "Edit joined date", "Edit leave date"
+                }));
 
-        public void SearchCamper()
+            if (editCamperMenu == "Edit first name")
+            {
+                Console.Write("Enter new first name: ");
+                string newFirstName = Console.ReadLine();
+
+                while (true)
+                {
+                    if (IsLettersOnly(newFirstName))
+                    {
+                        camperToEdit.FirstName = newFirstName;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a name with only letter");
+                        Console.Write("First name: ");
+                    }
+                }
+            }
+            else if (editCamperMenu == "Edit last name")
+            {
+                Console.Write("Enter new last name: ");
+                string newLastName = Console.ReadLine();
+
+                while (true)
+                {
+                    if (IsLettersOnly(newLastName))
+                    {
+                        camperToEdit.FirstName = newLastName;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a name with only letter");
+                        Console.Write("Last name: ");
+                    }
+                }
+            }
+            else if (editCamperMenu == "Edit phone number")
+            {
+                Console.Write("Enter new phone number: ");
+                string newPhoneNumber = Console.ReadLine();
+                if (newPhoneNumber.Length > 7 && newPhoneNumber.Length < 17)
+                {
+                    camperToEdit.PhoneNumber = newPhoneNumber;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid phone number. Phone number has not been updated.");
+                }
+            }
+            else if (editCamperMenu == "Edit birth date")
+            {
+                Console.Write("Birth date: ");
+                DateTime dateOfBirth;
+                while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth))
+                {
+                    Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
+                    Console.Write("Birth date: ");
+                }
+            }
+            else if (editCamperMenu == "Edit joined date")
+            {   
+                Console.Write("Join date: ");
+                DateTime joinDate;
+                while (!DateTime.TryParse(Console.ReadLine(), out joinDate))
+                {
+                    Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd.");
+                    Console.Write("Join date: ");
+                }
+            }
+            else if (editCamperMenu == "Edit leave date")
+            {
+                Console.Write("Enter new leave date (if there is no leave date, just press 'Enter' to skip): ");
+                string leaveDateInput = Console.ReadLine();
+
+                Console.Write("Leave date: ");
+                DateTime leaveDate;
+                while (!DateTime.TryParse(Console.ReadLine(), out leaveDate))
+                {
+                    Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd.");
+                    Console.Write("Leave date: ");
+                }
+            }
+            return camperToEdit;
+        }
+
+        public static void SearchCamper()
         {
             Console.Write("Search for camper by cabin or counselor: ");
             string searchQuery = Console.ReadLine();
@@ -165,7 +276,7 @@ namespace camp_sleepaway
                     Console.WriteLine("Id: " + result.Id);
                     Console.WriteLine("Full name: " + result.FirstName + " " + result.LastName);
                     Console.WriteLine("Phone number: " + result.PhoneNumber);
-                    Console.WriteLine("Birth date: " + result.BirthDate);
+                    Console.WriteLine("Birth date: " + result.DateOfBirth);
                     Console.WriteLine("Date joined: " + result.JoinDate);
                     Console.WriteLine("Date left/date to leave: " + result.LeaveDate);
                     Console.WriteLine("Cabin: " + result.Cabin.Id + " " + result.Cabin.CabinName);
@@ -174,17 +285,41 @@ namespace camp_sleepaway
                     // If counselor is not null then print out normally, if it is null then warn the user
                 }
             }
-
         }
 
         public void DisplayCampersAndNextOfKins()
         {
-            /*Console.Write("NextOfKins: ");
-            foreach (NextOfKin nextOfKin in result.NextOfKins)
+            using (var camperContext = new CampContext()) 
             {
-                Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
-            }*/
-            // Print each NextOfKin, for each result
+                List<Camper> campers = camperContext.Campers.OrderBy(c => c.Cabin.Id).ToList();
+                // Get every camper, and order them by CabinId
+
+                foreach (Camper camper in campers)
+                {
+                    Console.WriteLine("Id: " + camper.Id);
+                    Console.WriteLine("Full name: " + camper.FirstName + " " + camper.LastName);
+                    Console.WriteLine("Phone number: " + camper.PhoneNumber);
+                    Console.WriteLine("Birth date: " + camper.DateOfBirth);
+                    Console.WriteLine("Date joined: " + camper.JoinDate);
+                    Console.WriteLine("Date left/date to leave: " + camper.LeaveDate);
+                    Console.WriteLine("Cabin: " + camper.Cabin.Id + " " + camper.Cabin.CabinName);
+
+                    foreach (NextOfKin nextOfKin in camper.NextOfKins)
+                    {
+                        Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
+                    }
+                    // Print each NextOfKin, for each camper
+                }
+            }
+        }
+
+        public void SaveToDb()
+        {
+            using (var camperContext = new CampContext())
+            {
+                camperContext.Campers.Add(this);
+                camperContext.SaveChanges();
+            }
         }
     }
 }

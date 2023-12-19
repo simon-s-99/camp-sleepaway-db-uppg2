@@ -25,7 +25,7 @@ namespace camp_sleepaway
         }
 
         [SetsRequiredMembers]
-        public Cabin(string cabinName, Counselor counselor)
+        public Cabin(string cabinName, Counselor? counselor)
         {
             CabinName = cabinName;
             Counselor = counselor;
