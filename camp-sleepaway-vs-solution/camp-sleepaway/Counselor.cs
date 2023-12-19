@@ -43,7 +43,7 @@ namespace camp_sleepaway
         }
 
         // Asks user for input via console, should primarily be called from main menu 
-        public Counselor InputCounselorData()
+        public static Counselor InputCounselorData()
         {
             Console.Clear();
             Console.WriteLine("Add counselor");
@@ -94,15 +94,6 @@ namespace camp_sleepaway
             return counselor;
         }
 
-        public void AddCounselor(Counselor counselor)
-        {
-            using (var counselorContext = new CampContext())
-            {
-                counselorContext.Counselors.Add(counselor);
-                counselorContext.SaveChanges();
-            }
-        }
-
         public Counselor ChooseCounselorToEdit()
         {
             using (var counselorContext = new CampContext())
@@ -120,6 +111,15 @@ namespace camp_sleepaway
                 Counselor selectedCounselor = counselorContext.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
 
                 return selectedCounselor;
+            }
+        }
+
+        public void SaveToDb()
+        {
+            using (var counselorContext = new CampContext())
+            {
+                counselorContext.Counselors.Add(this);
+                counselorContext.SaveChanges();
             }
         }
     }

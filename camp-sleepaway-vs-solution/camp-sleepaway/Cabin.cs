@@ -31,8 +31,9 @@ namespace camp_sleepaway
             Counselor = counselor;
         }
 
-        // Asks user for input via console, should primarily be called from the main menu 
-        public Cabin InputCabinData()
+
+        // Asks user for input via console, should primarily be called from main menu 
+        public static Cabin InputCabinData()
         {
             Console.Clear();
             Console.WriteLine("Add cabin");
@@ -53,6 +54,15 @@ namespace camp_sleepaway
             return cabin;
         }
 
+        public void SaveToDb()
+        {
+            using (var cabinContext = new CampContext())
+            {
+                cabinContext.Cabins.Add(this);
+                cabinContext.SaveChanges();
+            }
+        }
+      
         // used hashset to guarantee unique names 
         private static readonly HashSet<string> AssignedCabinNames = new HashSet<string>();
 
