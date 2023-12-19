@@ -104,11 +104,11 @@ namespace camp_sleepaway
             }
         }
 
-        public void AddCounselor()
+        public void SaveToDb()
         {
             using (var counselorContext = new CampContext())
             {
-                counselorContext.Counselors.Add(counselor);
+                counselorContext.Counselors.Add(this);
                 counselorContext.SaveChanges();
             }
         }
