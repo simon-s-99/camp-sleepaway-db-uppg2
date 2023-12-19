@@ -17,6 +17,11 @@ namespace camp_sleepaway
         // Reference navigation to Camper
         public Camper Camper { get; set; } = null!;
 
+        // empty constructor for Entity Framework
+        public NextOfKin()
+        {
+        }
+
         [SetsRequiredMembers]
         public NextOfKin(string firstName, string lastName, string phoneNumber,
             int relatedToCamper, string relationType)

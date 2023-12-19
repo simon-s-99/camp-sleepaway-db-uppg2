@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +9,13 @@ namespace camp_sleepaway
 {
     public abstract class Person
     {
-        public required string FirstName { get; set; }
+        [Required(ErrorMessage = "Invalid first name.")]
+        public string FirstName { get; set; }
 
-        public required string LastName { get; set; }
+        [Required(ErrorMessage = "Invalid last name.")]
+        public string LastName { get; set; }
 
-        public required string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Invalid phone number.")]
+        public string PhoneNumber { get; set; }
     }
 }

@@ -25,6 +25,11 @@ namespace camp_sleepaway
         // Reference navigation to Cabin
         public Cabin? Cabin { get; set; }
 
+        // empty constructor for Entity Framework
+        public Counselor()
+        {
+        }
+
         [SetsRequiredMembers]
         public Counselor(string firstName, string lastName, string phoneNumber,
             WorkTitle workTitle, DateTime hiredDate, DateTime? terminationDate = null)
@@ -87,6 +92,15 @@ namespace camp_sleepaway
             Counselor counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, hiredDate, terminationDate);
 
             return counselor;
+        }
+
+        public void AddCounselor(Counselor counselor)
+        {
+            using (var counselorContext = new CampContext())
+            {
+                counselorContext.Counselors.Add(counselor);
+                counselorContext.SaveChanges();
+            }
         }
 
         public Counselor ChooseCounselorToEdit()
