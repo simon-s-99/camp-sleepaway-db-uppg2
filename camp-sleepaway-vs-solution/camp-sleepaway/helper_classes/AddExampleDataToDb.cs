@@ -1,5 +1,7 @@
 ﻿using camp_sleepaway.ef_table_classes;
 
+// Adds example data to database, primarily used for testing 
+
 namespace camp_sleepaway
 {
     internal class AddExampleDataToDb
@@ -39,24 +41,23 @@ namespace camp_sleepaway
                 {
                     string cabinName = Cabin.GenerateRandomCabinName();
                     var cabin = new Cabin(cabinName, null);
-                    cabins.Add(cabin);
+                    cabin.SaveToDb();
                 }
-
-                foreach (var c in cabins)
-                {
-                    c.SaveToDb();
-                }
-
                 return true;
             }
             catch
             {
-                return false;
+                return false; // return false if any errors occur 
             }
         }
 
         private static bool AddCounselors()
         {
+            string dir = Directory.GetCurrentDirectory();
+
+            // to-do here:
+            // check counselor ctor and translate .csv to ctor here 
+
             return true;
         }
 
