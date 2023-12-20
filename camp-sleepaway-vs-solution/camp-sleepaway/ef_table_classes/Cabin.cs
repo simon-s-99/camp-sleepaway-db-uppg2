@@ -130,11 +130,46 @@ namespace camp_sleepaway.ef_table_classes
             return cabin;
         }
 
+        public static Cabin ChooseCabinToEdit()
+        {
+            using (var cabinContext = new CampContext())
+            {
+                List<Cabin> cabins = cabinContext.Cabins.ToList();
+
+                foreach (Cabin cabin in cabins)
+                {
+                    Console.WriteLine(cabin.Id + " - " + cabin.CabinName + " - " + cabin.Counselor);
+
+                    Console.Write("Campers: ");
+                    foreach (Camper camper in cabin.Campers)
+                    {
+                        Console.WriteLine(camper.Id + " - " + camper.FirstName + " " + camper.LastName + " - " + camper.PhoneNumber);
+                    }
+                }
+
+                Console.Write("Enter ID for cabin you wish to edit: ");
+                int cabinID = int.Parse(Console.ReadLine());
+
+                Cabin selectedCabin = cabinContext.Cabins.Where(c => c.Id == cabinID).FirstOrDefault();
+
+                return selectedCabin;
+            }
+        }
+
         public void SaveToDb()
         {
             using (var cabinContext = new CampContext())
             {
                 cabinContext.Cabins.Add(this);
+                cabinContext.SaveChanges();
+            }
+        }
+
+        public void DeleteFromDb()
+        {
+            using (var cabinContext = new CampContext())
+            {
+                cabinContext.Cabins.Remove(this);
                 cabinContext.SaveChanges();
             }
         }

@@ -207,5 +207,14 @@ namespace camp_sleepaway
                 nextOfKinContext.SaveChanges();
             }
         }
+
+        public void DeleteFromDb()
+        {
+            using (var nextOfKinContext = new CampContext())
+            {
+                nextOfKinContext.NextOfKins.Remove(this);
+                nextOfKinContext.SaveChanges();
+            }
+        }
     }
 }

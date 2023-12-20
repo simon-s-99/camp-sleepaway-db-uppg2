@@ -13,7 +13,7 @@ namespace camp_sleepaway
 
         internal static void ShowMainMenu()
         {
-            string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper" };
+            string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper", "Delete individual" };
             string? mainMenuChoice = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("[red]What do you want to do[/]?")
@@ -118,8 +118,47 @@ namespace camp_sleepaway
             {
                 Camper.SearchCamper();
             }
-        }
+            // Delete row 
+            else if (mainMenuChoice == mainMenuChoiceOptions[3])
+            {
+                string[] deleteIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
+                string? deleteIndividualChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[red]What do you wish to delete from[/]?")
+                    .PageSize(10)
+                    .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                    .AddChoices(deleteIndividualChoiceOptions));
 
-        
+                // Camper
+                if (deleteIndividualChoice == deleteIndividualChoiceOptions[0])
+                {
+                    Camper camper = Camper.ChooseCamperToEdit();
+
+                    camper.DeleteFromDb();
+                }
+                // Counselor
+                else if (deleteIndividualChoice == deleteIndividualChoiceOptions[1])
+                {
+                    Counselor counselor = Counselor.ChooseCounselorToEdit();
+
+                    counselor.DeleteFromDb();
+                }
+                // NextOfKin
+                else if (deleteIndividualChoice == deleteIndividualChoiceOptions[2])
+                {
+                    NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinToEdit();
+
+                    nextOfKin.DeleteFromDb();
+                }
+                // Cabin 
+                else if (deleteIndividualChoice == deleteIndividualChoiceOptions[3])
+                {
+                    Cabin cabin = Cabin.ChooseCabinToEdit();
+
+                    cabin.DeleteFromDb();
+                }
+            }
+
+        }
     }
 }

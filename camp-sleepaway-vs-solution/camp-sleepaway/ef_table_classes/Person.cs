@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using camp_sleepaway.ef_table_classes;
 
 // This does not represent a table in Entity Framework Core
 // this is a parent class that other EF Table classes inherit from 

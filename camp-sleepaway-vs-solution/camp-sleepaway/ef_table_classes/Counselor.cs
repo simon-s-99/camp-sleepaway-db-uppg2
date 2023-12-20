@@ -345,5 +345,14 @@ namespace camp_sleepaway
                 counselorContext.SaveChanges();
             }
         }
+
+        public void DeleteFromDb()
+        {
+            using (var counselorContext = new CampContext())
+            {
+                counselorContext.Counselors.Remove(this);
+                counselorContext.SaveChanges();
+            }
+        }
     }
 }
