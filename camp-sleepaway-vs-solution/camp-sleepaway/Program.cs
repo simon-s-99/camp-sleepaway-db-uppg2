@@ -65,10 +65,10 @@ namespace camp_sleepaway
             // Edit individual
             else if (mainMenuChoice == mainMenuChoiceOptions[1])
             {
-                string[] editIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin" };
+                string[] editIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
                 string? editIndividualChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[red]Who do you wish to edit? [/]?")
+                    .Title("[red]What do you wish to edit? [/]?")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                     .AddChoices(editIndividualChoiceOptions));
@@ -111,6 +111,19 @@ namespace camp_sleepaway
                     else
                     {
                         Console.WriteLine("No NextOfKin has been selected for editing. ");
+                    }
+                }
+                // Cabin
+                else if (editIndividualChoice == editIndividualChoiceOptions[3])
+                {
+                    Cabin cabin = Cabin.ChooseCabinToEdit();
+                    if (cabin != null)
+                    {
+                        Cabin editedCabin = Cabin.EditCabinMenu(cabin);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No cabin has been selected for editing. ");
                     }
                 }
             }
