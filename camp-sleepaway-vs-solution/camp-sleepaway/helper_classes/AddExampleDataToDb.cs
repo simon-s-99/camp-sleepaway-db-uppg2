@@ -15,8 +15,8 @@ namespace camp_sleepaway
         {
             bool result = false;
 
-            result = AddCabins(25);
             result = AddCounselors();
+            result = AddCabins(25);
             result = AddCampers();
             result = AddNextOfKin();
 
@@ -73,7 +73,7 @@ namespace camp_sleepaway
                     string phoneNumber = l[2];
 
                     string workTitleString = l[3].Trim().Substring(10);
-                    // Get the work title, except the "WorkTitle."-part
+                    // Get the work title, except the "WorkTitle."-part, also remove whitespace before and after
 
                     WorkTitle workTitle = Enum.Parse<WorkTitle>(workTitleString);
 
