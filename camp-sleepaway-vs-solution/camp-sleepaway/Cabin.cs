@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Spectre.Console;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace camp_sleepaway
@@ -39,8 +40,26 @@ namespace camp_sleepaway
             Console.WriteLine("Add cabin");
             Console.WriteLine();
 
-            Console.Write("Cabin name: ");
-            string cabinName = Console.ReadLine();
+            // user can choose to manually enter cabin name or get a generated cabin name
+            string[] cabinNameChoiceOptions = { "Input cabin name manually", "Generate cabin name for me" };
+            string? cabinNameChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[red]Do you want the program to generate a cabin name or do you " +
+                    "wish to input this manually?[/]")
+                    .PageSize(10)
+                    .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                    .AddChoices(cabinNameChoiceOptions));
+
+            string cabinName = string.Empty;
+            if (cabinNameChoice == cabinNameChoiceOptions[0])
+            {
+                Console.Write("Cabin name: ");
+                cabinName = Console.ReadLine();
+            }
+            else
+            {
+                cabinName = GenerateRandomCabinName();
+            }
 
             Console.Write("CounselorID: ");
             int counselorID = int.Parse(Console.ReadLine());
@@ -69,6 +88,9 @@ namespace camp_sleepaway
         // Method that generates a random cabin name. Could always add more names if needed.
         public static string GenerateRandomCabinName()
         {
+            // Current method (GenerateRandomCabinName()) supports ~441 uniquely generated names
+            // Changing the do-while loop to handle the names running out, i.e. returning another value
+            // (maybe returning false if unique names run out) or adding more names would solve this. 
             string[] namesPrefix =
             {
                 "Lion", "Power", "Lone",

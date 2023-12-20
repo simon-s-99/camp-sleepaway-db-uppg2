@@ -83,16 +83,24 @@ namespace camp_sleepaway
             string phoneNumber;
             while (true)
             {
-                Console.Write("Phone number: ");
-                phoneNumber = Console.ReadLine();
-
-                if (phoneNumber.Length > 7 && phoneNumber.Length < 17)
+                try
                 {
-                    break;
-                }
+                    Console.Write("Phone number: ");
+                    phoneNumber = Console.ReadLine();
 
-                Console.WriteLine("Please enter a phone number between 8 and 16 digits.");
-                Console.Write("Phone number: ");
+                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid phone number");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Error creating phone number");
+                }
             }
 
 
@@ -158,7 +166,7 @@ namespace camp_sleepaway
             return counselor;
         }
 
-        public Counselor ChooseCounselorToEdit()
+        public static Counselor ChooseCounselorToEdit()
         {
             using (var counselorContext = new CampContext())
             {
@@ -231,15 +239,27 @@ namespace camp_sleepaway
             }
             else if (editCounselorMenu == "Edit phone number")
             {
-                Console.Write("Enter new phone number: ");
-                string newPhoneNumber = Console.ReadLine();
-                if (newPhoneNumber.Length > 7 && newPhoneNumber.Length < 17)
+                string phoneNumber;
+                while (true)
                 {
-                    counselorToEdit.PhoneNumber = newPhoneNumber;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid phone number. Phone number has not been updated.");
+                    try
+                    {
+                        Console.Write("Phone number: ");
+                        phoneNumber = Console.ReadLine();
+
+                        if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid phone number");
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error creating phone number");
+                    }
                 }
             }
             else if (editCounselorMenu == "Edit work title")

@@ -11,6 +11,11 @@
 
   <ItemGroup>
     <Compile Remove="Context.cs" />
+    <Compile Remove="unit_tests\UnitTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="unit_tests\ExampleUnitTest" />
   </ItemGroup>
 
   <ItemGroup>
