@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using camp_sleepaway.ef_table_classes;
+using Spectre.Console;
 
 namespace camp_sleepaway
 {

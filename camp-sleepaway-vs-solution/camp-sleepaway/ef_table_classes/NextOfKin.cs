@@ -1,4 +1,6 @@
-﻿using Spectre.Console;
+﻿using camp_sleepaway.ef_table_classes;
+using camp_sleepaway.helper_classes;
+using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 

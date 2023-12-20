@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.Json;
+﻿using camp_sleepaway.ef_table_classes;
+using camp_sleepaway.helper_classes;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -283,7 +285,8 @@ namespace camp_sleepaway
             {   
                 Console.Write("Join date: ");
                 DateTime joinDate;
-                while (true)
+
+                while (!DateTime.TryParse(Console.ReadLine)
                 {
                     Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd.");
                     Console.Write("Join date: ");

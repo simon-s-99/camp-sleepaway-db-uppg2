@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace camp_sleepaway
+namespace camp_sleepaway.helper_classes
 {
     public static class DateManager
     {

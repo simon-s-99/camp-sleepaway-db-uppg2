@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace camp_sleepaway
+namespace camp_sleepaway.ef_table_classes
 {
     public class Cabin
     {

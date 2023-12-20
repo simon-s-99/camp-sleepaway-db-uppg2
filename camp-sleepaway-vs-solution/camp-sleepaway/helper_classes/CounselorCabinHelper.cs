@@ -1,4 +1,4 @@
-﻿namespace camp_sleepaway
+﻿namespace camp_sleepaway.helper_classes
 {
     internal class CounselorCabinHelper
     {

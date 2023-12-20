@@ -10,11 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AddExampleData.cs" />
     <Compile Remove="Context.cs" />
     <Compile Remove="unit_tests\UnitTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="AddExampleData" />
     <None Remove="NewFile1.txt" />
     <None Remove="unit_tests\ExampleUnitTest" />
   </ItemGroup>
