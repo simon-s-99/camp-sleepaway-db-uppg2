@@ -1,4 +1,5 @@
 ﻿using camp_sleepaway.ef_table_classes;
+using Newtonsoft.Json.Linq;
 
 // Adds example data to database, primarily used for testing 
 
@@ -58,19 +59,97 @@ namespace camp_sleepaway
         {
             string dir = _dir + "Counselor_Example_Data.csv";
 
-            
+            try
+            {
+                string[] lines = File.ReadAllLines(dir);
 
-            return true;
+                foreach (string line in lines)
+                {
+                    string formattedLine = line.Replace("\"", "");
+                    string[] l = formattedLine.Split(',');
+
+                    string firstName = l[0];
+                    string lastName = l[1];
+                    string phoneNumber = l[2];
+                    WorkTitle workTitle = (WorkTitle)Enum.Parse(typeof(WorkTitle), l[3]);
+                    DateTime dateTime = DateTime.Parse(l[4]);
+
+                    var counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, dateTime, null, null);
+
+                    counselor.SaveToDb();
+                }
+
+                return true;
+            }
+            catch 
+            { 
+                return false;
+            }
         }
 
         private static bool AddCampers()
         {
-            return true;
+            string dir = _dir + "Camper_Example_Data.csv";
+
+            try
+            {
+                string[] lines = File.ReadAllLines(dir);
+
+                foreach (string line in lines)
+                {
+                    string formattedLine = line.Replace("\"", "");
+                    string[] l = formattedLine.Split(',');
+
+                    string firstName = l[0];
+                    string lastName = l[1];
+                    string phoneNumber = l[2];
+                    DateTime dateOfBirth = DateTime.Parse(l[3]);
+                    DateTime joinDate = DateTime.Parse(l[4]);
+                    DateTime leaveDate = DateTime.Parse(l[5]);
+
+                    var camper = new Camper(firstName, lastName, phoneNumber, dateOfBirth, joinDate, leaveDate);
+
+                    camper.SaveToDb();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static bool AddNextOfKin()
         {
-            return true;
+            string dir = _dir + "NextOfKin_Example_Data.csv";
+
+            try
+            {
+                string[] lines = File.ReadAllLines(dir);
+
+                foreach (string line in lines)
+                {
+                    string formattedLine = line.Replace("\"", "");
+                    string[] l = formattedLine.Split(',');
+
+                    string firstName = l[0];
+                    string lastName = l[1];
+                    string phoneNumber = l[2];
+                    int relatedToCamper = int.Parse(l[3]);
+                    string relationType = l[4];
+
+                    var nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper, relationType);
+
+                    nextOfKin.SaveToDb();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
