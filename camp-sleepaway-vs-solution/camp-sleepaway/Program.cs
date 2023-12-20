@@ -13,7 +13,8 @@ namespace camp_sleepaway
 
         internal static void ShowMainMenu()
         {
-            string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper", "Delete individual" };
+            string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper", 
+                "View campers and NextOfKins", "Delete individual" };
             string? mainMenuChoice = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("[red]What do you want to do[/]?")
@@ -118,13 +119,18 @@ namespace camp_sleepaway
             {
                 Camper.SearchCamper();
             }
-            // Delete row 
+            // Display campers and NextOfKins
             else if (mainMenuChoice == mainMenuChoiceOptions[3])
+            {
+                Camper.DisplayCampersAndNextOfKins();
+            }
+            // Delete row 
+            else if (mainMenuChoice == mainMenuChoiceOptions[4])
             {
                 string[] deleteIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
                 string? deleteIndividualChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("[red]What do you wish to delete from[/]?")
+                    .Title("[red]Which table do you wish to delete from[/]?")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                     .AddChoices(deleteIndividualChoiceOptions));

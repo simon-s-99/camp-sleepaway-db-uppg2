@@ -395,7 +395,7 @@ namespace camp_sleepaway
             }
         }
 
-        public void DisplayCampersAndNextOfKins()
+        public static void DisplayCampersAndNextOfKins()
         {
             using (var camperContext = new CampContext()) 
             {
