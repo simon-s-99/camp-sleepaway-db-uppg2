@@ -32,58 +32,14 @@ namespace camp_sleepaway
             Counselor = counselor;
         }
 
-
-        // Asks user for input via console, should primarily be called from main menu 
-        public static Cabin InputCabinData()
-        {
-            Console.Clear();
-            Console.WriteLine("Add cabin");
-            Console.WriteLine();
-
-            // user can choose to manually enter cabin name or get a generated cabin name
-            string[] cabinNameChoiceOptions = { "Input cabin name manually", "Generate cabin name for me" };
-            string? cabinNameChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[red]Do you want the program to generate a cabin name or do you " +
-                    "wish to input this manually?[/]")
-                    .PageSize(10)
-                    .MoreChoicesText("[grey](Move up and down to select an option)[/]")
-                    .AddChoices(cabinNameChoiceOptions));
-
-            string cabinName = string.Empty;
-            if (cabinNameChoice == cabinNameChoiceOptions[0])
-            {
-                Console.Write("Cabin name: ");
-                cabinName = Console.ReadLine();
-            }
-            else
-            {
-                cabinName = GenerateRandomCabinName();
-            }
-
-            Console.Write("CounselorID: ");
-            int counselorID = int.Parse(Console.ReadLine());
-
-            var context = new CampContext();
-
-            Counselor counselor = context.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
-
-            Cabin cabin = new Cabin(cabinName, counselor);
-
-            return cabin;
-        }
-
-        public void SaveToDb()
-        {
-            using (var cabinContext = new CampContext())
-            {
-                cabinContext.Cabins.Add(this);
-                cabinContext.SaveChanges();
-            }
-        }
-      
         // used hashset to guarantee unique names 
         private static readonly HashSet<string> AssignedCabinNames = new HashSet<string>();
+
+        // Method to check if name is unique
+        private static bool IsNameUnique(string attribute, string noun)
+        {
+            return !AssignedCabinNames.Contains($"{attribute} {noun}");
+        }
 
         // Method that generates a random cabin name. Could always add more names if needed.
         public static string GenerateRandomCabinName()
@@ -134,9 +90,53 @@ namespace camp_sleepaway
             return $"{prefix} {suffix}";
         }
 
-        private static bool IsNameUnique(string attribute, string noun)
+        // Asks user for input via console, should primarily be called from main menu 
+        public static Cabin InputCabinData()
         {
-            return !AssignedCabinNames.Contains($"{attribute} {noun}");
+            Console.Clear();
+            Console.WriteLine("Add cabin");
+            Console.WriteLine();
+
+            // user can choose to manually enter cabin name or get a generated cabin name
+            string[] cabinNameChoiceOptions = { "Input cabin name manually", "Generate cabin name for me" };
+            string? cabinNameChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("[red]Do you want the program to generate a cabin name or do you " +
+                    "wish to input this manually?[/]")
+                    .PageSize(10)
+                    .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                    .AddChoices(cabinNameChoiceOptions));
+
+            string cabinName = string.Empty;
+            if (cabinNameChoice == cabinNameChoiceOptions[0])
+            {
+                Console.Write("Cabin name: ");
+                cabinName = Console.ReadLine();
+            }
+            else
+            {
+                cabinName = GenerateRandomCabinName();
+            }
+
+            Console.Write("CounselorID: ");
+            int counselorID = int.Parse(Console.ReadLine());
+
+            var context = new CampContext();
+
+            Counselor counselor = context.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
+
+            Cabin cabin = new Cabin(cabinName, counselor);
+
+            return cabin;
+        }
+
+        public void SaveToDb()
+        {
+            using (var cabinContext = new CampContext())
+            {
+                cabinContext.Cabins.Add(this);
+                cabinContext.SaveChanges();
+            }
         }
     }
 }

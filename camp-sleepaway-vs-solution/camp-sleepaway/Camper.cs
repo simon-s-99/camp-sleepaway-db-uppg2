@@ -106,14 +106,26 @@ namespace camp_sleepaway
                 {
                     Console.WriteLine("Error creating phone number");
                 }
-            }        
-                /*(phoneNumber.Length > 7 && phoneNumber.Length < 17)*/
+            }
 
             Console.Write("Birth date: ");
             DateTime dateOfBirth;
-            while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth))
+
+            while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || DateManager.CalculateAge(dateOfBirth) < 7
+                || DateManager.CalculateAge(dateOfBirth) > 17)
             {
-                Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
+                if (DateManager.CalculateAge(dateOfBirth) < 7)
+                {
+                    Console.WriteLine("The camper must be at least 7 years old.");
+                }
+                else if (DateManager.CalculateAge(dateOfBirth) > 17)
+                {
+                    Console.WriteLine("The camper cannot be older than 17 years old");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
+                }
                 Console.Write("Birth date: ");
             }
 
@@ -248,10 +260,22 @@ namespace camp_sleepaway
             {
                 Console.Write("Birth date: ");
                 DateTime dateOfBirth;
-                while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || CalculateAge(dateOfBirth) < 7 || CalculateAge(dateOfBirth) > 17
+
+                while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || DateManager.CalculateAge(dateOfBirth) < 7
+                    || DateManager.CalculateAge(dateOfBirth) > 17)
                 {
-                    if (Cal)
+                    if (DateManager.CalculateAge(dateOfBirth) < 7)
+                    {
+                        Console.WriteLine("The camper must be at least 7 years old.");
+                    }
+                    else if (DateManager.CalculateAge(dateOfBirth) > 17)
+                    {
+                        Console.WriteLine("The camper cannot be older than 17 years old");
+                    }
+                    else
+                    {
                     Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
+                    }
                     Console.Write("Birth date: ");
                 }
             }
@@ -259,7 +283,7 @@ namespace camp_sleepaway
             {   
                 Console.Write("Join date: ");
                 DateTime joinDate;
-                while (!DateTime.TryParse(Console.ReadLine(), out joinDate))
+                while (true)
                 {
                     Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd.");
                     Console.Write("Join date: ");

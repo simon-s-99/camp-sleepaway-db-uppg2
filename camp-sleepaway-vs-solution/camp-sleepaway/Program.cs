@@ -63,16 +63,16 @@ namespace camp_sleepaway
             // Edit individual
             else if (mainMenuChoice == mainMenuChoiceOptions[1])
             {
-                var editIndividualChoice = AnsiConsole.Prompt(
+                string[] editIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin" };
+                string? editIndividualChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[red]Who do you wish to edit? [/]?")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
-                    .AddChoices(new[] {
-                        "Camper", "Councelor", "NextOfKin"
-                    }));
+                    .AddChoices(editIndividualChoiceOptions));
 
-                if (editIndividualChoice == "Camper")
+                // Camper
+                if (editIndividualChoice == editIndividualChoiceOptions[0])
                 {
                     Camper camper = Camper.ChooseCamperToEdit();
                     if (camper != null)
@@ -85,7 +85,8 @@ namespace camp_sleepaway
                     }
 
                 }
-                else if (editIndividualChoice == "Councelor")
+                // Counselor
+                else if (editIndividualChoice == editIndividualChoiceOptions[1])
                 {
                     Counselor counselor = Counselor.ChooseCounselorToEdit();
                     if (counselor != null)
@@ -97,7 +98,8 @@ namespace camp_sleepaway
                         Console.WriteLine("No counselor has been selected for editing. ");
                     }
                 }
-                else if (editIndividualChoice == "NextOfKin")
+                // NextOfKin
+                else if (editIndividualChoice == editIndividualChoiceOptions[2])
                 {
                     NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinToEdit();
                     if (nextOfKin != null)
