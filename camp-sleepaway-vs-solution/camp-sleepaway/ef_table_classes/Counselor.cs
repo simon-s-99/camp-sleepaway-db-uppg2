@@ -52,7 +52,9 @@ namespace camp_sleepaway
             Console.WriteLine("Add counselor");
             Console.WriteLine();
 
+            Counselor counselor = null;
             string firstName;
+
             while (true)
             {
                 Console.Write("First name: ");
@@ -142,7 +144,7 @@ namespace camp_sleepaway
                 cabinIdString = Console.ReadLine();
             }
 
-            Console.Write("Join date: ");
+            Console.Write("Hired date: ");
             DateTime hiredDate;
             while (!DateTime.TryParse(Console.ReadLine(), out hiredDate))
             {
@@ -150,12 +152,30 @@ namespace camp_sleepaway
                 Console.Write("Join date: ");
             }
 
-            Console.Write("Leave date: ");
-            DateTime terminationDate;
-            while (!DateTime.TryParse(Console.ReadLine(), out terminationDate))
+            Console.Write("Enter termination date (if there is no termination date, just press 'Enter' to skip): ");
+            DateTime? terminationDate = null;
+
+            string TerminationDateInput = Console.ReadLine();
+            DateTime parsedTerminationDate;
+
+            //Check so that the input is not empty
+            if (!string.IsNullOrEmpty(TerminationDateInput))
             {
-                Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
-                Console.Write("Leave date: ");
+                // Looop until the user enters a valid date
+                while (!DateTime.TryParse(TerminationDateInput, out parsedTerminationDate) || parsedTerminationDate <= counselor.HiredDate)
+                {
+                    //Checking if the leave date is before or athe same day to the join date
+                    if (parsedTerminationDate <= counselor.HiredDate)
+                    {
+                        Console.WriteLine("termination date must be set after the joined date");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-MM-dd' or 'Enter' to skip.");
+                    }
+                    Console.Write("Termination date: ");
+                    TerminationDateInput = Console.ReadLine();
+                }
             }
 
             var tempCabin = new Cabin();
@@ -163,7 +183,7 @@ namespace camp_sleepaway
             {
                 // add code to get cabin from context here 
             }
-            Counselor counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, hiredDate, tempCabin, terminationDate);
+            counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, hiredDate, tempCabin, terminationDate);
 
             return counselor;
         }
