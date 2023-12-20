@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace camp_sleepaway
+namespace camp_sleepaway.Tests
 {
     [TestClass]
     internal class ExampleUnitTests

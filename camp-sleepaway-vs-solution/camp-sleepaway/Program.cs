@@ -12,53 +12,56 @@ namespace camp_sleepaway
 
         internal static void ShowMainMenu()
         {
-            var mainMenuChoice = AnsiConsole.Prompt(
+            string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper" };
+            string? mainMenuChoice = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("[red]What do you want to do[/]?")
                 .PageSize(10)
                 .MoreChoicesText("[grey](Move up and down to select an option)[/]")
-                .AddChoices(new[] {
-                    "Add new object", "Edit individual",
-                    "Search camper"
-                }));
+                .AddChoices(mainMenuChoiceOptions));
 
-            if (mainMenuChoice == "Add new object")
+            // Add new object 
+            if (mainMenuChoice == mainMenuChoiceOptions[0])
             {
-                var addIndividualChoice = AnsiConsole.Prompt(
+                string[] addIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
+                string? addIndividualChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[red]What type of object do you want to add[/]?")
                     .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
-                    .AddChoices(new[] {
-                        "Camper", "Councelor", "NextOfKin", "Cabin"
-                    }));
+                    .AddChoices(addIndividualChoiceOptions));
 
-                if (addIndividualChoice == "Camper")
+                // Camper
+                if (addIndividualChoice == addIndividualChoiceOptions[0])
                 {
                     Camper camper = Camper.InputCamperData();
 
                     camper.SaveToDb();
                 }
-                else if (addIndividualChoice == "Councelor")
+                // Counselor
+                else if (addIndividualChoice == addIndividualChoiceOptions[1])
                 {
                     Counselor counselor = Counselor.InputCounselorData();
 
                     counselor.SaveToDb();
                 }
-                else if (addIndividualChoice == "NextOfKin")
+                // NextOfKin
+                else if (addIndividualChoice == addIndividualChoiceOptions[2])
                 {
                     NextOfKin nextOfKin = NextOfKin.InputNextOfKinData();
 
                     nextOfKin.SaveToDb();
                 }
-                else if (addIndividualChoice == "Cabin")
+                // Cabin 
+                else if (addIndividualChoice == addIndividualChoiceOptions[3])
                 {
                     Cabin cabin = Cabin.InputCabinData();
 
                     cabin.SaveToDb();
                 }
             }
-            else if (mainMenuChoice == "Edit individual")
+            // Edit individual
+            else if (mainMenuChoice == mainMenuChoiceOptions[1])
             {
                 var editIndividualChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -84,16 +87,31 @@ namespace camp_sleepaway
                 }
                 else if (editIndividualChoice == "Councelor")
                 {
-                    //ChooseCouncelorToEdit();
-                    //EditCouncelor(councelor);
+                    Counselor counselor = Counselor.ChooseCounselorToEdit();
+                    if (counselor != null)
+                    {
+                        Counselor editedCounselor = Counselor.EditCounselorMenu(counselor);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No counselor has been selected for editing. ");
+                    }
                 }
                 else if (editIndividualChoice == "NextOfKin")
                 {
-                    //ChooseNextOfKinToEdit();
-                    //EditNextOfKin(nextOfKin);
+                    NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinToEdit();
+                    if (nextOfKin != null)
+                    {
+                        NextOfKin editedNextOfKin = NextOfKin.EditNextOfKinMenu(nextOfKin);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No NextOfKin has been selected for editing. ");
+                    }
                 }
             }
-            else if (mainMenuChoice == "Search camper")
+            // Search camper
+            else if (mainMenuChoice == mainMenuChoiceOptions[2])
             {
                 Camper.SearchCamper();
             }

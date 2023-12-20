@@ -221,23 +221,36 @@ namespace camp_sleepaway
             }
             else if (editCamperMenu == "Edit phone number")
             {
-                Console.Write("Enter new phone number: ");
-                string newPhoneNumber = Console.ReadLine();
-                if (newPhoneNumber.Length > 7 && newPhoneNumber.Length < 17)
+                string phoneNumber;
+                while (true)
                 {
-                    camperToEdit.PhoneNumber = newPhoneNumber;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid phone number. Phone number has not been updated.");
+                    try
+                    {
+                        Console.Write("Phone number: ");
+                        phoneNumber = Console.ReadLine();
+
+                        if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid phone number");
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error creating phone number");
+                    }
                 }
             }
             else if (editCamperMenu == "Edit birth date")
             {
                 Console.Write("Birth date: ");
                 DateTime dateOfBirth;
-                while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth))
+                while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || CalculateAge(dateOfBirth) < 7 || CalculateAge(dateOfBirth) > 17
                 {
+                    if (Cal)
                     Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
                     Console.Write("Birth date: ");
                 }
