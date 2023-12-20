@@ -6,6 +6,9 @@ namespace camp_sleepaway
 {
     internal class AddExampleDataToDb
     {
+        private static readonly string _dir = 
+            Directory.GetCurrentDirectory() + "./test_data_for_tables/";
+
         // Adds all exampledata, returns true if successful, false if any of the methods failed
         internal static bool AddAllData()
         {
@@ -53,10 +56,9 @@ namespace camp_sleepaway
 
         private static bool AddCounselors()
         {
-            string dir = Directory.GetCurrentDirectory();
+            string dir = _dir + "Counselor_Example_Data.csv";
 
-            // to-do here:
-            // check counselor ctor and translate .csv to ctor here 
+            
 
             return true;
         }
