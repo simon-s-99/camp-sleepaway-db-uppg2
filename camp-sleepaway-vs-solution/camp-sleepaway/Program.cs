@@ -18,7 +18,7 @@ namespace camp_sleepaway
                 .PageSize(10)
                 .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                 .AddChoices(new[] {
-                    "Add new individual", "Edit individual",
+                    "Add new object", "Edit individual",
                     "Search camper"
                 }));
 

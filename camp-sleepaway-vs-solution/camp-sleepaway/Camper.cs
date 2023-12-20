@@ -88,16 +88,26 @@ namespace camp_sleepaway
             string phoneNumber;
             while (true)
             {
-                Console.Write("Phone number: ");
-                phoneNumber = Console.ReadLine();
-
-                if (phoneNumber.Length > 7 && phoneNumber.Length < 17)
+                try
                 {
-                    break;
-                }
+                    Console.Write("Phone number: ");
+                    phoneNumber = Console.ReadLine();
 
-                Console.WriteLine("Please enter a phone number between 8 and 16 digits.");
-            }
+                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid phone number");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Error creating phone number");
+                }
+            }        
+                /*(phoneNumber.Length > 7 && phoneNumber.Length < 17)*/
 
             Console.Write("Birth date: ");
             DateTime dateOfBirth;
