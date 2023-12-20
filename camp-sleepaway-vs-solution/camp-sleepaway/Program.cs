@@ -8,7 +8,11 @@ namespace camp_sleepaway
         // Samuel Lööf, Simon Sörqvist, Adam Kumlin
         public static void Main()
         {
-            ShowMainMenu();
+            //testcode for adding example data to database
+            bool test = AddExampleDataToDb.AddAllData();
+            Console.WriteLine(test);
+            
+            //ShowMainMenu();
         }
 
         internal static void ShowMainMenu()
