@@ -1,4 +1,6 @@
-﻿using Spectre.Console;
+﻿using camp_sleepaway.ef_table_classes;
+using camp_sleepaway.helper_classes;
+using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
@@ -323,12 +325,32 @@ namespace camp_sleepaway
             return counselorToEdit;
         }
 
+        public static Counselor[] GetAllFromDb()
+        {
+            var result = new List<Counselor>();
+            using (var context = new CampContext())
+            {
+                result = context.Counselors
+                    .ToList();
+            }
+
+            return result.ToArray();
+        }
 
         public void SaveToDb()
         {
             using (var counselorContext = new CampContext())
             {
                 counselorContext.Counselors.Add(this);
+                counselorContext.SaveChanges();
+            }
+        }
+
+        public void DeleteFromDb()
+        {
+            using (var counselorContext = new CampContext())
+            {
+                counselorContext.Counselors.Remove(this);
                 counselorContext.SaveChanges();
             }
         }
