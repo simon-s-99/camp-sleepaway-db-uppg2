@@ -1,4 +1,6 @@
-﻿using Spectre.Console;
+﻿using camp_sleepaway.ef_table_classes;
+using camp_sleepaway.helper_classes;
+using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
@@ -202,6 +204,15 @@ namespace camp_sleepaway
             using (var nextOfKinContext = new CampContext())
             {
                 nextOfKinContext.NextOfKins.Add(this);
+                nextOfKinContext.SaveChanges();
+            }
+        }
+
+        public void DeleteFromDb()
+        {
+            using (var nextOfKinContext = new CampContext())
+            {
+                nextOfKinContext.NextOfKins.Remove(this);
                 nextOfKinContext.SaveChanges();
             }
         }
