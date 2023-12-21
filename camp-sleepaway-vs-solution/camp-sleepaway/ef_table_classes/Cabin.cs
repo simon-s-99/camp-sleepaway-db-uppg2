@@ -23,7 +23,7 @@ namespace camp_sleepaway.ef_table_classes
         public Counselor? Counselor { get; set; }
 
         // Collection reference to Camper
-        public ICollection<Camper> Campers { get; set; }
+        public ICollection<Camper> Campers { get; set; } = new List<Camper>();
 
         // empty constructor for Entity Framework
         public Cabin()

@@ -2,6 +2,7 @@
 using camp_sleepaway.helper_classes;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 // Represents Camper table in Entity Framework
@@ -25,11 +26,13 @@ namespace camp_sleepaway
         [DataType(DataType.Date)]
         public DateTime? LeaveDate { get; set; }
 
+        [ForeignKey("CabinId")]
+        public int CabinId { get; set; }
         // Reference navigation to Cabin
         public Cabin Cabin { get; set; } = null!;
 
         // Collection navigation to NextOfKin
-        public ICollection<NextOfKin> NextOfKins { get; set; }
+        public ICollection<NextOfKin> NextOfKins { get; set; } = new List<NextOfKin>();
 
         // empty constructor for Entity Framework
         public Camper()
