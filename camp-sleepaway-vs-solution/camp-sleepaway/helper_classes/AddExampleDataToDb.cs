@@ -35,6 +35,9 @@ namespace camp_sleepaway
             return result;
         }
 
+        // add method for readin all lines from dir here, the implementation
+        // looks the same in all Add... methods below 
+
         // generates cabins with no assigned counselors 
         private static bool AddCabins(int nrOfCabins)
         {
@@ -71,12 +74,7 @@ namespace camp_sleepaway
                     string firstName = l[0];
                     string lastName = l[1];
                     string phoneNumber = l[2];
-
-                    // Get the work title, except the "WorkTitle."-part, also remove whitespace before and after
-                    string workTitleString = l[3].Trim().Substring(10);
-
-                    WorkTitle workTitle = Enum.Parse<WorkTitle>(workTitleString);
-
+                    WorkTitle workTitle = Enum.Parse<WorkTitle>(l[3]);
                     DateTime dateTime = DateTime.Parse(l[4]);
 
                     var counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, dateTime, null, null);
