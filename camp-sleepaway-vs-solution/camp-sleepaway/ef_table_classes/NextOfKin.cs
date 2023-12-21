@@ -18,9 +18,9 @@ namespace camp_sleepaway
         // Foreign key property to Camper
         [Required(ErrorMessage = "Invalid camper id.")]
         [ForeignKey("CamperId")]
-        public int CamperId { get; set; }
+        public int? CamperId { get; set; }
         // Reference navigation to Camper
-        public Camper Camper { get; set; } = null!;
+        public Camper? Camper { get; set; }
 
         // empty constructor for Entity Framework
         public NextOfKin()
