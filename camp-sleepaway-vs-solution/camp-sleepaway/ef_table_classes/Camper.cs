@@ -42,7 +42,8 @@ namespace camp_sleepaway
         // Constructor for camper
         [SetsRequiredMembers]
         public Camper(string firstName, string lastName, string phoneNumber,
-        DateTime dateOfBirth, DateTime joinDate, DateTime? leaveDate = null)
+            DateTime dateOfBirth, DateTime joinDate, int cabinId,
+            DateTime? leaveDate = null)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -50,6 +51,7 @@ namespace camp_sleepaway
             DateOfBirth = dateOfBirth;
             JoinDate = joinDate;
             LeaveDate = leaveDate;
+            CabinId = cabinId;
         }
 
         public static Camper InputCamperData()

@@ -15,11 +15,14 @@ namespace camp_sleepaway
         {
             bool result = false;
 
-            result = AddCounselors();
             result = AddCabins(25);
+            result = AddCounselors();
             result = AddCampers();
             result = AddNextOfKin();
 
+            // Below logic simply does not work, the idea was to remove data if not all of the data
+            // was added but this does not work as intended. 
+            /*
             if (!result) // removes the previously added data if any of the above methods fail (ACID)
             {
                 using (var context = new CampContext())
@@ -30,7 +33,7 @@ namespace camp_sleepaway
                     context.Cabins.RemoveRange(context.Cabins);
                 }
                 return result;
-            }
+            }*/
 
             return result;
         }
@@ -134,9 +137,11 @@ namespace camp_sleepaway
                     string phoneNumber = l[2];
                     DateTime dateOfBirth = DateTime.Parse(l[3]);
                     DateTime joinDate = DateTime.Parse(l[4]);
+                    int cabinId = int.Parse(l[6]); // the integers in the example data ended up at index 6
                     DateTime leaveDate = DateTime.Parse(l[5]);
 
-                    var camper = new Camper(firstName, lastName, phoneNumber, dateOfBirth, joinDate, leaveDate);
+                    var camper = new Camper(firstName, lastName, phoneNumber,
+                        dateOfBirth, joinDate, cabinId, leaveDate);
 
                     camper.SaveToDb();
                 }
