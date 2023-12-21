@@ -140,8 +140,16 @@ namespace camp_sleepaway
                     int cabinId = int.Parse(l[6]); // the integers in the example data ended up at index 6
                     DateTime leaveDate = DateTime.Parse(l[5]);
 
-                    var camper = new Camper(firstName, lastName, phoneNumber,
-                        dateOfBirth, joinDate, cabinId, leaveDate);
+                    var camper = new Camper
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        PhoneNumber = phoneNumber,
+                        DateOfBirth = dateOfBirth,
+                        JoinDate = joinDate,
+                        LeaveDate = leaveDate,
+                        CabinId = cabinId
+                    }; 
 
                     camper.SaveToDb();
                 }
