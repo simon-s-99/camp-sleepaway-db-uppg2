@@ -4,6 +4,8 @@ using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
+// Represents Counselor table in Entity Framework
+
 namespace camp_sleepaway
 {
     public enum WorkTitle
@@ -16,12 +18,15 @@ namespace camp_sleepaway
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Invalid work title."), EnumDataType(typeof(WorkTitle))]
+        [Required(ErrorMessage = "Invalid work title.")]
+        [EnumDataType(typeof(WorkTitle))]
         public WorkTitle WorkTitle { get; set; }
 
         [Required(ErrorMessage = "Invalid hire date.")]
+        [DataType(DataType.Date)]
         public DateTime HiredDate { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime? TerminationDate { get; set; }
 
         // Reference navigation to Cabin
@@ -350,8 +355,7 @@ namespace camp_sleepaway
             var result = new List<Counselor>();
             using (var context = new CampContext())
             {
-                result = context.Counselors
-                    .ToList();
+                result = context.Counselors.ToList();
             }
 
             return result.ToArray();
