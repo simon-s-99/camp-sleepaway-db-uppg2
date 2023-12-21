@@ -1,5 +1,5 @@
 ﻿using camp_sleepaway.ef_table_classes;
-using Newtonsoft.Json.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // Adds example data to database, primarily used for testing 
 
@@ -35,8 +35,36 @@ namespace camp_sleepaway
             return result;
         }
 
-        // add method for readin all lines from dir here, the implementation
-        // looks the same in all Add... methods below 
+        /// <summary>
+        /// Retrieves data from filepath and returns it with all double quotation
+        /// marks removed (") and all trailing/leading spaces trimmed off around each word.
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        internal static string[] GetFormattedData(string filepath)
+        {
+            string[] lines = File.ReadAllLines(filepath);
+            return GetFormattedData(lines);
+        }
+        // tests are done on this overload (string[])
+        internal static string[] GetFormattedData(string[] lines)
+        {
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string formattedLine = lines[i].Replace("\"", "");
+                string[] splitLine = formattedLine.Split(',');
+
+                for (int j = 0; j < splitLine.Length; j++)
+                {
+                    splitLine[j] = splitLine[j].Trim();
+                }
+
+                string finalFormatLine = string.Join(",", splitLine);
+                lines[i] = finalFormatLine;
+            }
+
+            return lines;
+        }
 
         // generates cabins with no assigned counselors 
         private static bool AddCabins(int nrOfCabins)
@@ -64,12 +92,11 @@ namespace camp_sleepaway
 
             try
             {
-                string[] lines = File.ReadAllLines(dir);
+                string[] lines = GetFormattedData(dir);
 
                 foreach (string line in lines)
                 {
-                    string formattedLine = line.Replace("\"", "");
-                    string[] l = formattedLine.Split(',');
+                    string[] l = line.Split(',');
 
                     string firstName = l[0];
                     string lastName = l[1];
@@ -96,12 +123,11 @@ namespace camp_sleepaway
 
             try
             {
-                string[] lines = File.ReadAllLines(dir);
+                string[] lines = GetFormattedData(dir);
 
                 foreach (string line in lines)
                 {
-                    string formattedLine = line.Replace("\"", "");
-                    string[] l = formattedLine.Split(',');
+                    string[] l = line.Split(',');
 
                     string firstName = l[0];
                     string lastName = l[1];
@@ -129,12 +155,11 @@ namespace camp_sleepaway
 
             try
             {
-                string[] lines = File.ReadAllLines(dir);
+                string[] lines = GetFormattedData(dir);
 
                 foreach (string line in lines)
                 {
-                    string formattedLine = line.Replace("\"", "");
-                    string[] l = formattedLine.Split(',');
+                    string[] l = line.Split(',');
 
                     string firstName = l[0];
                     string lastName = l[1];
@@ -153,6 +178,32 @@ namespace camp_sleepaway
             {
                 return false;
             }
+        }
+    }
+
+    [TestClass]
+    public class UnitTestsGetFormattedData
+    {
+        [TestMethod]
+        public void HappyPath()
+        {
+            string[] input =
+            {
+                "  \"hi\"  ,    there,hello, test   , input\"",
+                "Normally, formatted, line, with, nothing, weird, going, on,,",
+                "\"\"\", Weird, line           , \"\"\""
+            };
+
+            string[] expectedOutput = 
+            {
+                "hi,there,hello,test,input",
+                "Normally,formatted,line,with,nothing,weird,going,on,,",
+                ",Weird,line,"
+            };
+
+            string[] actualResult = AddExampleDataToDb.GetFormattedData(input);
+
+            CollectionAssert.AreEqual(expectedOutput, actualResult);
         }
     }
 }
