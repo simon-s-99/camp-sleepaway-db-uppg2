@@ -1,13 +1,10 @@
 ﻿using camp_sleepaway.ef_table_classes;
 using camp_sleepaway.helper_classes;
-using Microsoft.EntityFrameworkCore.Storage.Json;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.RegularExpressions;
-using camp_sleepaway.ef_table_classes;
+
+// Represents Camper table in Entity Framework
 
 namespace camp_sleepaway
 {
@@ -49,13 +46,6 @@ namespace camp_sleepaway
             LeaveDate = leaveDate;
         }
 
-        public static bool IsLettersOnly(string input)
-        {
-            // Check if a string contains only letters
-            // returns true if the input string contains only english and swedish letters, false otherwise          
-            return !string.IsNullOrWhiteSpace(input) && Regex.IsMatch(input, "^[a-zA-ZåäöÅÄÖ]+$");
-        }
-
         public static Camper InputCamperData()
         {
             Console.Clear();
@@ -67,7 +57,7 @@ namespace camp_sleepaway
             while (true)
             {
                 firstName = Console.ReadLine();
-                if (IsLettersOnly(firstName))
+                if (NameCheck.IsLettersOnly(firstName))
                 {
                     break;
                 }
@@ -81,7 +71,7 @@ namespace camp_sleepaway
             while (true)
             {
                 lastName = Console.ReadLine();
-                if (IsLettersOnly(lastName))
+                if (NameCheck.IsLettersOnly(lastName))
                 {
                     break;
                 }
@@ -231,7 +221,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (IsLettersOnly(newFirstName))
+                    if (NameCheck.IsLettersOnly(newFirstName))
                     {
                         camperToEdit.FirstName = newFirstName;
                         break;
@@ -250,7 +240,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (IsLettersOnly(newLastName))
+                    if (NameCheck.IsLettersOnly(newLastName))
                     {
                         camperToEdit.FirstName = newLastName;
                         break;
@@ -419,6 +409,17 @@ namespace camp_sleepaway
                     // Print each NextOfKin, for each camper
                 }
             }
+        }
+
+        public static Camper[] GetAllFromDb()
+        {
+            var result = new List<Camper>();
+            using (var context = new CampContext())
+            {
+                result = context.Campers.ToList();
+            }
+
+            return result.ToArray();
         }
 
         public void SaveToDb()

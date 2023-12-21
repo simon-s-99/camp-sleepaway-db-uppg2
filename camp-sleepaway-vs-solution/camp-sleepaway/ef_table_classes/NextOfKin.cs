@@ -4,9 +4,10 @@ using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
+// Represents NextOfKin table in Entity Framework
+
 namespace camp_sleepaway
 {
-    // Represents a NextOfKin table in Entity Frameworks
     public class NextOfKin : Person
     {
         [Key]
@@ -43,10 +44,32 @@ namespace camp_sleepaway
             Console.WriteLine();
 
             Console.Write("First name: ");
-            string firstName = Console.ReadLine();
+            string firstName;
+            while (true)
+            {
+                firstName = Console.ReadLine();
+                if (NameCheck.IsLettersOnly(firstName))
+                {
+                    break;
+                }
+
+                Console.WriteLine("Invalid input. Please enter a name with only letter");
+                Console.Write("First name: ");
+            }
 
             Console.Write("Last name: ");
-            string lastName = Console.ReadLine();
+            string lastName;
+            while (true)
+            {
+                lastName = Console.ReadLine();
+                if (NameCheck.IsLettersOnly(lastName))
+                {
+                    break;
+                }
+
+                Console.WriteLine("Invalid input. Please enter a name with only letter");
+                Console.Write("Last name: ");
+            }
 
             string phoneNumber;
             while (true)
@@ -71,13 +94,41 @@ namespace camp_sleepaway
                 }
             }
 
-            int relatedToCamper = int.Parse(Console.ReadLine());
+            string relationType;
+            Console.Write("Relation type to the camper: ");
 
-            string relationType = Console.ReadLine();
+            while (true)
+            {
+                relationType = Console.ReadLine();
+                if (NameCheck.IsLettersOnly(relationType))
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid input. Please enter a name with only letter");
+                Console.Write("Relation type: ");
+            }
+
+            int relatedToCamper = -1;
+            Console.Clear();
+            Console.WriteLine("Which camper should she/he be related to? ");
+
+            //int relatedToCamper = int.Parse(Console.ReadLine());
+            //string relationType = Console.ReadLine();
+
+            //Foreach loop on campers to be able to select which camper the next of kin is related too
 
             NextOfKin nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper, relationType);
 
             return nextOfKin;
+        }
+
+        public static int SelectCamper()
+        {
+            Console.WriteLine("Select a camper");
+
+            //Add spectre console :P
+
+            return 10; // <-- change when implementing method for real 
         }
 
         public static NextOfKin ChooseNextOfKinToEdit()
@@ -119,7 +170,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (Camper.IsLettersOnly(newFirstName))
+                    if (NameCheck.IsLettersOnly(newFirstName))
                     {
                         nextOfKinToEdit.FirstName = newFirstName;
                         break;
@@ -138,7 +189,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (Camper.IsLettersOnly(newLastName))
+                    if (NameCheck.IsLettersOnly(newLastName))
                     {
                         nextOfKinToEdit.LastName = newLastName;
                         break;
@@ -183,7 +234,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (Camper.IsLettersOnly(newRelationType))
+                    if (NameCheck.IsLettersOnly(newRelationType))
                     {
                         nextOfKinToEdit.RelationType = newRelationType;
                         break;
@@ -197,6 +248,17 @@ namespace camp_sleepaway
             }
 
             return nextOfKinToEdit;
+        }
+
+        public static NextOfKin[] GetAllFromDb()
+        {
+            var result = new List<NextOfKin>();
+            using (var context = new CampContext())
+            {
+                result = context.NextOfKins.ToList();
+            }
+
+            return result.ToArray();
         }
 
         public void SaveToDb()

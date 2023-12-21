@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <None Remove="AddExampleData" />
-    <None Remove="NewFile1.txt" />
     <None Remove="unit_tests\ExampleUnitTest" />
   </ItemGroup>
 
@@ -41,11 +40,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="test_data_for_tables\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="test_data_for_tables\Camper_Example_Data.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="test_data_for_tables\Counselor_Example_Data.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="test_data_for_tables\NextOfKin_Example_Data.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

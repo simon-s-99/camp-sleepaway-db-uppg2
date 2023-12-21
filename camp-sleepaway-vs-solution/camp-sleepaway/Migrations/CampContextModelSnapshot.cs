@@ -43,7 +43,7 @@ namespace camp_sleepaway.Migrations
                         .IsUnique()
                         .HasFilter("[CounselorId] IS NOT NULL");
 
-                    b.ToTable("Cabins");
+                    b.ToTable("Cabins", (string)null);
                 });
 
             modelBuilder.Entity("camp_sleepaway.Camper", b =>
@@ -82,7 +82,7 @@ namespace camp_sleepaway.Migrations
 
                     b.HasIndex("CabinId");
 
-                    b.ToTable("Campers");
+                    b.ToTable("Campers", (string)null);
                 });
 
             modelBuilder.Entity("camp_sleepaway.Counselor", b =>
@@ -116,7 +116,7 @@ namespace camp_sleepaway.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Counselors");
+                    b.ToTable("Counselors", (string)null);
                 });
 
             modelBuilder.Entity("camp_sleepaway.NextOfKin", b =>
@@ -150,7 +150,7 @@ namespace camp_sleepaway.Migrations
 
                     b.HasIndex("CamperId");
 
-                    b.ToTable("NextOfKins");
+                    b.ToTable("NextOfKins", (string)null);
                 });
 
             modelBuilder.Entity("camp_sleepaway.Cabin", b =>

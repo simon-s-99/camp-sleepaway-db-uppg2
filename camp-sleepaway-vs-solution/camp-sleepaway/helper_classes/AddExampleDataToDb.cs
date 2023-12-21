@@ -1,4 +1,5 @@
 ﻿using camp_sleepaway.ef_table_classes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // Adds example data to database, primarily used for testing 
 
@@ -7,15 +8,15 @@ namespace camp_sleepaway
     internal class AddExampleDataToDb
     {
         private static readonly string _dir = 
-            Directory.GetCurrentDirectory() + "./test_data_for_tables/";
+            Directory.GetCurrentDirectory() + "\\test_data_for_tables\\";
 
         // Adds all exampledata, returns true if successful, false if any of the methods failed
         internal static bool AddAllData()
         {
             bool result = false;
 
-            result = AddCabins(25);
             result = AddCounselors();
+            result = AddCabins(25);
             result = AddCampers();
             result = AddNextOfKin();
 
@@ -32,6 +33,37 @@ namespace camp_sleepaway
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Retrieves data from filepath and returns it with all double quotation
+        /// marks removed (") and all trailing/leading spaces trimmed off around each word.
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        internal static string[] GetFormattedData(string filepath)
+        {
+            string[] lines = File.ReadAllLines(filepath);
+            return GetFormattedData(lines);
+        }
+        // tests are done on this overload (string[])
+        internal static string[] GetFormattedData(string[] lines)
+        {
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string formattedLine = lines[i].Replace("\"", "");
+                string[] splitLine = formattedLine.Split(',');
+
+                for (int j = 0; j < splitLine.Length; j++)
+                {
+                    splitLine[j] = splitLine[j].Trim();
+                }
+
+                string finalFormatLine = string.Join(",", splitLine);
+                lines[i] = finalFormatLine;
+            }
+
+            return lines;
         }
 
         // generates cabins with no assigned counselors 
@@ -58,19 +90,120 @@ namespace camp_sleepaway
         {
             string dir = _dir + "Counselor_Example_Data.csv";
 
-            
+            try
+            {
+                string[] lines = GetFormattedData(dir);
 
-            return true;
+                foreach (string line in lines)
+                {
+                    string[] l = line.Split(',');
+
+                    string firstName = l[0];
+                    string lastName = l[1];
+                    string phoneNumber = l[2];
+                    WorkTitle workTitle = Enum.Parse<WorkTitle>(l[3]);
+                    DateTime dateTime = DateTime.Parse(l[4]);
+
+                    var counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, dateTime, null, null);
+
+                    counselor.SaveToDb();
+                }
+
+                return true;
+            }
+            catch 
+            { 
+                return false;
+            }
         }
 
         private static bool AddCampers()
         {
-            return true;
-        }
+            string dir = _dir + "Camper_Example_Data.csv";
 
+            try
+            {
+                string[] lines = GetFormattedData(dir);
+
+                foreach (string line in lines)
+                {
+                    string[] l = line.Split(',');
+
+                    string firstName = l[0];
+                    string lastName = l[1];
+                    string phoneNumber = l[2];
+                    DateTime dateOfBirth = DateTime.Parse(l[3]);
+                    DateTime joinDate = DateTime.Parse(l[4]);
+                    DateTime leaveDate = DateTime.Parse(l[5]);
+
+                    var camper = new Camper(firstName, lastName, phoneNumber, dateOfBirth, joinDate, leaveDate);
+
+                    camper.SaveToDb();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
         private static bool AddNextOfKin()
         {
-            return true;
+            string dir = _dir + "NextOfKin_Example_Data.csv";
+
+            try
+            {
+                string[] lines = GetFormattedData(dir);
+
+                foreach (string line in lines)
+                {
+                    string[] l = line.Split(',');
+
+                    string firstName = l[0];
+                    string lastName = l[1];
+                    string phoneNumber = l[2];
+                    int relatedToCamper = int.Parse(l[3]);
+                    string relationType = l[4];
+
+                    var nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper, relationType);
+
+                    nextOfKin.SaveToDb();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
+
+    [TestClass]
+    public class UnitTestsGetFormattedData
+    {
+        [TestMethod]
+        public void HappyPath()
+        {
+            string[] input =
+            {
+                "  \"hi\"  ,    there,hello, test   , input\"",
+                "Normally, formatted, line, with, nothing, weird, going, on,,",
+                "\"\"\", Weird, line           , \"\"\""
+            };
+
+            string[] expectedOutput = 
+            {
+                "hi,there,hello,test,input",
+                "Normally,formatted,line,with,nothing,weird,going,on,,",
+                ",Weird,line,"
+            };
+
+            string[] actualResult = AddExampleDataToDb.GetFormattedData(input);
+
+            CollectionAssert.AreEqual(expectedOutput, actualResult);
         }
     }
 }

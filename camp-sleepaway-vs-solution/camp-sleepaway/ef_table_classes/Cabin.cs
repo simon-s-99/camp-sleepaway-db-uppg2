@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
+// Represents Cabin table in Entity Framework
+
 namespace camp_sleepaway.ef_table_classes
 {
     public class Cabin
@@ -154,6 +156,88 @@ namespace camp_sleepaway.ef_table_classes
 
                 return selectedCabin;
             }
+        }
+
+        internal static Cabin EditCabinMenu(Cabin cabinToEdit)
+        {
+            var editCabinMenu = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("[red]What do you want to do[/]?")
+                .PageSize(10)
+                .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                .AddChoices(new[] {
+                    "Edit cabin name", "Edit counselor" 
+                }));
+
+            if (editCabinMenu == "Edit cabin name")
+            {
+                string[] cabinNameChoiceOptions = { "Input cabin name manually", "Generate cabin name for me" };
+                string? cabinNameChoice = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("[red]Do you want the program to generate a cabin name or do you " +
+                        "wish to input this manually?[/]")
+                        .PageSize(10)
+                        .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                        .AddChoices(cabinNameChoiceOptions));
+
+                string cabinName = string.Empty;
+                if (cabinNameChoice == cabinNameChoiceOptions[0])
+                {
+                    Console.Write("Cabin name: ");
+                    cabinName = Console.ReadLine();
+                }
+                else
+                {
+                    cabinName = GenerateRandomCabinName();
+                }
+                cabinToEdit.CabinName = cabinName;
+            }
+            else if (editCabinMenu == "Edit counselor")
+            {
+                Counselor newCounselor = Counselor.ChooseCounselorToEdit();
+
+                cabinToEdit.Counselor = newCounselor;
+
+                cabinToEdit.CounselorId = newCounselor.Id;
+            }
+            else if (editCabinMenu == "Edit campers")
+            {
+                List<Camper> newCampers = null;
+
+                while (true)
+                {
+                    Camper newCamper = Camper.ChooseCamperToEdit();
+
+                    newCampers.Add(newCamper);
+
+                    string[] cabinNameChoiceOptions = { "Yes", "No" };
+                    string? cabinNameChoice = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("[red]Do you want to add another camper?[/]")
+                            .PageSize(10)
+                            .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                            .AddChoices(cabinNameChoiceOptions));
+
+                    Console.Clear();
+
+                    if (cabinNameChoice == cabinNameChoiceOptions[1])
+                    {
+                        break;
+                    }
+                }
+            }
+            return cabinToEdit;
+        }
+
+        public static Cabin[] GetAllFromDb()
+        {
+            var result = new List<Cabin>();
+            using (var context = new CampContext())
+            {
+                result = context.Cabins.ToList();
+            }
+
+            return result.ToArray();
         }
 
         public void SaveToDb()

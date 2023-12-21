@@ -4,6 +4,8 @@ using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
+// Represents Counselor table in Entity Framework
+
 namespace camp_sleepaway
 {
     public enum WorkTitle
@@ -60,7 +62,7 @@ namespace camp_sleepaway
                 Console.Write("First name: ");
                 firstName = Console.ReadLine();
 
-                if (Camper.IsLettersOnly(firstName))
+                if (NameCheck.IsLettersOnly(firstName))
                 {
                     break;
                 }
@@ -75,7 +77,7 @@ namespace camp_sleepaway
             Console.Write("Last name: ");
             lastName = Console.ReadLine();
 
-                if (Camper.IsLettersOnly(lastName))
+                if (NameCheck.IsLettersOnly(lastName))
                 {
                     break;
                 }
@@ -228,7 +230,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (Camper.IsLettersOnly(newFirstName))
+                    if (NameCheck.IsLettersOnly(newFirstName))
                     {
                         counselorToEdit.FirstName = newFirstName;
                         break;
@@ -247,7 +249,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (Camper.IsLettersOnly(newLastName))
+                    if (NameCheck.IsLettersOnly(newLastName))
                     {
                         counselorToEdit.LastName = newLastName;
                         break;
@@ -350,8 +352,7 @@ namespace camp_sleepaway
             var result = new List<Counselor>();
             using (var context = new CampContext())
             {
-                result = context.Counselors
-                    .ToList();
+                result = context.Counselors.ToList();
             }
 
             return result.ToArray();
