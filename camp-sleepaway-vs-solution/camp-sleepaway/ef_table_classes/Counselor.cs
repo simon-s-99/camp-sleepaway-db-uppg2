@@ -352,8 +352,7 @@ namespace camp_sleepaway
             var result = new List<Counselor>();
             using (var context = new CampContext())
             {
-                result = context.Counselors
-                    .ToList();
+                result = context.Counselors.ToList();
             }
 
             return result.ToArray();

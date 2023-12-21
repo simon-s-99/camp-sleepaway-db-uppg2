@@ -250,6 +250,17 @@ namespace camp_sleepaway
             return nextOfKinToEdit;
         }
 
+        public static NextOfKin[] GetAllFromDb()
+        {
+            var result = new List<NextOfKin>();
+            using (var context = new CampContext())
+            {
+                result = context.NextOfKins.ToList();
+            }
+
+            return result.ToArray();
+        }
+
         public void SaveToDb()
         {
             using (var nextOfKinContext = new CampContext())

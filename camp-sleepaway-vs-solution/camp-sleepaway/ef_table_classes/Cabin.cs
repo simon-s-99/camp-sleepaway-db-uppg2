@@ -229,6 +229,17 @@ namespace camp_sleepaway.ef_table_classes
             return cabinToEdit;
         }
 
+        public static Cabin[] GetAllFromDb()
+        {
+            var result = new List<Cabin>();
+            using (var context = new CampContext())
+            {
+                result = context.Cabins.ToList();
+            }
+
+            return result.ToArray();
+        }
+
         public void SaveToDb()
         {
             using (var cabinContext = new CampContext())
