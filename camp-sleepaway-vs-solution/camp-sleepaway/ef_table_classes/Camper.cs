@@ -1,13 +1,10 @@
 ﻿using camp_sleepaway.ef_table_classes;
 using camp_sleepaway.helper_classes;
-using Microsoft.EntityFrameworkCore.Storage.Json;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.RegularExpressions;
-using camp_sleepaway.ef_table_classes;
+
+// Represents Camper table in Entity Framework
 
 namespace camp_sleepaway
 {

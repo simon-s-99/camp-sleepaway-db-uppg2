@@ -4,6 +4,8 @@ using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
+// Represents Counselor table in Entity Framework
+
 namespace camp_sleepaway
 {
     public enum WorkTitle

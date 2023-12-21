@@ -4,9 +4,10 @@ using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
+// Represents NextOfKin table in Entity Framework
+
 namespace camp_sleepaway
 {
-    // Represents a NextOfKin table in Entity Frameworks
     public class NextOfKin : Person
     {
         [Key]
