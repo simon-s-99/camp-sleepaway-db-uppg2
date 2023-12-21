@@ -112,7 +112,16 @@ namespace camp_sleepaway
                     DateTime joinDate = DateTime.Parse(l[4]);
                     DateTime leaveDate = DateTime.Parse(l[5]);
 
-                    var camper = new Camper(firstName, lastName, phoneNumber, dateOfBirth, joinDate, leaveDate);
+                    var camper = new Camper
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        PhoneNumber = phoneNumber,
+                        DateOfBirth = dateOfBirth,
+                        JoinDate = joinDate,
+                        LeaveDate = leaveDate,
+                        CabinId = cabinId
+                    }; 
 
                     camper.SaveToDb();
                 }

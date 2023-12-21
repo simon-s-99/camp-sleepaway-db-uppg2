@@ -366,6 +366,15 @@ namespace camp_sleepaway
             }
         }
 
+        public void UpdateRecordInDb()
+        {
+            using (var counselorContext = new CampContext())
+            {
+                counselorContext.Update(this);
+                counselorContext.SaveChanges();
+            }
+        }
+
         public void DeleteFromDb()
         {
             using (var counselorContext = new CampContext())

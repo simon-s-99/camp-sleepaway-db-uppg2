@@ -237,6 +237,15 @@ namespace camp_sleepaway.ef_table_classes
             }
         }
 
+        public void UpdateRecordInDb()
+        {
+            using (var cabinContext = new CampContext())
+            {
+                cabinContext.Update(this);
+                cabinContext.SaveChanges();
+            }
+        }
+
         public void DeleteFromDb()
         {
             using (var cabinContext = new CampContext())

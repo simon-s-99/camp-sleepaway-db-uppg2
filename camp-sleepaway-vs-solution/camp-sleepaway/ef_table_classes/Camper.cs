@@ -36,19 +36,6 @@ namespace camp_sleepaway
         {
         }
 
-        // Constructor for camper
-        [SetsRequiredMembers]
-        public Camper(string firstName, string lastName, string phoneNumber,
-        DateTime dateOfBirth, DateTime joinDate, DateTime? leaveDate = null)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            PhoneNumber = phoneNumber;
-            DateOfBirth = dateOfBirth;
-            JoinDate = joinDate;
-            LeaveDate = leaveDate;
-        }
-
         public static Camper InputCamperData()
         {
             Console.Clear();
@@ -180,7 +167,15 @@ namespace camp_sleepaway
             Console.WriteLine("");
             Console.WriteLine("Your camper has been added successfully.");
 
-            Camper camperData = new Camper(firstName, lastName, phoneNumber, dateOfBirth, joinDate, leaveDate);
+            Camper camperData = new Camper
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                PhoneNumber = phoneNumber,
+                DateOfBirth = dateOfBirth,
+                JoinDate = joinDate,
+                LeaveDate = leaveDate
+            };
 
             return camperData;
         }
@@ -419,6 +414,15 @@ namespace camp_sleepaway
             using (var camperContext = new CampContext())
             {
                 camperContext.Campers.Add(this);
+                camperContext.SaveChanges();
+            }
+        }
+
+        public void UpdateRecordInDb()
+        {
+            using (var camperContext = new CampContext())
+            {
+                camperContext.Update(this);
                 camperContext.SaveChanges();
             }
         }

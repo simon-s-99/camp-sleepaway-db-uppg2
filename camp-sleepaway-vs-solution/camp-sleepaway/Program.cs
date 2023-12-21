@@ -84,6 +84,7 @@ namespace camp_sleepaway
                     if (camper != null)
                     {
                         Camper editedCamper = Camper.EditCamperMenu(camper);
+                        editedCamper.UpdateRecordInDb();
                     }
                     else
                     {
@@ -98,6 +99,7 @@ namespace camp_sleepaway
                     if (counselor != null)
                     {
                         Counselor editedCounselor = Counselor.EditCounselorMenu(counselor);
+                        editedCounselor.UpdateRecordInDb();
                     }
                     else
                     {
@@ -111,6 +113,7 @@ namespace camp_sleepaway
                     if (nextOfKin != null)
                     {
                         NextOfKin editedNextOfKin = NextOfKin.EditNextOfKinMenu(nextOfKin);
+                        editedNextOfKin.UpdateRecordInDb();
                     }
                     else
                     {
@@ -124,6 +127,7 @@ namespace camp_sleepaway
                     if (cabin != null)
                     {
                         Cabin editedCabin = Cabin.EditCabinMenu(cabin);
+                        editedCabin.UpdateRecordInDb();
                     }
                     else
                     {
