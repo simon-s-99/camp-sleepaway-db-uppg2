@@ -110,9 +110,9 @@ namespace camp_sleepaway
                 Console.Write("Relation type: ");
             }
 
-            int relatedToCamper = -1;
             Console.Clear();
             Console.WriteLine("Which camper should she/he be related to? ");
+            int relatedToCamper = SelectCamper();
 
             //int relatedToCamper = int.Parse(Console.ReadLine());
             //string relationType = Console.ReadLine();
@@ -126,11 +126,37 @@ namespace camp_sleepaway
 
         public static int SelectCamper()
         {
-            Console.WriteLine("Select a camper");
+            using (var camperContext = new CampContext())
+            {
+                // Retrieves a list of campers from the database
+                var campers = camperContext.Campers.ToList();
 
-            //Add spectre console :P
+                //Create a root node for the tree
+                var root = new Tree("Select camper to edit");
 
-            return 10; // <-- change when implementing method for real 
+                foreach (var camper in campers)
+                {
+                    //TreeNode and Narkup are used here to create structured and formatted console output
+                    var camperNode = new TreeNode(new Markup($"{camper.Id}  {camper.FirstName} {camper.LastName}"));
+
+                    root.AddNode(camperNode);
+                }
+
+                AnsiConsole.Render(root);
+
+                // Prompt the user to enter the ID of the camper they want to edit
+                var selectedCamperId = AnsiConsole.Prompt<int>(
+                    new TextPrompt<int>("Enter the ID of the camper you want to edit")
+                        .Validate(id =>
+                        {
+                            // Validate that the entered ID is a valid camper ID
+                            return campers.Any(c => c.Id == id);
+                        })
+                        .Styled(style => style.Bold())
+                        .ValueConverter(input => int.Parse(input.Trim())));
+             
+                return selectedCamperId;
+            }
         }
 
         public static NextOfKin ChooseNextOfKinToEdit()
