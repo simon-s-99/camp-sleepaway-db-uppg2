@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace camp_sleepaway.Migrations
 {
     /// <inheritdoc />
-    public partial class initial_migration : Migration
+    public partial class initial_v4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,9 +20,9 @@ namespace camp_sleepaway.Migrations
                     WorkTitle = table.Column<int>(type: "int", nullable: false),
                     HiredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TerminationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace camp_sleepaway.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CabinName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CabinName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CounselorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -58,9 +58,9 @@ namespace camp_sleepaway.Migrations
                     JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LeaveDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CabinId = table.Column<int>(type: "int", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,11 +79,11 @@ namespace camp_sleepaway.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RelationType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RelationType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CamperId = table.Column<int>(type: "int", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {

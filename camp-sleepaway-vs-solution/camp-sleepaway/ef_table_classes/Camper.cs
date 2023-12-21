@@ -29,7 +29,7 @@ namespace camp_sleepaway
         public Cabin Cabin { get; set; } = null!;
 
         // Collection navigation to NextOfKin
-        public List<NextOfKin> NextOfKins { get; set; } = new();
+        public ICollection<NextOfKin> NextOfKins { get; set; }
 
         // empty constructor for Entity Framework
         public Camper()

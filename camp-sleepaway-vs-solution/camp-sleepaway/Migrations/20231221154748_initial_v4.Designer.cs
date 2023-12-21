@@ -12,8 +12,8 @@ using camp_sleepaway;
 namespace camp_sleepaway.Migrations
 {
     [DbContext(typeof(CampContext))]
-    [Migration("20231219145819_initial_migration")]
-    partial class initial_migration
+    [Migration("20231221154748_initial_v4")]
+    partial class initial_v4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,30 +24,6 @@ namespace camp_sleepaway.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("camp_sleepaway.Cabin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CabinName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CounselorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CounselorId")
-                        .IsUnique()
-                        .HasFilter("[CounselorId] IS NOT NULL");
-
-                    b.ToTable("Cabins");
-                });
 
             modelBuilder.Entity("camp_sleepaway.Camper", b =>
                 {
@@ -65,21 +41,24 @@ namespace camp_sleepaway.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("JoinDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("LeaveDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.HasKey("Id");
 
@@ -98,18 +77,21 @@ namespace camp_sleepaway.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("HiredDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<DateTime?>("TerminationDate")
                         .HasColumnType("datetime2");
@@ -135,18 +117,20 @@ namespace camp_sleepaway.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("RelationType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -156,18 +140,34 @@ namespace camp_sleepaway.Migrations
                     b.ToTable("NextOfKins");
                 });
 
-            modelBuilder.Entity("camp_sleepaway.Cabin", b =>
+            modelBuilder.Entity("camp_sleepaway.ef_table_classes.Cabin", b =>
                 {
-                    b.HasOne("camp_sleepaway.Counselor", "Counselor")
-                        .WithOne("Cabin")
-                        .HasForeignKey("camp_sleepaway.Cabin", "CounselorId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Navigation("Counselor");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CabinName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("CounselorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CounselorId")
+                        .IsUnique()
+                        .HasFilter("[CounselorId] IS NOT NULL");
+
+                    b.ToTable("Cabins");
                 });
 
             modelBuilder.Entity("camp_sleepaway.Camper", b =>
                 {
-                    b.HasOne("camp_sleepaway.Cabin", "Cabin")
+                    b.HasOne("camp_sleepaway.ef_table_classes.Cabin", "Cabin")
                         .WithMany("Campers")
                         .HasForeignKey("CabinId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -187,9 +187,13 @@ namespace camp_sleepaway.Migrations
                     b.Navigation("Camper");
                 });
 
-            modelBuilder.Entity("camp_sleepaway.Cabin", b =>
+            modelBuilder.Entity("camp_sleepaway.ef_table_classes.Cabin", b =>
                 {
-                    b.Navigation("Campers");
+                    b.HasOne("camp_sleepaway.Counselor", "Counselor")
+                        .WithOne("Cabin")
+                        .HasForeignKey("camp_sleepaway.ef_table_classes.Cabin", "CounselorId");
+
+                    b.Navigation("Counselor");
                 });
 
             modelBuilder.Entity("camp_sleepaway.Camper", b =>
@@ -200,6 +204,11 @@ namespace camp_sleepaway.Migrations
             modelBuilder.Entity("camp_sleepaway.Counselor", b =>
                 {
                     b.Navigation("Cabin");
+                });
+
+            modelBuilder.Entity("camp_sleepaway.ef_table_classes.Cabin", b =>
+                {
+                    b.Navigation("Campers");
                 });
 #pragma warning restore 612, 618
         }
