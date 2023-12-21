@@ -60,7 +60,7 @@ namespace camp_sleepaway
                 Console.Write("First name: ");
                 firstName = Console.ReadLine();
 
-                if (Camper.IsLettersOnly(firstName))
+                if (NameCheck.IsLettersOnly(firstName))
                 {
                     break;
                 }
@@ -75,7 +75,7 @@ namespace camp_sleepaway
             Console.Write("Last name: ");
             lastName = Console.ReadLine();
 
-                if (Camper.IsLettersOnly(lastName))
+                if (NameCheck.IsLettersOnly(lastName))
                 {
                     break;
                 }
@@ -228,7 +228,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (Camper.IsLettersOnly(newFirstName))
+                    if (NameCheck.IsLettersOnly(newFirstName))
                     {
                         counselorToEdit.FirstName = newFirstName;
                         break;
@@ -247,7 +247,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (Camper.IsLettersOnly(newLastName))
+                    if (NameCheck.IsLettersOnly(newLastName))
                     {
                         counselorToEdit.LastName = newLastName;
                         break;

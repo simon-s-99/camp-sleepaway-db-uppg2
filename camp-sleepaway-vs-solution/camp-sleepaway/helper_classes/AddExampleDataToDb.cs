@@ -72,8 +72,8 @@ namespace camp_sleepaway
                     string lastName = l[1];
                     string phoneNumber = l[2];
 
-                    string workTitleString = l[3].Trim().Substring(10);
                     // Get the work title, except the "WorkTitle."-part, also remove whitespace before and after
+                    string workTitleString = l[3].Trim().Substring(10);
 
                     WorkTitle workTitle = Enum.Parse<WorkTitle>(workTitleString);
 
@@ -83,7 +83,7 @@ namespace camp_sleepaway
 
                     counselor.SaveToDb();
                 }
-                
+
                 return true;
             }
             catch 
