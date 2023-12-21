@@ -15,8 +15,8 @@ namespace camp_sleepaway
         {
             bool result = false;
 
-            result = AddCabins(25);
             result = AddCounselors();
+            result = AddCabins(25);
             result = AddCampers();
             result = AddNextOfKin();
 
@@ -71,7 +71,12 @@ namespace camp_sleepaway
                     string firstName = l[0];
                     string lastName = l[1];
                     string phoneNumber = l[2];
-                    WorkTitle workTitle = (WorkTitle)Enum.Parse(typeof(WorkTitle), l[3]);
+
+                    // Get the work title, except the "WorkTitle."-part, also remove whitespace before and after
+                    string workTitleString = l[3].Trim().Substring(10);
+
+                    WorkTitle workTitle = Enum.Parse<WorkTitle>(workTitleString);
+
                     DateTime dateTime = DateTime.Parse(l[4]);
 
                     var counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, dateTime, null, null);
@@ -119,7 +124,7 @@ namespace camp_sleepaway
                 return false;
             }
         }
-
+        
         private static bool AddNextOfKin()
         {
             string dir = _dir + "NextOfKin_Example_Data.csv";
