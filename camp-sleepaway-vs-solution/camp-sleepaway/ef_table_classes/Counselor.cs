@@ -4,6 +4,8 @@ using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
+// Represents Counselor table in Entity Framework
+
 namespace camp_sleepaway
 {
     public enum WorkTitle
@@ -350,8 +352,7 @@ namespace camp_sleepaway
             var result = new List<Counselor>();
             using (var context = new CampContext())
             {
-                result = context.Counselors
-                    .ToList();
+                result = context.Counselors.ToList();
             }
 
             return result.ToArray();

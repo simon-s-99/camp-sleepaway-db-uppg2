@@ -1,7 +1,8 @@
-﻿using camp_sleepaway.helper_classes;
-using Spectre.Console;
+﻿using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+
+// Represents Cabin table in Entity Framework
 
 namespace camp_sleepaway.ef_table_classes
 {
@@ -226,6 +227,17 @@ namespace camp_sleepaway.ef_table_classes
                 }
             }
             return cabinToEdit;
+        }
+
+        public static Cabin[] GetAllFromDb()
+        {
+            var result = new List<Cabin>();
+            using (var context = new CampContext())
+            {
+                result = context.Cabins.ToList();
+            }
+
+            return result.ToArray();
         }
 
         public void SaveToDb()

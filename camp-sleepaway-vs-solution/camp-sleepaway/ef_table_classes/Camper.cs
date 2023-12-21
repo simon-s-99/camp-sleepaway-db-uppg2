@@ -1,13 +1,10 @@
 ﻿using camp_sleepaway.ef_table_classes;
 using camp_sleepaway.helper_classes;
-using Microsoft.EntityFrameworkCore.Storage.Json;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.RegularExpressions;
-using camp_sleepaway.ef_table_classes;
+
+// Represents Camper table in Entity Framework
 
 namespace camp_sleepaway
 {
@@ -412,6 +409,17 @@ namespace camp_sleepaway
                     // Print each NextOfKin, for each camper
                 }
             }
+        }
+
+        public static Camper[] GetAllFromDb()
+        {
+            var result = new List<Camper>();
+            using (var context = new CampContext())
+            {
+                result = context.Campers.ToList();
+            }
+
+            return result.ToArray();
         }
 
         public void SaveToDb()
