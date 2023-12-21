@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 // Represents Cabin table in Entity Framework
@@ -12,15 +13,17 @@ namespace camp_sleepaway.ef_table_classes
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Invalid cabin name.")]
+        [StringLength(100)]
         public string CabinName { get; set; }
 
         // Foreign key property to Counselor
+        [ForeignKey("CounselorId")]
         public int? CounselorId { get; set; }
         // Reference navigation to Counselor
         public Counselor? Counselor { get; set; }
 
         // Collection reference to Camper
-        public List<Camper> Campers { get; set; } = new();
+        public ICollection<Camper> Campers { get; set; } = new List<Camper>();
 
         // empty constructor for Entity Framework
         public Cabin()

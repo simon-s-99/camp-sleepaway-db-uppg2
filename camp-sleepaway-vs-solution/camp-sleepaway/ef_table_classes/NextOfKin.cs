@@ -2,6 +2,7 @@
 using camp_sleepaway.helper_classes;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 // Represents NextOfKin table in Entity Framework
@@ -12,13 +13,14 @@ namespace camp_sleepaway
     {
         [Key]
         public int Id { get; set; }
-        public string RelationType { get; set; }
+        public string? RelationType { get; set; }
 
         // Foreign key property to Camper
         [Required(ErrorMessage = "Invalid camper id.")]
-        public int CamperId { get; set; }
+        [ForeignKey("CamperId")]
+        public int? CamperId { get; set; }
         // Reference navigation to Camper
-        public Camper Camper { get; set; } = null!;
+        public Camper? Camper { get; set; }
 
         // empty constructor for Entity Framework
         public NextOfKin()

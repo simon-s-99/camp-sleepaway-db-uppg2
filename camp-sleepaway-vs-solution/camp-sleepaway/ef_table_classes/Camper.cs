@@ -2,6 +2,7 @@
 using camp_sleepaway.helper_classes;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 // Represents Camper table in Entity Framework
@@ -14,19 +15,24 @@ namespace camp_sleepaway
         [Key]
         public int Id { get; set; }
 
-        //[Required(ErrorMessage = "Invalid date of birth.")]
+        [Required(ErrorMessage = "Invalid date of birth.")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
-        //[Required(ErrorMessage = "Invalid join date.")]
+        [Required(ErrorMessage = "Invalid join date.")]
+        [DataType(DataType.Date)]
         public DateTime JoinDate { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime? LeaveDate { get; set; }
 
+        [ForeignKey("CabinId")]
+        public int CabinId { get; set; }
         // Reference navigation to Cabin
         public Cabin Cabin { get; set; } = null!;
 
         // Collection navigation to NextOfKin
-        public List<NextOfKin> NextOfKins { get; set; } = new();
+        public ICollection<NextOfKin> NextOfKins { get; set; } = new List<NextOfKin>();
 
         // empty constructor for Entity Framework
         public Camper()
@@ -36,7 +42,8 @@ namespace camp_sleepaway
         // Constructor for camper
         [SetsRequiredMembers]
         public Camper(string firstName, string lastName, string phoneNumber,
-        DateTime dateOfBirth, DateTime joinDate, DateTime? leaveDate = null)
+            DateTime dateOfBirth, DateTime joinDate, int cabinId,
+            DateTime? leaveDate = null)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -44,6 +51,7 @@ namespace camp_sleepaway
             DateOfBirth = dateOfBirth;
             JoinDate = joinDate;
             LeaveDate = leaveDate;
+            CabinId = cabinId;
         }
 
         public static Camper InputCamperData()
