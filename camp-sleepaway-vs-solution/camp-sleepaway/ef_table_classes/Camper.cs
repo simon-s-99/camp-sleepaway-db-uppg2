@@ -189,17 +189,23 @@ namespace camp_sleepaway
 
                 foreach (Camper camper in campers)
                 {
-                    Console.WriteLine(camper.Id + " - " + camper.FirstName + " " + camper.LastName + " - " + camper.PhoneNumber);
+                    Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - {camper.PhoneNumber}");
                 }
 
-                Console.Write("Enter ID for camper you wish to edit: ");
-                int camperID = int.Parse(Console.ReadLine());
+                Console.Write("Enter ID for the 'camper' you wish to edit: ");
+                int camperId;
+                while (!int.TryParse(Console.ReadLine(), out camperId))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    Console.Write("Enter ID for the 'camper' you wish to edit: ");
+                }
 
-                Camper selectedCamper = camperContext.Campers.Where(c => c.Id == camperID).FirstOrDefault();
+                Camper selectedCamper = camperContext.Campers.FirstOrDefault(c => c.Id == camperId);
 
                 return selectedCamper;
             }
         }
+
 
         internal static Camper EditCamperMenu(Camper camperToEdit)
         {

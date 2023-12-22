@@ -110,28 +110,93 @@ namespace camp_sleepaway
                 Console.Write("Relation type: ");
             }
 
-            int relatedToCamper = -1;
             Console.Clear();
             Console.WriteLine("Which camper should she/he be related to? ");
 
-            //int relatedToCamper = int.Parse(Console.ReadLine());
-            //string relationType = Console.ReadLine();
+            Camper relatedToCamper = SelectCamper();
 
-            //Foreach loop on campers to be able to select which camper the next of kin is related too
-
-            NextOfKin nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper, relationType);
+            NextOfKin nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper.Id, relationType);
 
             return nextOfKin;
+
         }
 
-        public static int SelectCamper()
+        public static Camper SelectCamper()
         {
-            Console.WriteLine("Select a camper");
+            using (var camperContext = new CampContext())
+            {
+                var campers = camperContext.Campers.ToList();
 
-            //Add spectre console :P
+                // Create a root node for the tree
+                var root = new Tree("Select camper to relate to NextOfKin");
 
-            return 10; // <-- change when implementing method for real 
+                foreach (var camper in campers)
+                {
+                    // TreeNode and Narkup are used here to create structured and formatted console output
+                    var camperNode = new TreeNode(new Markup($"{camper.Id}  {camper.FirstName} {camper.LastName}"));
+                    root.AddNode(camperNode);
+                }
+
+                AnsiConsole.Render(root);
+
+                // Prompt the user to enter the name or ID of the camper they want to relate to
+                var userInput = AnsiConsole.Prompt<string>(
+                    new TextPrompt<string>("Enter the name or ID of the camper you want to relate NextOfKin to")
+                        .Validate(input =>
+                        {
+                            // Validate that the entered input matches either the ID or the full name of a camper
+                            return campers.Any(c => c.Id.ToString() == input || $"{c.FirstName} {c.LastName}" == input);
+                        }));
+
+                // Check if the input is a camper ID or a camper name
+                if (int.TryParse(userInput, out int selectedCamperId))
+                {
+                    // Return the selected camper based on ID
+                    return campers.FirstOrDefault(c => c.Id == selectedCamperId);
+                }
+                else
+                {
+                    // Return the selected camper based on name
+                    return campers.FirstOrDefault(c => $"{c.FirstName} {c.LastName}" == userInput);
+                }
+            }
         }
+
+
+
+        //Method that displays all available campers
+        //public static int SelectCamper()
+        //{
+        //    using (var camperContext = new CampContext())
+        //    {
+        //        // Retrieves a list of campers from the database
+        //        var campers = camperContext.Campers.ToList();
+
+        //        //Create a root node for the tree
+        //        var root = new Tree("Select camper to edit");
+
+        //        foreach (var camper in campers)
+        //        {
+        //            //TreeNode and Narkup are used here to create structured and formatted console output
+        //            var camperNode = new TreeNode(new Markup($"{camper.Id}  {camper.FirstName} {camper.LastName}"));
+
+        //            root.AddNode(camperNode);
+        //        }
+
+        //        AnsiConsole.Render(root);
+
+        //        // Prompt the user to enter the ID of the camper they want to edit
+        //        var selectedCamperId = AnsiConsole.Prompt<int>(
+        //            new TextPrompt<int>("Enter the ID of the camper you want to edit")
+        //                .Validate(id =>
+        //                {
+        //                    // Validate that the entered ID is a valid camper ID
+        //                    return campers.Any(c => c.Id == id);
+        //                }));
+
+        //        return selectedCamperId;
+        //    }
+        //}
 
         public static NextOfKin ChooseNextOfKinToEdit()
         {
@@ -141,17 +206,23 @@ namespace camp_sleepaway
 
                 foreach (NextOfKin nextOfKin in nextOfKins)
                 {
-                    Console.WriteLine(nextOfKin.Id + " | " + nextOfKin.FirstName + " " + nextOfKin.LastName + " | " + nextOfKin.PhoneNumber);
+                    Console.WriteLine($"{nextOfKin.Id} | {nextOfKin.FirstName} {nextOfKin.LastName} | {nextOfKin.PhoneNumber}");
                 }
 
-                Console.Write("Enter ID for camper you wish to edit: ");
-                int nextOfKinId = int.Parse(Console.ReadLine());
+                Console.Write("Enter ID for the 'next of kin' you wish to edit: ");
+                int nextOfKinId;
+                while (!int.TryParse(Console.ReadLine(), out nextOfKinId))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    Console.Write("Enter ID for the 'next of kin' you wish to edit: ");
+                }
 
-                NextOfKin selectedNextOfKin = nextOfKinContext.NextOfKins.Where(c => c.Id == nextOfKinId).FirstOrDefault();
+                NextOfKin selectedNextOfKin = nextOfKinContext.NextOfKins.FirstOrDefault(c => c.Id == nextOfKinId);
 
                 return selectedNextOfKin;
             }
         }
+
 
         internal static NextOfKin EditNextOfKinMenu(NextOfKin nextOfKinToEdit)
         {
@@ -162,7 +233,7 @@ namespace camp_sleepaway
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                     .AddChoices(new[]
                     {
-                "Edit first name", "Edit last name", "Edit phone number", "Edit relation type"
+                "Edit first name", "Edit last name", "Edit phone number", "Edit relation type/name", "Edit which camper she/he is related to"
                     }));
 
             if (editNextOfKinMenu == "Edit first name")
@@ -229,9 +300,9 @@ namespace camp_sleepaway
                     }
                 }
             }
-            else if (editNextOfKinMenu == "Edit relation type")
+            else if (editNextOfKinMenu == "Edit relation type/name")
             {
-                Console.Write("Enter new relation type: ");
+                Console.Write("Enter new relation type/name: ");
                 string newRelationType = Console.ReadLine();
 
                 while (true)
@@ -248,8 +319,21 @@ namespace camp_sleepaway
                     }
                 }
             }
+            else if (editNextOfKinMenu == "Edit which camper she/he is related to")
+            {
+                Console.WriteLine("Select a camper:");
+
+                // Call the SelectCamper method to get the Camper object
+                Camper selectedCamper = SelectCamper();
+
+                // Set the selected camper's Id as the new related camper Id
+                nextOfKinToEdit.CamperId = selectedCamper.Id;
+
+                Console.WriteLine($"Relation updated to camper with ID: {selectedCamper.Id}");
+            }
 
             return nextOfKinToEdit;
+
         }
 
         public static NextOfKin[] GetAllFromDb()
