@@ -30,5 +30,14 @@ namespace camp_sleepaway
                 LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configuration for Person entity (assuming it's the base class for Camper, Counselor, and NextOfKin)
+            modelBuilder.Entity<Person>()
+                // Define an index on the PhoneNumber property to enforce uniqueness
+                .HasIndex(p => p.PhoneNumber)
+                // Specify that the index must be unique
+                .IsUnique();
+        }
     }
 }
