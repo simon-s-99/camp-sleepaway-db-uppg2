@@ -151,10 +151,8 @@ namespace camp_sleepaway
                         {
                             // Validate that the entered ID is a valid camper ID
                             return campers.Any(c => c.Id == id);
-                        })
-                        .Styled(style => style.Bold())
-                        .ValueConverter(input => int.Parse(input.Trim())));
-             
+                        }));
+                         
                 return selectedCamperId;
             }
         }
