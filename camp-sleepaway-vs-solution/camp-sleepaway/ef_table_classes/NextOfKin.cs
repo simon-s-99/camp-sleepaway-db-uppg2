@@ -112,12 +112,8 @@ namespace camp_sleepaway
 
             Console.Clear();
             Console.WriteLine("Which camper should she/he be related to? ");
+            
             int relatedToCamper = SelectCamper();
-
-            //int relatedToCamper = int.Parse(Console.ReadLine());
-            //string relationType = Console.ReadLine();
-
-            //Foreach loop on campers to be able to select which camper the next of kin is related too
 
             NextOfKin nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper, relationType);
 
@@ -165,17 +161,23 @@ namespace camp_sleepaway
 
                 foreach (NextOfKin nextOfKin in nextOfKins)
                 {
-                    Console.WriteLine(nextOfKin.Id + " | " + nextOfKin.FirstName + " " + nextOfKin.LastName + " | " + nextOfKin.PhoneNumber);
+                    Console.WriteLine($"{nextOfKin.Id} | {nextOfKin.FirstName} {nextOfKin.LastName} | {nextOfKin.PhoneNumber}");
                 }
 
-                Console.Write("Enter ID for camper you wish to edit: ");
-                int nextOfKinId = int.Parse(Console.ReadLine());
+                Console.Write("Enter ID for the 'next of kin' you wish to edit: ");
+                int nextOfKinId;
+                while (!int.TryParse(Console.ReadLine(), out nextOfKinId))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    Console.Write("Enter ID for the 'next of kin' you wish to edit: ");
+                }
 
-                NextOfKin selectedNextOfKin = nextOfKinContext.NextOfKins.Where(c => c.Id == nextOfKinId).FirstOrDefault();
+                NextOfKin selectedNextOfKin = nextOfKinContext.NextOfKins.FirstOrDefault(c => c.Id == nextOfKinId);
 
                 return selectedNextOfKin;
             }
         }
+
 
         internal static NextOfKin EditNextOfKinMenu(NextOfKin nextOfKinToEdit)
         {

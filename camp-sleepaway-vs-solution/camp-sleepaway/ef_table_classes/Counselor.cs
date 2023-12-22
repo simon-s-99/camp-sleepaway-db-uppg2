@@ -204,10 +204,15 @@ namespace camp_sleepaway
                     Console.WriteLine(counselor.Id + " | " + counselor.FirstName + " " + counselor.LastName + " | " + counselor.PhoneNumber);
                 }
 
-                Console.Write("Enter ID for camper you wish to edit: ");
-                int counselorID = int.Parse(Console.ReadLine());
+                Console.Write("Enter ID for the 'counselor' you wish to edit: ");
+                int counselorId;
+                while (!int.TryParse(Console.ReadLine(), out counselorId))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    Console.Write("Enter ID for the 'counselor' you wish to edit: ");
+                }
 
-                Counselor selectedCounselor = counselorContext.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
+                Counselor selectedCounselor = counselorContext.Counselors.Where(c => c.Id == counselorId).FirstOrDefault();
 
                 return selectedCounselor;
             }

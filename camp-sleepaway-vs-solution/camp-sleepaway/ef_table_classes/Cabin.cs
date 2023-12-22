@@ -143,23 +143,29 @@ namespace camp_sleepaway.ef_table_classes
 
                 foreach (Cabin cabin in cabins)
                 {
-                    Console.WriteLine(cabin.Id + " - " + cabin.CabinName + " - " + cabin.Counselor);
+                    Console.WriteLine($"{cabin.Id} - {cabin.CabinName} - {cabin.Counselor}");
 
                     Console.Write("Campers: ");
                     foreach (Camper camper in cabin.Campers)
                     {
-                        Console.WriteLine(camper.Id + " - " + camper.FirstName + " " + camper.LastName + " - " + camper.PhoneNumber);
+                        Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - {camper.PhoneNumber}");
                     }
                 }
 
-                Console.Write("Enter ID for cabin you wish to edit: ");
-                int cabinID = int.Parse(Console.ReadLine());
+                Console.Write("Enter ID for the 'cabin' you wish to edit: ");
+                int cabinId;
+                while (!int.TryParse(Console.ReadLine(), out cabinId))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    Console.Write("Enter ID for the 'cabin' you wish to edit: ");
+                }
 
-                Cabin selectedCabin = cabinContext.Cabins.Where(c => c.Id == cabinID).FirstOrDefault();
+                Cabin selectedCabin = cabinContext.Cabins.FirstOrDefault(c => c.Id == cabinId);
 
                 return selectedCabin;
             }
         }
+
 
         internal static Cabin EditCabinMenu(Cabin cabinToEdit)
         {
