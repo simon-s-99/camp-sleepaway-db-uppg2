@@ -272,6 +272,15 @@ namespace camp_sleepaway
             }
         }
 
+        public void UpdateRecordInDb()
+        {
+            using (var nextOfKinContext = new CampContext())
+            {
+                nextOfKinContext.Update(this);
+                nextOfKinContext.SaveChanges();
+            }
+        }
+
         public void DeleteFromDb()
         {
             using (var nextOfKinContext = new CampContext())
