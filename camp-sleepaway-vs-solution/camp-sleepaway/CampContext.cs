@@ -24,11 +24,11 @@ namespace camp_sleepaway
             var connectionString = configuration.GetConnectionString("local");
 
             // Connect to database
-            optionsBuilder.UseSqlServer(connectionString)
-                .LogTo(Console.WriteLine,
-                new[] { DbLoggerCategory.Database.Name },
-                LogLevel.Information)
-                .EnableSensitiveDataLogging();
+            optionsBuilder.UseSqlServer(connectionString);
+                //.LogTo(Console.WriteLine,
+                //new[] { DbLoggerCategory.Database.Name },
+                //LogLevel.Information)
+                //.EnableSensitiveDataLogging();
         }
     }
 }
