@@ -97,7 +97,7 @@ namespace camp_sleepaway
                     Console.Write("Phone number: ");
                     phoneNumber = Console.ReadLine();
 
-                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber))
+                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, true))
                     {
                         break;
                     }
@@ -279,7 +279,7 @@ namespace camp_sleepaway
                         Console.Write("Phone number: ");
                         phoneNumber = Console.ReadLine();
 
-                        if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber))
+                        if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, true))
                         {
                             break;
                         }
