@@ -3,7 +3,6 @@ using camp_sleepaway.helper_classes;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
 // Represents Camper table in Entity Framework
 
@@ -81,7 +80,7 @@ namespace camp_sleepaway
                     Console.Write("Phone number: ");
                     phoneNumber = Console.ReadLine();
 
-                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber))
+                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, false))
                     {
                         break;
                     }
@@ -120,12 +119,11 @@ namespace camp_sleepaway
             Console.Write("Join date: ");
             DateTime joinDate;
 
-            Camper camper = null;
             //Try parsing the date from the console into a DateTime object, and checks if the join date
             //is at least 7 years after the campers birth date. if true, the camper cannot join before the age of 7
-            while (!DateTime.TryParse(Console.ReadLine(), out joinDate) || joinDate < camper.DateOfBirth.AddYears(7) || joinDate > DateTime.Now)
+            while (!DateTime.TryParse(Console.ReadLine(), out joinDate) || joinDate < dateOfBirth.AddYears(7) || joinDate > DateTime.Now)
             {
-                if (joinDate < camper.DateOfBirth.AddYears(7))
+                if (joinDate < dateOfBirth.AddYears(7))
                 {
                     Console.WriteLine("The camper cannot join before the age of 7.");
                 }
@@ -151,10 +149,10 @@ namespace camp_sleepaway
             if (!string.IsNullOrEmpty(leaveDateInput))
             {
                 // Looop until the user enters a valid date
-                while (!DateTime.TryParse(leaveDateInput, out parsedLeaveDate) || parsedLeaveDate <= camper.JoinDate)
+                while (!DateTime.TryParse(leaveDateInput, out parsedLeaveDate) || parsedLeaveDate <= joinDate)
                 {
                     //Checking if the leave date is before or athe same day to the join date
-                    if (parsedLeaveDate <= camper.JoinDate)
+                    if (parsedLeaveDate <= joinDate)
                     {
                         Console.WriteLine("Leave date must be set after the joined date");
                     }
@@ -269,7 +267,7 @@ namespace camp_sleepaway
                         Console.Write("Phone number: ");
                         phoneNumber = Console.ReadLine();
 
-                        if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber))
+                        if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, false))
                         {
                             break;
                         }
@@ -360,7 +358,7 @@ namespace camp_sleepaway
                     }
                 }
             }
-                return camperToEdit;
+            return camperToEdit;
         }
 
         public static void SearchCamper()
@@ -384,17 +382,21 @@ namespace camp_sleepaway
                     Console.WriteLine("Birth date: " + result.DateOfBirth);
                     Console.WriteLine("Date joined: " + result.JoinDate);
                     Console.WriteLine("Date left/date to leave: " + result.LeaveDate);
-                    Console.WriteLine("Cabin: " + result.Cabin.Id + " " + result.Cabin.CabinName);
 
-                    Console.WriteLine(result.Cabin.Counselor != null ? "Cabin counselor: " + result.Cabin.Counselor.FirstName + " " + result.Cabin.Counselor.LastName : "Warning! This cabin has no active counselor!");
+                    Cabin resultCabin = GetCabinFromCabinId(result.CabinId);
+                    Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
+
+                    Counselor resultCounselor = GetCounselorFromCabinId(result.CabinId);
+                    Console.WriteLine(resultCounselor != null ? "Cabin counselor: " + resultCounselor.FirstName + " " + resultCounselor.LastName : "Warning! This cabin has no active counselor!");
                     // If counselor is not null then print out normally, if it is null then warn the user
+
+                    Console.WriteLine();
                 }
             }
         }
-
         public static void DisplayCampersAndNextOfKins()
         {
-            using (var camperContext = new CampContext()) 
+            using (var camperContext = new CampContext())
             {
                 List<Camper> campers = camperContext.Campers.OrderBy(c => c.Cabin.Id).ToList();
                 // Get every camper, and order them by CabinId
@@ -407,16 +409,49 @@ namespace camp_sleepaway
                     Console.WriteLine("Birth date: " + camper.DateOfBirth);
                     Console.WriteLine("Date joined: " + camper.JoinDate);
                     Console.WriteLine("Date left/date to leave: " + camper.LeaveDate);
-                    Console.WriteLine("Cabin: " + camper.Cabin.Id + " " + camper.Cabin.CabinName);
 
-                    foreach (NextOfKin nextOfKin in camper.NextOfKins)
+                    Cabin resultCabin = GetCabinFromCabinId(camper.CabinId);
+                    Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
+
+                    if (camper.NextOfKins.Count != 0)
                     {
-                        Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
+                        Console.WriteLine("NextOfKins: ");
+                        foreach (NextOfKin nextOfKin in camper.NextOfKins)
+                        {
+                            Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
+                        }
+                        // Print each NextOfKin, for each camper
                     }
-                    // Print each NextOfKin, for each camper
+                    else
+                    {
+                        Console.WriteLine("This camper has no NextOfKins.");
+                    }
+
+                    Console.WriteLine();
                 }
             }
         }
+
+        private static Cabin GetCabinFromCabinId(int cabinId)
+        {
+            using (var camperContext = new CampContext())
+            {
+                Cabin cabin = camperContext.Cabins.Where(c => c.Id == cabinId).FirstOrDefault();
+
+                return cabin;
+            }
+        }
+
+        private static Counselor GetCounselorFromCabinId(int cabinId)
+        {
+            using (var camperContext = new CampContext())
+            {
+                Counselor counselor = camperContext.Counselors.Where(c => c.Cabin.Id == cabinId).FirstOrDefault();
+
+                return counselor;
+            }
+        }
+
 
         public static Camper[] GetAllFromDb()
         {
