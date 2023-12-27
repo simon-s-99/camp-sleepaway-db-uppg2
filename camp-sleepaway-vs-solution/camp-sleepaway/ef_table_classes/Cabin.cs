@@ -30,13 +30,6 @@ namespace camp_sleepaway
         {
         }
 
-        [SetsRequiredMembers]
-        public Cabin(string cabinName, Counselor? counselor)
-        {
-            CabinName = cabinName;
-            Counselor = counselor;
-        }
-
         // used hashset to guarantee unique names 
         private static readonly HashSet<string> AssignedCabinNames = new HashSet<string>();
 
@@ -130,7 +123,11 @@ namespace camp_sleepaway
 
             Counselor counselor = context.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
 
-            Cabin cabin = new Cabin(cabinName, counselor);
+            Cabin cabin = new Cabin
+            {
+                CabinName = cabinName,
+                Counselor = counselor
+            };
 
             return cabin;
         }
