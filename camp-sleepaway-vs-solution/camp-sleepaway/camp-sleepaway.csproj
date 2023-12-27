@@ -49,6 +49,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="first_run.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="test_data_for_tables\Camper_Example_Data.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
