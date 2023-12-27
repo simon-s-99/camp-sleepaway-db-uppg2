@@ -1,5 +1,4 @@
-﻿using camp_sleepaway.ef_table_classes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // Adds example data to database, primarily used for testing 
 

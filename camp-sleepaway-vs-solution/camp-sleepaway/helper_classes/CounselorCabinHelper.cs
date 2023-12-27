@@ -1,5 +1,9 @@
 ﻿namespace camp_sleepaway.helper_classes
 {
+    /*
+     * is this class even needed ?? 
+     */
+
     internal class CounselorCabinHelper
     {
         internal static Counselor[] GetUnassignedCounselors()

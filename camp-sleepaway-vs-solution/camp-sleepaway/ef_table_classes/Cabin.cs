@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 // Represents Cabin table in Entity Framework
 
-namespace camp_sleepaway.ef_table_classes
+namespace camp_sleepaway
 {
     public class Cabin
     {
