@@ -209,6 +209,11 @@ namespace camp_sleepaway
                     Console.WriteLine("This cabin is full!");
                     Console.Write("Enter the ID for the cabin to associate this camper with: ");
                 }
+                else if (GetCabinFromCabinId(cabinId).CounselorId == null)
+                {
+                    Console.WriteLine("This cabin has no active counselor. Assigning a camper to this cabin is therefore not possible.");
+                    Console.Write("Enter the ID for the cabin to associate this camper with: ");
+                }
                 else
                 {
                     break;
