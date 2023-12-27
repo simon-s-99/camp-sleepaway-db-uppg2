@@ -1,5 +1,5 @@
 ﻿using camp_sleepaway.ef_table_classes;
-using camp_sleepaway.helper_classes;
+using static camp_sleepaway.Helper;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -50,7 +50,7 @@ namespace camp_sleepaway
             while (true)
             {
                 firstName = Console.ReadLine();
-                if (NameCheck.IsLettersOnly(firstName))
+                if (IsLettersOnly(firstName))
                 {
                     break;
                 }
@@ -64,7 +64,7 @@ namespace camp_sleepaway
             while (true)
             {
                 lastName = Console.ReadLine();
-                if (NameCheck.IsLettersOnly(lastName))
+                if (IsLettersOnly(lastName))
                 {
                     break;
                 }
@@ -81,7 +81,7 @@ namespace camp_sleepaway
                     Console.Write("Phone number: ");
                     phoneNumber = Console.ReadLine();
 
-                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, false))
+                    if (IsPhoneNumberValid(phoneNumber, false))
                     {
                         break;
                     }
@@ -102,7 +102,7 @@ namespace camp_sleepaway
             while (true)
             {
                 relationType = Console.ReadLine();
-                if (NameCheck.IsLettersOnly(relationType))
+                if (IsLettersOnly(relationType))
                 {
                     break;
                 }
@@ -243,7 +243,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (NameCheck.IsLettersOnly(newFirstName))
+                    if (IsLettersOnly(newFirstName))
                     {
                         nextOfKinToEdit.FirstName = newFirstName;
                         break;
@@ -262,7 +262,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (NameCheck.IsLettersOnly(newLastName))
+                    if (IsLettersOnly(newLastName))
                     {
                         nextOfKinToEdit.LastName = newLastName;
                         break;
@@ -284,7 +284,7 @@ namespace camp_sleepaway
                         Console.Write("Phone number: ");
                         newPhoneNumber = Console.ReadLine();
 
-                        if (IsPhoneNumberValid.IsPhoneNumber(newPhoneNumber, false))
+                        if (IsPhoneNumberValid(newPhoneNumber, false))
                         {
                             nextOfKinToEdit.PhoneNumber = newPhoneNumber;
                             break;
@@ -307,7 +307,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (NameCheck.IsLettersOnly(newRelationType))
+                    if (IsLettersOnly(newRelationType))
                     {
                         nextOfKinToEdit.RelationType = newRelationType;
                         break;

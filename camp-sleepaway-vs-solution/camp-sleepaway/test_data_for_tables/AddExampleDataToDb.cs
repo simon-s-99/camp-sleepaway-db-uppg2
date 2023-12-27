@@ -2,7 +2,7 @@
 
 // Adds example data to database, primarily used for testing 
 
-namespace camp_sleepaway
+namespace camp_sleepaway.test_data_for_tables
 {
     internal class AddExampleDataToDb
     {

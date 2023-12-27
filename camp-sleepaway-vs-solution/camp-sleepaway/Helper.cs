@@ -1,18 +1,31 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace camp_sleepaway.helper_classes
+namespace camp_sleepaway
 {
-    //Method to check if a american phone number is valid
-    //public static bool IsPhoneNumber(string number)
-    //{
-    //    return Regex.Match(number, @"^(\+[0-9]{9})$").Success;
-    //}
-
-    public class IsPhoneNumberValid
+    internal class Helper
     {
+        public static bool IsLettersOnly(string input) // moved from NameCheck
+        {
+            // Check if a string contains only letters
+            // returns true if the input string contains only english and swedish letters, false otherwise
+            return !string.IsNullOrWhiteSpace(input) && Regex.IsMatch(input, "^[a-zA-ZåäöÅÄÖ]+$");
+        }
+
+        internal static int CalculateAge(DateTime birthDate) // moved from DateManager
+        {
+            DateTime today = DateTime.Today;
+
+            //Calculate the age of the person
+            int age = today.Year - birthDate.Year;
+
+            // If the birthdate hasn't occured yet this year we subtract 1 year from the age
+            if (birthDate.Date > today.AddYears(age)) age--;
+
+            return age;
+        }
 
         //Method to check if a phone number with different variations is valid
-        public static bool IsPhoneNumber(string number, bool mustBeUnique)
+        public static bool IsPhoneNumberValid(string number, bool mustBeUnique) // moved from IsPhoneNumber
         {
             bool isFormattedCorrectly = Regex.Match(number, @"^(\+\d{1,3}\s?)?(\(\d{1,4}\))?[0-9\- \(\)]{7,15}$").Success;
 
@@ -27,7 +40,7 @@ namespace camp_sleepaway.helper_classes
                 {
                     List<Camper> campers = personContext.Campers.ToList();
                     List<Counselor> counselors = personContext.Counselors.ToList();
-                    List <NextOfKin> nextOfKins = personContext.NextOfKins.ToList();
+                    List<NextOfKin> nextOfKins = personContext.NextOfKins.ToList();
 
                     foreach (Camper camper in campers)
                     {
@@ -44,7 +57,7 @@ namespace camp_sleepaway.helper_classes
                             return false;
                         }
                     }
-                    
+
                     foreach (NextOfKin nextOfKin in nextOfKins)
                     {
                         if (nextOfKin.PhoneNumber == number)
@@ -57,8 +70,5 @@ namespace camp_sleepaway.helper_classes
 
             return true;
         }
-
     }
-
-
 }
