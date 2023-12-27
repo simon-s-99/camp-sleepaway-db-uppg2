@@ -1,9 +1,8 @@
-﻿using camp_sleepaway.ef_table_classes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // Adds example data to database, primarily used for testing 
 
-namespace camp_sleepaway
+namespace camp_sleepaway.test_data_for_tables
 {
     internal class AddExampleDataToDb
     {

@@ -1,5 +1,5 @@
 ﻿using camp_sleepaway.ef_table_classes;
-using camp_sleepaway.helper_classes;
+using static camp_sleepaway.Helper;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -49,7 +49,7 @@ namespace camp_sleepaway
             while (true)
             {
                 firstName = Console.ReadLine();
-                if (NameCheck.IsLettersOnly(firstName))
+                if (IsLettersOnly(firstName))
                 {
                     break;
                 }
@@ -63,7 +63,7 @@ namespace camp_sleepaway
             while (true)
             {
                 lastName = Console.ReadLine();
-                if (NameCheck.IsLettersOnly(lastName))
+                if (IsLettersOnly(lastName))
                 {
                     break;
                 }
@@ -80,7 +80,7 @@ namespace camp_sleepaway
                     Console.Write("Phone number: ");
                     phoneNumber = Console.ReadLine();
 
-                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, false))
+                    if (IsPhoneNumberValid(phoneNumber, false))
                     {
                         break;
                     }
@@ -98,14 +98,14 @@ namespace camp_sleepaway
             Console.Write("Birth date: ");
             DateTime dateOfBirth;
 
-            while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || DateManager.CalculateAge(dateOfBirth) < 7
-                || DateManager.CalculateAge(dateOfBirth) > 17)
+            while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || CalculateAge(dateOfBirth) < 7
+                || CalculateAge(dateOfBirth) > 17)
             {
-                if (DateManager.CalculateAge(dateOfBirth) < 7)
+                if (CalculateAge(dateOfBirth) < 7)
                 {
                     Console.WriteLine("The camper must be at least 7 years old.");
                 }
-                else if (DateManager.CalculateAge(dateOfBirth) > 17)
+                else if (CalculateAge(dateOfBirth) > 17)
                 {
                     Console.WriteLine("The camper cannot be older than 17 years old");
                 }
@@ -226,7 +226,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (NameCheck.IsLettersOnly(newFirstName))
+                    if (IsLettersOnly(newFirstName))
                     {
                         camperToEdit.FirstName = newFirstName;
                         break;
@@ -245,7 +245,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (NameCheck.IsLettersOnly(newLastName))
+                    if (IsLettersOnly(newLastName))
                     {
                         camperToEdit.FirstName = newLastName;
                         break;
@@ -267,7 +267,7 @@ namespace camp_sleepaway
                         Console.Write("Phone number: ");
                         phoneNumber = Console.ReadLine();
 
-                        if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, false))
+                        if (IsPhoneNumberValid(phoneNumber, false))
                         {
                             break;
                         }
@@ -287,14 +287,14 @@ namespace camp_sleepaway
                 Console.Write("Birth date: ");
                 DateTime dateOfBirth;
 
-                while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || DateManager.CalculateAge(dateOfBirth) < 7
-                    || DateManager.CalculateAge(dateOfBirth) > 17)
+                while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || CalculateAge(dateOfBirth) < 7
+                    || CalculateAge(dateOfBirth) > 17)
                 {
-                    if (DateManager.CalculateAge(dateOfBirth) < 7)
+                    if (CalculateAge(dateOfBirth) < 7)
                     {
                         Console.WriteLine("The camper must be at least 7 years old.");
                     }
-                    else if (DateManager.CalculateAge(dateOfBirth) > 17)
+                    else if (CalculateAge(dateOfBirth) > 17)
                     {
                         Console.WriteLine("The camper cannot be older than 17 years old");
                     }

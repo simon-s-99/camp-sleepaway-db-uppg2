@@ -1,5 +1,5 @@
 ﻿using camp_sleepaway.ef_table_classes;
-using camp_sleepaway.helper_classes;
+using static camp_sleepaway.Helper;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -65,7 +65,7 @@ namespace camp_sleepaway
                 Console.Write("First name: ");
                 firstName = Console.ReadLine();
 
-                if (NameCheck.IsLettersOnly(firstName))
+                if (IsLettersOnly(firstName))
                 {
                     break;
                 }
@@ -80,7 +80,7 @@ namespace camp_sleepaway
             Console.Write("Last name: ");
             lastName = Console.ReadLine();
 
-                if (NameCheck.IsLettersOnly(lastName))
+                if (IsLettersOnly(lastName))
                 {
                     break;
                 }
@@ -97,7 +97,7 @@ namespace camp_sleepaway
                     Console.Write("Phone number: ");
                     phoneNumber = Console.ReadLine();
 
-                    if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, true))
+                    if (IsPhoneNumberValid(phoneNumber, true))
                     {
                         break;
                     }
@@ -238,7 +238,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (NameCheck.IsLettersOnly(newFirstName))
+                    if (IsLettersOnly(newFirstName))
                     {
                         counselorToEdit.FirstName = newFirstName;
                         break;
@@ -257,7 +257,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    if (NameCheck.IsLettersOnly(newLastName))
+                    if (IsLettersOnly(newLastName))
                     {
                         counselorToEdit.LastName = newLastName;
                         break;
@@ -279,7 +279,7 @@ namespace camp_sleepaway
                         Console.Write("Phone number: ");
                         phoneNumber = Console.ReadLine();
 
-                        if (IsPhoneNumberValid.IsPhoneNumber(phoneNumber, true))
+                        if (IsPhoneNumberValid(phoneNumber, true))
                         {
                             break;
                         }
