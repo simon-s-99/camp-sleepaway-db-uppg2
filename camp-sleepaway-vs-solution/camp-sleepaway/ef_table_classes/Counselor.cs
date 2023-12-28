@@ -37,19 +37,6 @@ namespace camp_sleepaway
         {
         }
 
-        [SetsRequiredMembers]
-        public Counselor(string firstName, string lastName, string phoneNumber,
-            WorkTitle workTitle, DateTime hiredDate, Cabin? cabin = null, DateTime? terminationDate = null)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            PhoneNumber = phoneNumber;
-            WorkTitle = workTitle;
-            HiredDate = hiredDate;
-            Cabin = cabin;
-            TerminationDate = terminationDate;
-        }
-
         // Asks user for input via console, should primarily be called from main menu 
         public static Counselor InputCounselorData()
         {
@@ -227,7 +214,17 @@ namespace camp_sleepaway
             {
                 chosenCabin = context.Cabins.Where(c => c.Id == cabinId).FirstOrDefault();
             }
-            counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, hiredDate, chosenCabin, terminationDate);
+
+            counselor = new Counselor
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                PhoneNumber = phoneNumber,
+                WorkTitle = workTitle,
+                HiredDate = hiredDate,
+                Cabin = chosenCabin,
+                TerminationDate = terminationDate
+            };
 
             return counselor;
         }
