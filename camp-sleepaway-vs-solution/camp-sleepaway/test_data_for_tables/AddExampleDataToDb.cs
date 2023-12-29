@@ -112,7 +112,16 @@ namespace camp_sleepaway.test_data_for_tables
                     WorkTitle workTitle = Enum.Parse<WorkTitle>(l[3]);
                     DateTime dateTime = DateTime.Parse(l[4]);
 
-                    var counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, dateTime, null, null);
+                    var counselor = new Counselor
+                    { 
+                        FirstName = firstName, 
+                        LastName = lastName, 
+                        PhoneNumber = phoneNumber, 
+                        WorkTitle = workTitle, 
+                        HiredDate = dateTime, 
+                        TerminationDate = null, 
+                        Cabin = null
+                    };
 
                     counselor.SaveToDb();
                 }
