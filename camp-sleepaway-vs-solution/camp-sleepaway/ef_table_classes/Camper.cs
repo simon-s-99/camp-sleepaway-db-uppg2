@@ -3,6 +3,7 @@ using static camp_sleepaway.Helper;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static camp_sleepaway.Helper;
 
 // Represents Camper table in Entity Framework
 
@@ -165,6 +166,60 @@ namespace camp_sleepaway
                 }
             }
 
+            Cabin[] cabins = Cabin.GetAllFromDb();
+
+            Console.WriteLine();
+            Console.WriteLine("Cabins: ");
+
+            foreach (Cabin cabin in cabins)
+            {
+                Console.WriteLine(cabin.Id + " " + cabin.CabinName);
+            }
+            Console.WriteLine();
+
+            Console.Write("Enter the ID for the cabin to associate this camper with: ");
+
+            int cabinId;
+
+            while (true)
+            {
+                bool cabinDoesExist = false;
+
+                while (!int.TryParse(Console.ReadLine(), out cabinId))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    Console.Write("Enter the ID for the cabin to associate this camper with: ");
+                }
+
+                foreach (Cabin cabin in cabins)
+                {
+                    if (cabin.Id == cabinId)
+                    {
+                        cabinDoesExist = true;
+                    }
+                }
+
+                if (!cabinDoesExist)
+                {
+                    Console.WriteLine("This cabin does not exist!");
+                    Console.Write("Enter the ID for the cabin to associate this camper with: ");
+                }
+                else if (GetCabinFromCabinId(cabinId).Campers.Count >= 4)
+                {
+                    Console.WriteLine("This cabin is full!");
+                    Console.Write("Enter the ID for the cabin to associate this camper with: ");
+                }
+                else if (GetCabinFromCabinId(cabinId).CounselorId == null)
+                {
+                    Console.WriteLine("This cabin has no active counselor. Assigning a camper to this cabin is therefore not possible.");
+                    Console.Write("Enter the ID for the cabin to associate this camper with: ");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
             Console.WriteLine("");
             Console.WriteLine("Your camper has been added successfully.");
 
@@ -175,7 +230,8 @@ namespace camp_sleepaway
                 PhoneNumber = phoneNumber,
                 DateOfBirth = dateOfBirth,
                 JoinDate = joinDate,
-                LeaveDate = leaveDate
+                LeaveDate = leaveDate,
+                CabinId = cabinId
             };
 
             return camperData;
@@ -432,7 +488,7 @@ namespace camp_sleepaway
             }
         }
 
-        private static Cabin GetCabinFromCabinId(int cabinId)
+        public static Cabin GetCabinFromCabinId(int cabinId)
         {
             using (var camperContext = new CampContext())
             {

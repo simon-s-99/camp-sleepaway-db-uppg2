@@ -27,17 +27,6 @@ namespace camp_sleepaway
         {
         }
 
-        [SetsRequiredMembers]
-        public NextOfKin(string firstName, string lastName, string phoneNumber,
-            int relatedToCamper, string relationType)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            PhoneNumber = phoneNumber;
-            CamperId = relatedToCamper;
-            RelationType = relationType;
-        }
-
         // Asks user for input via console, should primarily be called from main menu 
         public static NextOfKin InputNextOfKinData()
         {
@@ -115,10 +104,16 @@ namespace camp_sleepaway
 
             Camper relatedToCamper = SelectCamper();
 
-            NextOfKin nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper.Id, relationType);
+            NextOfKin nextOfKin = new NextOfKin
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                PhoneNumber = phoneNumber,
+                CamperId = relatedToCamper.Id,
+                RelationType = relationType
+            };
 
             return nextOfKin;
-
         }
 
         public static Camper SelectCamper()

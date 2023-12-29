@@ -37,19 +37,6 @@ namespace camp_sleepaway
         {
         }
 
-        [SetsRequiredMembers]
-        public Counselor(string firstName, string lastName, string phoneNumber,
-            WorkTitle workTitle, DateTime hiredDate, Cabin? cabin = null, DateTime? terminationDate = null)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            PhoneNumber = phoneNumber;
-            WorkTitle = workTitle;
-            HiredDate = hiredDate;
-            Cabin = cabin;
-            TerminationDate = terminationDate;
-        }
-
         // Asks user for input via console, should primarily be called from main menu 
         public static Counselor InputCounselorData()
         {
@@ -138,17 +125,6 @@ namespace camp_sleepaway
                 workTitle = WorkTitle.Coach;
             }
 
-            Console.Write("Enter cabin id: ");
-            var cabinIdString = Console.ReadLine();
-            int cabinId;
-
-            while (!int.TryParse(cabinIdString, out cabinId))
-            {
-                Console.WriteLine("Invalid input. Please enter a valid integer for cabin ID.");
-                Console.Write("Enter cabin id: ");
-                cabinIdString = Console.ReadLine();
-            }
-
             Console.Write("Hired date: ");
             DateTime hiredDate;
             while (!DateTime.TryParse(Console.ReadLine(), out hiredDate))
@@ -183,12 +159,72 @@ namespace camp_sleepaway
                 }
             }
 
-            var tempCabin = new Cabin();
+            Cabin[] cabins = Cabin.GetAllFromDb();
+
+            Console.WriteLine();
+            Console.WriteLine("Cabins: ");
+
+            foreach (Cabin cabin in cabins)
+            {
+                Console.WriteLine(cabin.Id + " " + cabin.CabinName);
+            }
+            Console.WriteLine();
+
+            Console.Write("Enter the ID for the cabin to associate this counselor with: ");
+
+            int cabinId;
+
+            while (true)
+            {
+                bool cabinDoesExist = false;
+
+                while (!int.TryParse(Console.ReadLine(), out cabinId))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer for cabin ID.");
+                    Console.Write("Enter the ID for the cabin to associate this counselor with: ");
+                }
+
+                foreach (Cabin cabin in cabins)
+                {
+                    if (cabin.Id == cabinId)
+                    {
+                        cabinDoesExist = true;
+                    }
+                }
+
+                if (!cabinDoesExist)
+                {
+                    Console.WriteLine("This cabin does not exist!");
+                    Console.Write("Enter the ID for the cabin to associate this counselor with: ");
+                }
+                else if (Camper.GetCabinFromCabinId(cabinId).CounselorId != null)
+                {
+                    Console.WriteLine("This cabin already has a counselor!");
+                    Console.Write("Enter the ID for the cabin to associate this counselor with: ");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            Cabin chosenCabin = null;
+
             using (var context = new CampContext()) 
             {
-                // add code to get cabin from context here 
+                chosenCabin = context.Cabins.Where(c => c.Id == cabinId).FirstOrDefault();
             }
-            counselor = new Counselor(firstName, lastName, phoneNumber, workTitle, hiredDate, tempCabin, terminationDate);
+
+            counselor = new Counselor
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                PhoneNumber = phoneNumber,
+                WorkTitle = workTitle,
+                HiredDate = hiredDate,
+                Cabin = chosenCabin,
+                TerminationDate = terminationDate
+            };
 
             return counselor;
         }
