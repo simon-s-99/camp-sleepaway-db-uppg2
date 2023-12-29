@@ -469,12 +469,14 @@ namespace camp_sleepaway
                     Cabin resultCabin = GetCabinFromCabinId(camper.CabinId);
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
 
-                    if (camper.NextOfKins.Count != 0)
+                    NextOfKin[] resultNextOfKins = GetNextOfKinsFromCamperID(camper.Id);
+
+                    if (resultNextOfKins.Length != 0)
                     {
                         Console.WriteLine("NextOfKins: ");
-                        foreach (NextOfKin nextOfKin in camper.NextOfKins)
+                        foreach (NextOfKin resultNextOfKin in resultNextOfKins)
                         {
-                            Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
+                            Console.WriteLine(resultNextOfKin.FirstName + " " + resultNextOfKin.LastName + " - " + resultNextOfKin.RelationType);
                         }
                         // Print each NextOfKin, for each camper
                     }
@@ -485,6 +487,16 @@ namespace camp_sleepaway
 
                     Console.WriteLine();
                 }
+            }
+        }
+
+        public static NextOfKin[] GetNextOfKinsFromCamperID(int camperId)
+        {
+            using (var camperContext = new CampContext())
+            {
+                NextOfKin[] nextOfKins = camperContext.NextOfKins.Where(c => c.CamperId == camperId).ToArray();
+
+                return nextOfKins;
             }
         }
 
