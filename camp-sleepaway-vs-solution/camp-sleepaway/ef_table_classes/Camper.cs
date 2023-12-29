@@ -419,7 +419,7 @@ namespace camp_sleepaway
 
         public static void SearchCamper()
         {
-            Console.Write("Search for camper by cabin or counselor: ");
+            Console.Write("Search for camper by cabin, or counselor names: ");
             string searchQuery = Console.ReadLine();
             Console.WriteLine();
 
