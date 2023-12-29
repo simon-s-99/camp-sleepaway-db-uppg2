@@ -143,10 +143,10 @@ namespace camp_sleepaway
             if (!string.IsNullOrEmpty(TerminationDateInput))
             {
                 // Looop until the user enters a valid date
-                while (!DateTime.TryParse(TerminationDateInput, out parsedTerminationDate) || parsedTerminationDate <= counselor.HiredDate)
+                while (!DateTime.TryParse(TerminationDateInput, out parsedTerminationDate) || parsedTerminationDate <= hiredDate)
                 {
                     //Checking if the leave date is before or athe same day to the join date
-                    if (parsedTerminationDate <= counselor.HiredDate)
+                    if (parsedTerminationDate <= hiredDate)
                     {
                         Console.WriteLine("termination date must be set after the joined date");
                     }
