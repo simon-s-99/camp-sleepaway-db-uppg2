@@ -77,7 +77,13 @@ namespace camp_sleepaway.test_data_for_tables
                 for (int i = 0; i < nrOfCabins; i++)
                 {
                     string cabinName = Cabin.GenerateRandomCabinName();
-                    var cabin = new Cabin(cabinName, null);
+
+                    Cabin cabin = new Cabin
+                    {
+                        CabinName = cabinName,
+                        Counselor = null
+                    };
+
                     cabin.SaveToDb();
                 }
                 return true;
@@ -179,7 +185,14 @@ namespace camp_sleepaway.test_data_for_tables
                     int relatedToCamper = int.Parse(l[3]);
                     string relationType = l[4];
 
-                    var nextOfKin = new NextOfKin(firstName, lastName, phoneNumber, relatedToCamper, relationType);
+                    NextOfKin nextOfKin = new NextOfKin
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        PhoneNumber = phoneNumber,
+                        CamperId = relatedToCamper,
+                        RelationType = relationType
+                    };
 
                     nextOfKin.SaveToDb();
                 }
