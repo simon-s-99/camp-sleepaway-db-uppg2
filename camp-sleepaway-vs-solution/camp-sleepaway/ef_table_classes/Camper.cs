@@ -13,6 +13,7 @@ namespace camp_sleepaway
     public class Camper : Person
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Invalid date of birth.")]
@@ -231,7 +232,7 @@ namespace camp_sleepaway
                 DateOfBirth = dateOfBirth,
                 JoinDate = joinDate,
                 LeaveDate = leaveDate,
-                CabinId = cabinId
+                CabinId = cabinId,
             };
 
             return camperData;

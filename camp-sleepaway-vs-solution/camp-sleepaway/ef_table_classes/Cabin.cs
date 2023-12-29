@@ -10,6 +10,7 @@ namespace camp_sleepaway
     public class Cabin
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Invalid cabin name.")]
@@ -126,10 +127,23 @@ namespace camp_sleepaway
             Cabin cabin = new Cabin
             {
                 CabinName = cabinName,
-                Counselor = counselor
+                CounselorId = counselorID
             };
 
             return cabin;
+        }
+
+        public static Counselor UpdateCounselorWithCabinId(int? counselorId, Cabin cabin)
+        {
+            using (var cabinContext = new CampContext())
+            {
+                Counselor cabinCounselor = cabinContext.Counselors.Where(c => c.Id == counselorId).FirstOrDefault();
+
+                cabinCounselor.CabinId = cabin.Id;
+                cabinCounselor.Cabin = cabin;
+                
+                return cabinCounselor;
+            }
         }
 
         public static Cabin ChooseCabinToEdit()
