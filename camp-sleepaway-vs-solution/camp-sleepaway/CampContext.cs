@@ -23,7 +23,7 @@ namespace camp_sleepaway
             // Build connection string
             var connectionString = configuration.GetConnectionString("local");
 
-            // Connect to database
+            // Connect to database | code lines related to logging should be commented out/removed in final version
             optionsBuilder.UseSqlServer(connectionString);
                 //.LogTo(Console.WriteLine,
                 //new[] { DbLoggerCategory.Database.Name },

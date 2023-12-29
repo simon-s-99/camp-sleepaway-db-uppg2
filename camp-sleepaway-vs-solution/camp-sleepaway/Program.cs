@@ -13,11 +13,26 @@ namespace camp_sleepaway
         // Samuel Lööf, Simon Sörqvist, Adam Kumlin
         public static void Main()
         {
-            // testcode for adding example data to database
-            //bool test = AddExampleDataToDb.AddAllData();
-            //Console.WriteLine(test);
-            
+            // Checks if this is the programs first execution, adds example data if true
+            IsFirstRun();
+
             ShowMainMenu();
+        }
+
+        internal static void IsFirstRun()
+        {
+            // checks for a .txt file with one line ending with a "1"-character
+            string dir = "./first_run.txt";
+            string rawText = File.ReadAllText(dir);
+            bool firstRun = rawText.EndsWith('1');
+
+            if (firstRun)
+            {
+                AddExampleDataToDb.AddAllData();
+
+                string newText = rawText.Replace('1', '0');
+                File.WriteAllText(dir, newText);
+            }
         }
 
         internal static void ShowMainMenu()
