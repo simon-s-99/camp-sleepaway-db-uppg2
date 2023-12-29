@@ -22,7 +22,7 @@ namespace camp_sleepaway
         internal static void IsFirstRun()
         {
             // checks for a .txt file with one line ending with a "1"-character
-            string dir = "./first_run.txt";
+            string dir = Directory.GetCurrentDirectory() + "\\first_run.txt";
             string rawText = File.ReadAllText(dir);
             bool firstRun = rawText.EndsWith('1');
 
@@ -30,6 +30,7 @@ namespace camp_sleepaway
             {
                 AddExampleDataToDb.AddAllData();
 
+                // this only gets replaced in debug/build file, i.e. no visible change in visual studio
                 string newText = rawText.Replace('1', '0');
                 File.WriteAllText(dir, newText);
             }
