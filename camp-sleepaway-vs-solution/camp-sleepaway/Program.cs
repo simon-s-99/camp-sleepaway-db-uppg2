@@ -2,7 +2,6 @@
 // namespace was adjusted to avoid unintended calls from other
 // places in the program and to simplify intellisense suggestions.
 using camp_sleepaway.test_data_for_tables;
-using camp_sleepaway.ef_table_classes;
 
 using Spectre.Console;
 
@@ -38,7 +37,7 @@ namespace camp_sleepaway
 
         internal static void ShowMainMenu()
         {
-            string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper", 
+            string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper",
                 "View campers and NextOfKins", "Delete individual" };
             string? mainMenuChoice = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
@@ -71,6 +70,12 @@ namespace camp_sleepaway
                     Counselor counselor = Counselor.InputCounselorData();
 
                     counselor.SaveToDb();
+
+                    if (counselor.CabinId != null)
+                    {
+                        Cabin counselorCabin = Counselor.UpdateCabinWithCounselorId(counselor.CabinId, counselor);
+                        counselorCabin.UpdateRecordInDb();
+                    }
                 }
                 // NextOfKin
                 else if (addIndividualChoice == addIndividualChoiceOptions[2])
@@ -85,6 +90,12 @@ namespace camp_sleepaway
                     Cabin cabin = Cabin.InputCabinData();
 
                     cabin.SaveToDb();
+
+                    if (cabin.CounselorId != null)
+                    {
+                        Counselor cabinCounselor = Cabin.UpdateCounselorWithCabinId(cabin.CounselorId, cabin);
+                        cabinCounselor.UpdateRecordInDb();
+                    }
                 }
             }
             // Edit individual
