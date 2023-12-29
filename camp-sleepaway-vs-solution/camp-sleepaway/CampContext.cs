@@ -30,5 +30,26 @@ namespace camp_sleepaway
                 //LogLevel.Information)
                 //.EnableSensitiveDataLogging();
         }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Counselor>()
+                .HasOne<Cabin>(counselor => counselor.Cabin)
+                .WithOne(cabin => cabin.Counselor)
+                .HasForeignKey<Cabin>(cabin => cabin.CounselorId);
+
+            modelBuilder.Entity<Camper>()
+                .HasOne<Cabin>(camper => camper.Cabin)
+                .WithMany(cabin => cabin.Campers)
+                .HasForeignKey(camper => camper.CabinId).IsRequired(true);
+
+            modelBuilder.Entity<NextOfKin>()
+                .HasOne<Camper>(nextOfKin => nextOfKin.Camper)
+                .WithMany(camper => camper.NextOfKins)
+                .HasForeignKey(nextOfKin => nextOfKin.CamperId).IsRequired(true);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }
