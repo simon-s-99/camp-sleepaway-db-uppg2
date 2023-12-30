@@ -55,7 +55,8 @@ namespace camp_sleepaway.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CabinId")
+                    b.Property<int?>("CabinId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")

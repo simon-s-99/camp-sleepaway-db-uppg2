@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace camp_sleepaway.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateCabin : Migration
+    public partial class NullableCabin : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

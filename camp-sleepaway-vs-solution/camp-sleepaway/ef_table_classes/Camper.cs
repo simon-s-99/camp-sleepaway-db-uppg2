@@ -28,9 +28,9 @@ namespace camp_sleepaway
         public DateTime? LeaveDate { get; set; }
 
         [ForeignKey("CabinId")]
-        public int CabinId { get; set; }
+        public int? CabinId { get; set; }
         // Reference navigation to Cabin
-        public Cabin Cabin { get; set; } = null!;
+        public Cabin? Cabin { get; set; } = null!;
 
         // Collection navigation to NextOfKin
         public ICollection<NextOfKin> NextOfKins { get; set; } = new List<NextOfKin>();
@@ -501,7 +501,7 @@ namespace camp_sleepaway
             }
         }
 
-        public static Cabin GetCabinFromCabinId(int cabinId)
+        public static Cabin GetCabinFromCabinId(int? cabinId)
         {
             using (var camperContext = new CampContext())
             {
@@ -511,7 +511,7 @@ namespace camp_sleepaway
             }
         }
 
-        private static Counselor GetCounselorFromCabinId(int cabinId)
+        private static Counselor GetCounselorFromCabinId(int? cabinId)
         {
             using (var camperContext = new CampContext())
             {

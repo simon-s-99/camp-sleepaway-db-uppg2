@@ -42,7 +42,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="test_data_for_tables\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +49,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="first_run.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="test_data_for_tables\Cabin_Example_Data.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="test_data_for_tables\Camper_Example_Data.csv">

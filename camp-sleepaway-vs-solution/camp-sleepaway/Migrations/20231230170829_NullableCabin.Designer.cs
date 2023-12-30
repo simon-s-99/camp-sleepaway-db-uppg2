@@ -12,8 +12,8 @@ using camp_sleepaway;
 namespace camp_sleepaway.Migrations
 {
     [DbContext(typeof(CampContext))]
-    [Migration("20231229165224_UpdateCabin")]
-    partial class UpdateCabin
+    [Migration("20231230170829_NullableCabin")]
+    partial class NullableCabin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,8 @@ namespace camp_sleepaway.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CabinId")
+                    b.Property<int?>("CabinId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
