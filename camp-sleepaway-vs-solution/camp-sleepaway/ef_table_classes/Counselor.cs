@@ -175,43 +175,56 @@ namespace camp_sleepaway
             }
             Console.WriteLine();
 
-            Console.Write("Enter the ID for the cabin to associate this counselor with: ");
+            Console.Write("Enter the ID for the cabin to associate this counselor with (press Enter to skip): ");
 
             int cabinId;
 
             while (true)
             {
-                bool cabinDoesExist = false;
-
-                while (!int.TryParse(Console.ReadLine(), out cabinId))
+                string input = Console.ReadLine();
+             
+                if (string.IsNullOrWhiteSpace(input))
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid integer for cabin ID.");
-                    Console.Write("Enter the ID for the cabin to associate this counselor with: ");
+                    
+                    cabinId = 0; // Sets a special value to indicate that we don't assign the counselor to a cabin
+                    break;
                 }
+
+                // Parse the input as an integer
+                if (!int.TryParse(input, out cabinId))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer for cabin ID (or press Enter to skip).");
+                    Console.Write("Enter the ID for the cabin to associate this counselor with (press Enter to skip): ");
+                    continue;
+                }
+
+                bool cabinDoesExist = false;
 
                 foreach (Cabin cabin in cabins)
                 {
                     if (cabin.Id == cabinId)
                     {
                         cabinDoesExist = true;
+                        break;
                     }
                 }
 
                 if (!cabinDoesExist)
                 {
                     Console.WriteLine("This cabin does not exist!");
-                    Console.Write("Enter the ID for the cabin to associate this counselor with: ");
+                    Console.Write("Enter the ID for the cabin to associate this counselor with (press Enter to skip): ");
                 }
                 else if (Camper.GetCabinFromCabinId(cabinId).CounselorId != null)
                 {
                     Console.WriteLine("This cabin already has a counselor!");
-                    Console.Write("Enter the ID for the cabin to associate this counselor with: ");
+                    Console.Write("Enter the ID for the cabin to associate this counselor with (press Enter to skip): ");
                 }
                 else
                 {
                     break;
                 }
             }
+
 
             counselor = new Counselor
             {
@@ -269,6 +282,8 @@ namespace camp_sleepaway
 
         internal static Counselor EditCounselorMenu(Counselor counselorToEdit)
         {
+            Cabin[] cabins = Cabin.GetAllFromDb();
+
             var editCounselorMenu = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[red]What do you want to do[/]?")
@@ -375,9 +390,44 @@ namespace camp_sleepaway
 
             else if (editCounselorMenu == "Edit cabin id")
             {
-                Console.Write("Enter cabin id: ");
-                
+                Console.Write("Enter new cabin id (press Enter to skip): ");
+                string cabinIdInput = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(cabinIdInput))
+                {
+                    // User chose to skip cabin association
+                    counselorToEdit.CabinId = null;
+                }
+                else
+                {
+                    int newCabinId;
+
+                    while (!int.TryParse(cabinIdInput, out newCabinId))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid integer for cabin ID (or press Enter to skip).");
+                        Console.Write("Enter new cabin id (press Enter to skip): ");
+                        cabinIdInput = Console.ReadLine();
+                    }
+
+                    bool cabinExists = cabins.Any(c => c.Id == newCabinId);
+
+                    if (!cabinExists)
+                    {
+                        Console.WriteLine("This cabin does not exist!");
+                    }
+                    else if (cabinExists && Camper.GetCabinFromCabinId(newCabinId).CounselorId != null)
+                    {
+                        Console.WriteLine("This cabin already has a counselor!");
+                    }
+                    else
+                    {
+                        // Update the cabin ID
+                        counselorToEdit.CabinId = newCabinId;
+                        Console.WriteLine($"Cabin ID updated to: {newCabinId}");
+                    }
+                }
             }
+
 
             else if (editCounselorMenu == "Edit hire date")
             {
