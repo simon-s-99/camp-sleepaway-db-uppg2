@@ -163,12 +163,12 @@ namespace camp_sleepaway
                     }
                 }
 
-                Console.Write("Enter ID for the 'cabin' you wish to edit: ");
+                Console.Write("Enter ID for the 'cabin' you wish to select: ");
                 int cabinId;
                 while (!int.TryParse(Console.ReadLine(), out cabinId))
                 {
                     Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    Console.Write("Enter ID for the 'cabin' you wish to edit: ");
+                    Console.Write("Enter ID for the 'cabin' you wish to select: ");
                 }
 
                 Cabin selectedCabin = cabinContext.Cabins.FirstOrDefault(c => c.Id == cabinId);

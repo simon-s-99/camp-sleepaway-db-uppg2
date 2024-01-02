@@ -46,17 +46,18 @@ namespace camp_sleepaway
 
             while (true)
             {
+                string[] mainMenuChoiceOptions = { "Add new object", "Edit object", "Search camper",
+                "View campers and NextOfKins", "Delete object", "Exit program" };
+                
                 if (!firstDrawMenu)
                 {
                     Console.WriteLine("Press any key to continue.");
                     Console.ReadKey();
                     Console.Clear();
                 }
+
                 firstDrawMenu = false;
 
-                string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", 
-                    "Search camper (based on cabin/counselor)",
-                    "View campers and NextOfKins", "Delete individual", "Exit program" };
                 string? mainMenuChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[red]What do you want to do[/]?")

@@ -250,12 +250,12 @@ namespace camp_sleepaway
                     $"{camper.PhoneNumber}) - {camper.DateOfBirth} - {camper.JoinDate} - {camper.LeaveDate}");
                 }
 
-                Console.Write("Enter ID for the 'camper' you wish to edit: ");
+                Console.Write("Enter ID for the 'camper' you wish to select: ");
                 int camperId;
                 while (!int.TryParse(Console.ReadLine(), out camperId))
                 {
                     Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    Console.Write("Enter ID for the 'camper' you wish to edit: ");
+                    Console.Write("Enter ID for the 'camper' you wish to select: ");
                 }
 
                 Camper selectedCamper = camperContext.Campers.FirstOrDefault(c => c.Id == camperId);
