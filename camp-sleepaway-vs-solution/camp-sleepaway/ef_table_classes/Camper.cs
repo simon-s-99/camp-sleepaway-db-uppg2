@@ -263,7 +263,6 @@ namespace camp_sleepaway
             }
         }
 
-
         internal static Camper EditCamperMenu(Camper camperToEdit)
         {
             var editCamperMenu = AnsiConsole.Prompt(
@@ -451,6 +450,7 @@ namespace camp_sleepaway
                 }
             }
         }
+
         public static void DisplayCampersAndNextOfKins()
         {
             using (var camperContext = new CampContext())
@@ -519,18 +519,6 @@ namespace camp_sleepaway
 
                 return counselor;
             }
-        }
-
-
-        public static Camper[] GetAllFromDb()
-        {
-            var result = new List<Camper>();
-            using (var context = new CampContext())
-            {
-                result = context.Campers.ToList();
-            }
-
-            return result.ToArray();
         }
 
         public void SaveToDb()
