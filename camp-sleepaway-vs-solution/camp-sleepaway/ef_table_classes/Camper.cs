@@ -263,7 +263,6 @@ namespace camp_sleepaway
             }
         }
 
-
         internal static Camper EditCamperMenu(Camper camperToEdit)
         {
             var editCamperMenu = AnsiConsole.Prompt(
@@ -451,6 +450,7 @@ namespace camp_sleepaway
                 }
             }
         }
+
         public static void DisplayCampersAndNextOfKins()
         {
             using (var camperContext = new CampContext())
