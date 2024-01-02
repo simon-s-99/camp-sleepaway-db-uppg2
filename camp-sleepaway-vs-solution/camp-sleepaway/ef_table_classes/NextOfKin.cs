@@ -23,8 +23,6 @@ namespace camp_sleepaway
         // Reference navigation to Camper
         public Camper? Camper { get; set; }
 
-        public Camper? RelatedToCamper { get; set; }
-
         // empty constructor for Entity Framework
         public NextOfKin()
         {
@@ -169,7 +167,7 @@ namespace camp_sleepaway
                 foreach (NextOfKin nextOfKin in nextOfKins)
                 {
                     Console.WriteLine($"{nextOfKin.Id} | {nextOfKin.FirstName} {nextOfKin.LastName} |" +
-                        $" {nextOfKin.PhoneNumber} | {nextOfKin.RelatedToCamper?.Id} | {nextOfKin.RelationType}");
+                        $" {nextOfKin.PhoneNumber} | {nextOfKin.CamperId} | {nextOfKin.RelationType}");
 
                 }
 

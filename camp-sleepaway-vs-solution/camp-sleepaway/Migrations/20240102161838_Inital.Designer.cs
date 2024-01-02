@@ -12,8 +12,8 @@ using camp_sleepaway;
 namespace camp_sleepaway.Migrations
 {
     [DbContext(typeof(CampContext))]
-    [Migration("20231230170829_NullableCabin")]
-    partial class NullableCabin
+    [Migration("20240102161838_Inital")]
+    partial class Inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

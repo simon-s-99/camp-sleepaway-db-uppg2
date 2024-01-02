@@ -154,13 +154,7 @@ namespace camp_sleepaway
 
                 foreach (Cabin cabin in cabins)
                 {
-                    Console.WriteLine($"{cabin.Id} - {cabin.CabinName} - {cabin.Counselor}");
-
-                    Console.Write("Campers: ");
-                    foreach (Camper camper in cabin.Campers)
-                    {
-                        Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - {camper.PhoneNumber}");
-                    }
+                    Console.WriteLine($"{cabin.Id} - {cabin.CabinName} - CounselorId: {cabin.CounselorId}");
                 }
 
                 Console.Write("Enter ID for the 'cabin' you wish to select: ");
