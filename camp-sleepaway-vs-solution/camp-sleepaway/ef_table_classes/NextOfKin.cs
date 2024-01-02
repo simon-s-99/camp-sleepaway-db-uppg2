@@ -23,8 +23,6 @@ namespace camp_sleepaway
         // Reference navigation to Camper
         public Camper? Camper { get; set; }
 
-        public Camper? RelatedToCamper { get; set; }
-
         // empty constructor for Entity Framework
         public NextOfKin()
         {
@@ -169,16 +167,16 @@ namespace camp_sleepaway
                 foreach (NextOfKin nextOfKin in nextOfKins)
                 {
                     Console.WriteLine($"{nextOfKin.Id} | {nextOfKin.FirstName} {nextOfKin.LastName} |" +
-                        $" {nextOfKin.PhoneNumber} | {nextOfKin.RelatedToCamper?.Id} | {nextOfKin.RelationType}");
+                        $" {nextOfKin.PhoneNumber} | {nextOfKin.CamperId} | {nextOfKin.RelationType}");
 
                 }
 
-                Console.Write("Enter ID for the 'next of kin' you wish to edit: ");
+                Console.Write("Enter ID for the 'next of kin' you wish to select: ");
                 int nextOfKinId;
                 while (!int.TryParse(Console.ReadLine(), out nextOfKinId))
                 {
                     Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    Console.Write("Enter ID for the 'next of kin' you wish to edit: ");
+                    Console.Write("Enter ID for the 'next of kin' you wish to select: ");
                 }
 
                 NextOfKin selectedNextOfKin = nextOfKinContext.NextOfKins.FirstOrDefault(c => c.Id == nextOfKinId);
@@ -190,6 +188,8 @@ namespace camp_sleepaway
 
         internal static NextOfKin EditNextOfKinMenu(NextOfKin nextOfKinToEdit)
         {
+            Console.Clear();
+
             var editNextOfKinMenu = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[red]What do you want to do[/]?")
@@ -199,6 +199,8 @@ namespace camp_sleepaway
                     {
                 "Edit first name", "Edit last name", "Edit phone number", "Edit relation type/name", "Edit which camper she/he is related to"
                     }));
+
+            Console.Clear();
 
             if (editNextOfKinMenu == "Edit first name")
             {

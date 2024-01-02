@@ -104,6 +104,7 @@ namespace camp_sleepaway
                 }
             }
 
+            Console.Clear();
 
             WorkTitle workTitle = WorkTitle.Other;
 
@@ -116,6 +117,8 @@ namespace camp_sleepaway
                     {
                         "Teacher", "Parent", "Coach", "Other"
                     }));
+
+            Console.Clear();
 
             if (workTitleChoice == "Teacher")
             {
@@ -266,12 +269,12 @@ namespace camp_sleepaway
                         $" {counselor.WorkTitle} | {counselor.CabinId} | {counselor.HiredDate} | {counselor.TerminationDate}");
                 }
 
-                Console.Write("Enter ID for the 'counselor' you wish to edit: ");
+                Console.Write("Enter ID for the 'counselor' you wish to select: ");
                 int counselorId;
                 while (!int.TryParse(Console.ReadLine(), out counselorId))
                 {
                     Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    Console.Write("Enter ID for the 'counselor' you wish to edit: ");
+                    Console.Write("Enter ID for the 'counselor' you wish to select: ");
                 }
 
                 Counselor selectedCounselor = counselorContext.Counselors.Where(c => c.Id == counselorId).FirstOrDefault();

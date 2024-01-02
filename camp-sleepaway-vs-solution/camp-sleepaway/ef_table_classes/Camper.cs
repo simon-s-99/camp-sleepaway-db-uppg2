@@ -250,12 +250,12 @@ namespace camp_sleepaway
                     $"{camper.PhoneNumber}) - {camper.DateOfBirth} - {camper.JoinDate} - {camper.LeaveDate}");
                 }
 
-                Console.Write("Enter ID for the 'camper' you wish to edit: ");
+                Console.Write("Enter ID for the 'camper' you wish to select: ");
                 int camperId;
                 while (!int.TryParse(Console.ReadLine(), out camperId))
                 {
                     Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    Console.Write("Enter ID for the 'camper' you wish to edit: ");
+                    Console.Write("Enter ID for the 'camper' you wish to select: ");
                 }
 
                 Camper selectedCamper = camperContext.Campers.FirstOrDefault(c => c.Id == camperId);
@@ -266,6 +266,8 @@ namespace camp_sleepaway
 
         internal static Camper EditCamperMenu(Camper camperToEdit)
         {
+            Console.Clear();
+
             var editCamperMenu = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("[red]What do you want to do[/]?")
@@ -275,6 +277,8 @@ namespace camp_sleepaway
                     "Edit first name", "Edit last name", "Edit phone number", "Edit birth date",
                     "Edit joined date", "Edit leave date"
                 }));
+
+            Console.Clear();
 
             if (editCamperMenu == "Edit first name")
             {
@@ -304,7 +308,7 @@ namespace camp_sleepaway
                 {
                     if (IsLettersOnly(newLastName))
                     {
-                        camperToEdit.FirstName = newLastName;
+                        camperToEdit.LastName = newLastName;
                         break;
                     }
                     else
@@ -427,9 +431,9 @@ namespace camp_sleepaway
 
             using (var camperContext = new CampContext())
             {
-                List<Camper> results = camperContext.Campers.Where(c => c.Cabin.CabinName == searchQuery ||
-                c.Cabin.Counselor.FirstName == searchQuery ||
-                c.Cabin.Counselor.LastName == searchQuery).ToList();
+                List<Camper> results = camperContext.Campers.Where(c => c.Cabin.CabinName.Contains(searchQuery) ||
+                c.Cabin.Counselor.FirstName.Contains(searchQuery) ||
+                c.Cabin.Counselor.LastName.Contains(searchQuery)).ToList();
                 // Return campers who satisfy one or more conditions
 
                 foreach (Camper result in results)
@@ -445,7 +449,8 @@ namespace camp_sleepaway
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
 
                     Counselor resultCounselor = GetCounselorFromCabinId(result.CabinId);
-                    Console.WriteLine(resultCounselor != null ? "Cabin counselor: " + resultCounselor.FirstName + " " + resultCounselor.LastName : "Warning! This cabin has no active counselor!");
+                    Console.WriteLine(resultCounselor != null ? "Cabin counselor: " + resultCounselor.FirstName + " "
+                        + resultCounselor.LastName : "Warning! This cabin has no active counselor!");
                     // If counselor is not null then print out normally, if it is null then warn the user
 
                     Console.WriteLine();
