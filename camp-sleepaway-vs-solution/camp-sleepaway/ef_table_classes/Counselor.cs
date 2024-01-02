@@ -104,6 +104,7 @@ namespace camp_sleepaway
                 }
             }
 
+            Console.Clear();
 
             WorkTitle workTitle = WorkTitle.Other;
 
@@ -116,6 +117,8 @@ namespace camp_sleepaway
                     {
                         "Teacher", "Parent", "Coach", "Other"
                     }));
+
+            Console.Clear();
 
             if (workTitleChoice == "Teacher")
             {

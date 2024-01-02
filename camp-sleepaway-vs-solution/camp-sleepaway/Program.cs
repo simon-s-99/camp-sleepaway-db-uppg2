@@ -42,16 +42,27 @@ namespace camp_sleepaway
 
         internal static void ShowMainMenu()
         {
+            bool firstDrawMenu = true;
+
             while (true)
             {
-                string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper",
-                "View campers and NextOfKins", "Delete individual", "Exit program" };
+                if (!firstDrawMenu)
+                {
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+                firstDrawMenu = false;
+
+                string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", 
+                    "Search camper (based on cabin/counselor)",
+                    "View campers and NextOfKins", "Delete individual", "Exit program" };
                 string? mainMenuChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("[red]What do you want to do[/]?")
-                    .PageSize(10)
-                    .MoreChoicesText("[grey](Move up and down to select an option)[/]")
-                    .AddChoices(mainMenuChoiceOptions));
+                    new SelectionPrompt<string>()
+                        .Title("[red]What do you want to do[/]?")
+                        .PageSize(10)
+                        .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                        .AddChoices(mainMenuChoiceOptions));
 
                 Console.Clear();
 
@@ -65,6 +76,8 @@ namespace camp_sleepaway
                         .PageSize(10)
                         .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                         .AddChoices(addIndividualChoiceOptions));
+
+                    Console.Clear();
 
                     // Camper
                     if (addIndividualChoice == addIndividualChoiceOptions[0])
@@ -110,6 +123,8 @@ namespace camp_sleepaway
                 // Edit individual
                 else if (mainMenuChoice == mainMenuChoiceOptions[1])
                 {
+                    Console.Clear();
+
                     string[] editIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
                     string? editIndividualChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
@@ -117,6 +132,8 @@ namespace camp_sleepaway
                         .PageSize(10)
                         .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                         .AddChoices(editIndividualChoiceOptions));
+
+                    Console.Clear();
 
                     // Camper
                     if (editIndividualChoice == editIndividualChoiceOptions[0])
@@ -189,6 +206,8 @@ namespace camp_sleepaway
                 // Delete row 
                 else if (mainMenuChoice == mainMenuChoiceOptions[4])
                 {
+                    Console.Clear();
+
                     string[] deleteIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
                     string? deleteIndividualChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
@@ -196,6 +215,8 @@ namespace camp_sleepaway
                         .PageSize(10)
                         .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                         .AddChoices(deleteIndividualChoiceOptions));
+
+                    Console.Clear();
 
                     // Camper
                     if (deleteIndividualChoice == deleteIndividualChoiceOptions[0])
@@ -226,8 +247,8 @@ namespace camp_sleepaway
                         cabin.DeleteFromDb();
                     }
                 }
-
-                else // exit program
+                // exit program
+                else
                 {
                     Console.Clear();
                     Console.WriteLine("Exiting program, goodbye.");

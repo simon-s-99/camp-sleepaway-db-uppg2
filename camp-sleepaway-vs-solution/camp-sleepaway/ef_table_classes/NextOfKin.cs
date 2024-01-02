@@ -222,6 +222,8 @@ namespace camp_sleepaway
 
         internal static NextOfKin EditNextOfKinMenu(NextOfKin nextOfKinToEdit)
         {
+            Console.Clear();
+
             var editNextOfKinMenu = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[red]What do you want to do[/]?")
@@ -231,6 +233,8 @@ namespace camp_sleepaway
                     {
                 "Edit first name", "Edit last name", "Edit phone number", "Edit relation type/name", "Edit which camper she/he is related to"
                     }));
+
+            Console.Clear();
 
             if (editNextOfKinMenu == "Edit first name")
             {
