@@ -246,7 +246,8 @@ namespace camp_sleepaway
 
                 foreach (Camper camper in campers)
                 {
-                    Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - {camper.PhoneNumber}");
+                    Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - " +
+                    $"{camper.PhoneNumber}) - {camper.DateOfBirth} - {camper.JoinDate} - {camper.LeaveDate}");
                 }
 
                 Console.Write("Enter ID for the 'camper' you wish to edit: ");
@@ -319,16 +320,17 @@ namespace camp_sleepaway
             }
             else if (editCamperMenu == "Edit phone number")
             {
-                string phoneNumber;
+                string newPhoneNumber;
                 while (true)
                 {
                     try
                     {
                         Console.Write("Phone number: ");
-                        phoneNumber = Console.ReadLine();
+                        newPhoneNumber = Console.ReadLine();
 
-                        if (IsPhoneNumberValid(phoneNumber, false))
+                        if (IsPhoneNumberValid(newPhoneNumber, false))
                         {
+                            camperToEdit.PhoneNumber = newPhoneNumber;
                             break;
                         }
                         else
