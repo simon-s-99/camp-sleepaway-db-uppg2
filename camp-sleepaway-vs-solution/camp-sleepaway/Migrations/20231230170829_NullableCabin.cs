@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace camp_sleepaway.Migrations
 {
     /// <inheritdoc />
-    public partial class initial_migration_v5 : Migration
+    public partial class NullableCabin : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,6 +20,7 @@ namespace camp_sleepaway.Migrations
                     WorkTitle = table.Column<int>(type: "int", nullable: false),
                     HiredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TerminationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CabinId = table.Column<int>(type: "int", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)

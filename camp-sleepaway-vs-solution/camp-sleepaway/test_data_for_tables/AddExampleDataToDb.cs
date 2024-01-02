@@ -14,8 +14,8 @@ namespace camp_sleepaway.test_data_for_tables
         {
             bool result = false;
 
-            result = AddCabins(25);
             result = AddCounselors();
+            result = AddCabins();
             result = AddCampers();
             result = AddNextOfKin();
 
@@ -69,28 +69,35 @@ namespace camp_sleepaway.test_data_for_tables
         }
 
         // generates cabins with no assigned counselors 
-        private static bool AddCabins(int nrOfCabins)
+        private static bool AddCabins()
         {
-            var cabins = new List<Cabin>();
+            string dir = _dir + "Cabin_Example_Data.csv";
+
             try
             {
-                for (int i = 0; i < nrOfCabins; i++)
-                {
-                    string cabinName = Cabin.GenerateRandomCabinName();
+                string[] lines = GetFormattedData(dir);
 
-                    Cabin cabin = new Cabin
+                foreach (string line in lines)
+                {
+                    string[] l = line.Split(',');
+
+                    string cabinName = l[0];
+                    int counselorId = int.Parse(l[1]);
+
+                    var cabin = new Cabin
                     {
                         CabinName = cabinName,
-                        Counselor = null
+                        CounselorId = counselorId
                     };
 
                     cabin.SaveToDb();
                 }
+
                 return true;
             }
             catch
             {
-                return false; // return false if any errors occur 
+                return false;
             }
         }
 
@@ -111,6 +118,7 @@ namespace camp_sleepaway.test_data_for_tables
                     string phoneNumber = l[2];
                     WorkTitle workTitle = Enum.Parse<WorkTitle>(l[3]);
                     DateTime dateTime = DateTime.Parse(l[4]);
+                    int cabinId = int.Parse(l[5]);
 
                     var counselor = new Counselor
                     { 
@@ -120,7 +128,7 @@ namespace camp_sleepaway.test_data_for_tables
                         WorkTitle = workTitle, 
                         HiredDate = dateTime, 
                         TerminationDate = null, 
-                        Cabin = null
+                        CabinId = cabinId
                     };
 
                     counselor.SaveToDb();

@@ -3,6 +3,7 @@ using static camp_sleepaway.Helper;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel.DataAnnotations.Schema;
 
 // Represents Counselor table in Entity Framework
 
@@ -16,6 +17,7 @@ namespace camp_sleepaway
     public class Counselor : Person
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Invalid work title.")]
@@ -28,6 +30,9 @@ namespace camp_sleepaway
 
         [DataType(DataType.Date)]
         public DateTime? TerminationDate { get; set; }
+
+        [ForeignKey("CabinId")]
+        public int? CabinId { get; set; }
 
         // Reference navigation to Cabin
         public Cabin? Cabin { get; set; }
@@ -143,10 +148,10 @@ namespace camp_sleepaway
             if (!string.IsNullOrEmpty(TerminationDateInput))
             {
                 // Looop until the user enters a valid date
-                while (!DateTime.TryParse(TerminationDateInput, out parsedTerminationDate) || parsedTerminationDate <= counselor.HiredDate)
+                while (!DateTime.TryParse(TerminationDateInput, out parsedTerminationDate) || parsedTerminationDate <= hiredDate)
                 {
                     //Checking if the leave date is before or athe same day to the join date
-                    if (parsedTerminationDate <= counselor.HiredDate)
+                    if (parsedTerminationDate <= hiredDate)
                     {
                         Console.WriteLine("termination date must be set after the joined date");
                     }
@@ -208,13 +213,6 @@ namespace camp_sleepaway
                 }
             }
 
-            Cabin chosenCabin = null;
-
-            using (var context = new CampContext()) 
-            {
-                chosenCabin = context.Cabins.Where(c => c.Id == cabinId).FirstOrDefault();
-            }
-
             counselor = new Counselor
             {
                 FirstName = firstName,
@@ -222,11 +220,25 @@ namespace camp_sleepaway
                 PhoneNumber = phoneNumber,
                 WorkTitle = workTitle,
                 HiredDate = hiredDate,
-                Cabin = chosenCabin,
+                CabinId = cabinId,
                 TerminationDate = terminationDate
             };
 
             return counselor;
+        }
+
+        public static Cabin UpdateCabinWithCounselorId(int? cabinId, Counselor counselor)
+        {
+            using (var counselorContext = new CampContext())
+            {
+                Cabin cabin = counselorContext.Cabins.Where(c => c.Id == cabinId).FirstOrDefault();
+
+                cabin.CounselorId = counselor.Id;
+
+                cabin.Counselor = counselor;
+
+                return cabin;
+            }
         }
 
         public static Counselor ChooseCounselorToEdit()

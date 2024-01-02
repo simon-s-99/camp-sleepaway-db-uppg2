@@ -13,6 +13,7 @@ namespace camp_sleepaway
     public class Camper : Person
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Invalid date of birth.")]
@@ -27,9 +28,9 @@ namespace camp_sleepaway
         public DateTime? LeaveDate { get; set; }
 
         [ForeignKey("CabinId")]
-        public int CabinId { get; set; }
+        public int? CabinId { get; set; }
         // Reference navigation to Cabin
-        public Cabin Cabin { get; set; } = null!;
+        public Cabin? Cabin { get; set; } = null!;
 
         // Collection navigation to NextOfKin
         public ICollection<NextOfKin> NextOfKins { get; set; } = new List<NextOfKin>();
@@ -231,7 +232,7 @@ namespace camp_sleepaway
                 DateOfBirth = dateOfBirth,
                 JoinDate = joinDate,
                 LeaveDate = leaveDate,
-                CabinId = cabinId
+                CabinId = cabinId,
             };
 
             return camperData;
@@ -469,12 +470,14 @@ namespace camp_sleepaway
                     Cabin resultCabin = GetCabinFromCabinId(camper.CabinId);
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
 
-                    if (camper.NextOfKins.Count != 0)
+                    NextOfKin[] resultNextOfKins = GetNextOfKinsFromCamperID(camper.Id);
+
+                    if (resultNextOfKins.Length != 0)
                     {
                         Console.WriteLine("NextOfKins: ");
-                        foreach (NextOfKin nextOfKin in camper.NextOfKins)
+                        foreach (NextOfKin resultNextOfKin in resultNextOfKins)
                         {
-                            Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + " - " + nextOfKin.RelationType);
+                            Console.WriteLine(resultNextOfKin.FirstName + " " + resultNextOfKin.LastName + " - " + resultNextOfKin.RelationType);
                         }
                         // Print each NextOfKin, for each camper
                     }
@@ -488,7 +491,17 @@ namespace camp_sleepaway
             }
         }
 
-        public static Cabin GetCabinFromCabinId(int cabinId)
+        public static NextOfKin[] GetNextOfKinsFromCamperID(int camperId)
+        {
+            using (var camperContext = new CampContext())
+            {
+                NextOfKin[] nextOfKins = camperContext.NextOfKins.Where(c => c.CamperId == camperId).ToArray();
+
+                return nextOfKins;
+            }
+        }
+
+        public static Cabin GetCabinFromCabinId(int? cabinId)
         {
             using (var camperContext = new CampContext())
             {
@@ -498,7 +511,7 @@ namespace camp_sleepaway
             }
         }
 
-        private static Counselor GetCounselorFromCabinId(int cabinId)
+        private static Counselor GetCounselorFromCabinId(int? cabinId)
         {
             using (var camperContext = new CampContext())
             {
