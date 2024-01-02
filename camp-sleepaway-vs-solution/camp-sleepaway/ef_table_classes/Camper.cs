@@ -246,7 +246,8 @@ namespace camp_sleepaway
 
                 foreach (Camper camper in campers)
                 {
-                    Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - {camper.PhoneNumber}");
+                    Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - " +
+                    $"{camper.PhoneNumber}) - {camper.DateOfBirth} - {camper.JoinDate} - {camper.LeaveDate}");
                 }
 
                 Console.Write("Enter ID for the 'camper' you wish to edit: ");

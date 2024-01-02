@@ -249,7 +249,8 @@ namespace camp_sleepaway
 
                 foreach (Counselor counselor in counselors)
                 {
-                    Console.WriteLine(counselor.Id + " | " + counselor.FirstName + " " + counselor.LastName + " | " + counselor.PhoneNumber);
+                    Console.WriteLine($"{counselor.Id} | {counselor.FirstName} {counselor.LastName} | {counselor.PhoneNumber} |" +
+                        $" {counselor.WorkTitle} | {counselor.CabinId} | {counselor.HiredDate} | {counselor.TerminationDate}");
                 }
 
                 Console.Write("Enter ID for the 'counselor' you wish to edit: ");
