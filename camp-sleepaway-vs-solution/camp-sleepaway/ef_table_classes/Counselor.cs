@@ -319,16 +319,17 @@ namespace camp_sleepaway
             }
             else if (editCounselorMenu == "Edit phone number")
             {
-                string phoneNumber;
+                string newPhoneNumber;
                 while (true)
                 {
                     try
                     {
                         Console.Write("Phone number: ");
-                        phoneNumber = Console.ReadLine();
+                        newPhoneNumber = Console.ReadLine();
 
-                        if (IsPhoneNumberValid(phoneNumber, true))
+                        if (IsPhoneNumberValid(newPhoneNumber, false))
                         {
+                            counselorToEdit.PhoneNumber = newPhoneNumber;
                             break;
                         }
                         else
