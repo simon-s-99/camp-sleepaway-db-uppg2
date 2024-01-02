@@ -48,7 +48,7 @@ namespace camp_sleepaway
             {
                 string[] mainMenuChoiceOptions = { "Add new object", "Edit object", "Search camper",
                 "View campers and NextOfKins", "Delete object", "Exit program" };
-                
+
                 if (!firstDrawMenu)
                 {
                     Console.WriteLine("Press any key to continue.");
@@ -229,9 +229,21 @@ namespace camp_sleepaway
                     // Counselor
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[1])
                     {
-                        Counselor counselor = Counselor.ChooseCounselorToEdit();
+                        Counselor[] existingCounselors = Counselor.GetAllFromDb();
 
-                        counselor.DeleteFromDb();
+                        if (existingCounselors.Length <= 1)
+                        {
+                            Console.WriteLine("You can not have less than one counselor.");
+                        }
+                        else
+                        {
+                            Counselor counselor = Counselor.ChooseCounselorToEdit();
+                            Cabin counselorCabin = Camper.GetCabinFromCabinId(counselor.CabinId);
+                            counselorCabin.CounselorId = null;
+                            counselorCabin.Counselor = null;
+                            counselorCabin.UpdateRecordInDb();
+                            counselor.DeleteFromDb();
+                        }
                     }
                     // NextOfKin
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[2])
@@ -243,9 +255,22 @@ namespace camp_sleepaway
                     // Cabin 
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[3])
                     {
-                        Cabin cabin = Cabin.ChooseCabinToEdit();
+                        Cabin[] existingCabins = Cabin.GetAllFromDb();
 
-                        cabin.DeleteFromDb();
+                        if (existingCabins.Length <= 1)
+                        {
+                            Console.WriteLine("You can not have less than one cabin.");
+                        }
+                        else
+                        {
+                            Cabin cabin = Cabin.ChooseCabinToEdit();
+                            Counselor cabinCounselor = Cabin.GetCounselorFromCabinId(cabin.Id);
+                            cabinCounselor.CabinId = null;
+                            cabinCounselor.Cabin = null;
+                            cabinCounselor.UpdateRecordInDb();
+                            cabin.DeleteFromDb();
+                        }
+
                     }
                 }
                 // exit program
