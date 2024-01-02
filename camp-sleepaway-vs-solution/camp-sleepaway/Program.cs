@@ -12,7 +12,7 @@ namespace camp_sleepaway
         public static void Main()
         {
             // Checks if this is the programs first execution, adds example data if true
-            //IsFirstRun();
+            IsFirstRun();
             Console.WriteLine();
 
             ShowMainMenu();
