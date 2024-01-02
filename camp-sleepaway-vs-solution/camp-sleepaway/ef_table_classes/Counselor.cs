@@ -104,6 +104,7 @@ namespace camp_sleepaway
                 }
             }
 
+            Console.Clear();
 
             WorkTitle workTitle = WorkTitle.Other;
 
@@ -116,6 +117,8 @@ namespace camp_sleepaway
                     {
                         "Teacher", "Parent", "Coach", "Other"
                     }));
+
+            Console.Clear();
 
             if (workTitleChoice == "Teacher")
             {
@@ -249,7 +252,8 @@ namespace camp_sleepaway
 
                 foreach (Counselor counselor in counselors)
                 {
-                    Console.WriteLine(counselor.Id + " | " + counselor.FirstName + " " + counselor.LastName + " | " + counselor.PhoneNumber);
+                    Console.WriteLine($"{counselor.Id} | {counselor.FirstName} {counselor.LastName} | {counselor.PhoneNumber} |" +
+                        $" {counselor.WorkTitle} | {counselor.CabinId} | {counselor.HiredDate} | {counselor.TerminationDate}");
                 }
 
                 Console.Write("Enter ID for the 'counselor' you wish to select: ");
@@ -319,16 +323,17 @@ namespace camp_sleepaway
             }
             else if (editCounselorMenu == "Edit phone number")
             {
-                string phoneNumber;
+                string newPhoneNumber;
                 while (true)
                 {
                     try
                     {
                         Console.Write("Phone number: ");
-                        phoneNumber = Console.ReadLine();
+                        newPhoneNumber = Console.ReadLine();
 
-                        if (IsPhoneNumberValid(phoneNumber, true))
+                        if (IsPhoneNumberValid(newPhoneNumber, false))
                         {
+                            counselorToEdit.PhoneNumber = newPhoneNumber;
                             break;
                         }
                         else

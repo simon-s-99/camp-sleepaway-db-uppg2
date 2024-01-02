@@ -23,6 +23,8 @@ namespace camp_sleepaway
         // Reference navigation to Camper
         public Camper? Camper { get; set; }
 
+        public Camper? RelatedToCamper { get; set; }
+
         // empty constructor for Entity Framework
         public NextOfKin()
         {
@@ -158,42 +160,6 @@ namespace camp_sleepaway
             }
         }
 
-
-
-        //Method that displays all available campers
-        //public static int SelectCamper()
-        //{
-        //    using (var camperContext = new CampContext())
-        //    {
-        //        // Retrieves a list of campers from the database
-        //        var campers = camperContext.Campers.ToList();
-
-        //        //Create a root node for the tree
-        //        var root = new Tree("Select camper to edit");
-
-        //        foreach (var camper in campers)
-        //        {
-        //            //TreeNode and Narkup are used here to create structured and formatted console output
-        //            var camperNode = new TreeNode(new Markup($"{camper.Id}  {camper.FirstName} {camper.LastName}"));
-
-        //            root.AddNode(camperNode);
-        //        }
-
-        //        AnsiConsole.Render(root);
-
-        //        // Prompt the user to enter the ID of the camper they want to edit
-        //        var selectedCamperId = AnsiConsole.Prompt<int>(
-        //            new TextPrompt<int>("Enter the ID of the camper you want to edit")
-        //                .Validate(id =>
-        //                {
-        //                    // Validate that the entered ID is a valid camper ID
-        //                    return campers.Any(c => c.Id == id);
-        //                }));
-
-        //        return selectedCamperId;
-        //    }
-        //}
-
         public static NextOfKin ChooseNextOfKinToEdit()
         {
             using (var nextOfKinContext = new CampContext())
@@ -202,7 +168,9 @@ namespace camp_sleepaway
 
                 foreach (NextOfKin nextOfKin in nextOfKins)
                 {
-                    Console.WriteLine($"{nextOfKin.Id} | {nextOfKin.FirstName} {nextOfKin.LastName} | {nextOfKin.PhoneNumber}");
+                    Console.WriteLine($"{nextOfKin.Id} | {nextOfKin.FirstName} {nextOfKin.LastName} |" +
+                        $" {nextOfKin.PhoneNumber} | {nextOfKin.RelatedToCamper?.Id} | {nextOfKin.RelationType}");
+
                 }
 
                 Console.Write("Enter ID for the 'next of kin' you wish to select: ");
@@ -222,6 +190,8 @@ namespace camp_sleepaway
 
         internal static NextOfKin EditNextOfKinMenu(NextOfKin nextOfKinToEdit)
         {
+            Console.Clear();
+
             var editNextOfKinMenu = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[red]What do you want to do[/]?")
@@ -231,6 +201,8 @@ namespace camp_sleepaway
                     {
                 "Edit first name", "Edit last name", "Edit phone number", "Edit relation type/name", "Edit which camper she/he is related to"
                     }));
+
+            Console.Clear();
 
             if (editNextOfKinMenu == "Edit first name")
             {
@@ -312,6 +284,7 @@ namespace camp_sleepaway
                     {
                         Console.WriteLine("Invalid input. Please enter a name with only letters.");
                         Console.Write("Last name: ");
+                        newRelationType = Console.ReadLine();
                     }
                 }
             }
