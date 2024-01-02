@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace camp_sleepaway.Migrations
 {
     /// <inheritdoc />
-    public partial class Inital : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +58,7 @@ namespace camp_sleepaway.Migrations
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LeaveDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CabinId = table.Column<int>(type: "int", nullable: false),
+                    CabinId = table.Column<int>(type: "int", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
@@ -70,8 +70,7 @@ namespace camp_sleepaway.Migrations
                         name: "FK_Campers_Cabins_CabinId",
                         column: x => x.CabinId,
                         principalTable: "Cabins",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
