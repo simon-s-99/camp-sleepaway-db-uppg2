@@ -12,7 +12,7 @@ namespace camp_sleepaway
         public static void Main()
         {
             // Checks if this is the programs first execution, adds example data if true
-            IsFirstRun();
+            //IsFirstRun();
             Console.WriteLine();
 
             ShowMainMenu();
@@ -44,8 +44,8 @@ namespace camp_sleepaway
         {
             while (true)
             {
-                string[] mainMenuChoiceOptions = { "Add new object", "Edit individual", "Search camper",
-                "View campers and NextOfKins", "Delete individual", "Exit program" };
+                string[] mainMenuChoiceOptions = { "Add new object", "Edit object", "Search camper",
+                "View campers and NextOfKins", "Delete object", "Exit program" };
                 string? mainMenuChoice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[red]What do you want to do[/]?")

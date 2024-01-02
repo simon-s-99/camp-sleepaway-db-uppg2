@@ -205,12 +205,12 @@ namespace camp_sleepaway
                     Console.WriteLine($"{nextOfKin.Id} | {nextOfKin.FirstName} {nextOfKin.LastName} | {nextOfKin.PhoneNumber}");
                 }
 
-                Console.Write("Enter ID for the 'next of kin' you wish to edit: ");
+                Console.Write("Enter ID for the 'next of kin' you wish to select: ");
                 int nextOfKinId;
                 while (!int.TryParse(Console.ReadLine(), out nextOfKinId))
                 {
                     Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    Console.Write("Enter ID for the 'next of kin' you wish to edit: ");
+                    Console.Write("Enter ID for the 'next of kin' you wish to select: ");
                 }
 
                 NextOfKin selectedNextOfKin = nextOfKinContext.NextOfKins.FirstOrDefault(c => c.Id == nextOfKinId);
