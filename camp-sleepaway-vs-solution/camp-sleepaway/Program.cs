@@ -2,7 +2,6 @@
 // namespace was adjusted to avoid unintended calls from other
 // places in the program and to simplify intellisense suggestions.
 using camp_sleepaway.test_data_for_tables;
-
 using Spectre.Console;
 
 namespace camp_sleepaway
