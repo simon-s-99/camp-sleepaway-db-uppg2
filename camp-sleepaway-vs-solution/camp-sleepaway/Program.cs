@@ -232,21 +232,22 @@ namespace camp_sleepaway
                     // Counselor
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[1])
                     {
-                        /*Counselor[] existingCounselors = Counselor.GetAllFromDb();
+                        Counselor[] existingCounselors = Counselor.GetAllFromDb();
+                        Camper[] existingCampers = Camper.GetAllFromDb();
 
-                        if (existingCounselors.Length <= 1)
+                        if (existingCounselors.Length <= existingCampers.Length * 4)
                         {
                             Console.WriteLine("You can not have less than one counselor.");
                         }
                         else
-                        {*/
+                        {
                             Counselor counselor = Counselor.ChooseCounselorToEdit();
                             Cabin counselorCabin = Camper.GetCabinFromCabinId(counselor.CabinId);
                             counselorCabin.CounselorId = null;
                             counselorCabin.Counselor = null;
                             counselorCabin.UpdateRecordInDb();
                             counselor.DeleteFromDb();
-                        //}
+                        }
                     }
                     // NextOfKin
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[2])
@@ -257,14 +258,15 @@ namespace camp_sleepaway
                     // Cabin 
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[3])
                     {
-                        /*Cabin[] existingCabins = Cabin.GetAllFromDb();
+                        Cabin[] existingCabins = Cabin.GetAllFromDb();
+                        Camper[] existingCampers = Camper.GetAllFromDb();
 
-                        if (existingCabins.Length <= 1)
+                        if (existingCabins.Length <= existingCampers.Length * 4)
                         {
                             Console.WriteLine("You can not have less than one cabin.");
                         }
                         else
-                        {*/
+                        {
                             Cabin cabin = Cabin.ChooseCabinToEdit();
 
                             Counselor cabinCounselor = Cabin.GetCounselorFromCabinId(cabin.Id);
@@ -280,7 +282,7 @@ namespace camp_sleepaway
                             }
 
                             cabin.DeleteFromDb();
-                        //}
+                        }
 
                     }
                 }
