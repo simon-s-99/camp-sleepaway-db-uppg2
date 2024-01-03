@@ -430,29 +430,40 @@ namespace camp_sleepaway
             // edit date camper will leave / date camper left 
             else if (editCamperMenu == editCamperMenuChoices[5])
             {
-                Console.Write("Enter new leave date (if there is no leave date, just press 'Enter' to skip): ");
-                DateTime? leaveDate = null;
+                DateTime leaveDate;
+                bool validDate = false;
 
-                string leaveDateInput = Console.ReadLine();
-                DateTime parsedLeaveDate;
-
-                //Check so that the input is not empty
-                if (!string.IsNullOrEmpty(leaveDateInput))
+                while (!validDate)
                 {
-                    // Looop until the user enters a valid date
-                    while (!DateTime.TryParse(leaveDateInput, out parsedLeaveDate) || parsedLeaveDate <= camperToEdit.JoinDate)
+                    Console.Write("Enter new leave date (if there is no leave date, just press 'Enter' to skip): ");
+                    string leaveDateInput = Console.ReadLine();
+
+                    // This skips adding a leave date
+                    if (string.IsNullOrEmpty(leaveDateInput))
                     {
-                        //Checking if the leave date is before or athe same day to the join date
-                        if (parsedLeaveDate <= camperToEdit.JoinDate)
+                        camperToEdit.LeaveDate = null;
+                        validDate = true;
+                        break;
+                    }
+
+                    validDate = DateTime.TryParse(leaveDateInput, out leaveDate);
+
+                    if (validDate)
+                    {
+                        if (leaveDate < camperToEdit.JoinDate)
                         {
-                            Console.WriteLine("Leave date must be set after the joined date");
+                            Console.WriteLine("Leave date can not be set to before join date.");
+                            validDate = false;
                         }
                         else
                         {
-                            Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-MM-dd' or 'Enter' to skip.");
+                            camperToEdit.LeaveDate = leaveDate;
+                            // let validDate be true so that while-loop breaks 
                         }
-                        Console.Write("Leave date: ");
-                        leaveDateInput = Console.ReadLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
                     }
                 }
             }
