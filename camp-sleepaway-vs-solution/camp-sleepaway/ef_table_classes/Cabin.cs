@@ -1,7 +1,6 @@
 ﻿using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
 // Represents Cabin table in Entity Framework
 
@@ -116,18 +115,12 @@ namespace camp_sleepaway
             {
                 cabinName = GenerateRandomCabinName();
             }
-
-            Console.Write("CounselorID: ");
-            int counselorID = int.Parse(Console.ReadLine());
-
-            var context = new CampContext();
-
-            Counselor counselor = context.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
+            
 
             Cabin cabin = new Cabin
             {
                 CabinName = cabinName,
-                CounselorId = counselorID
+                CounselorId = null
             };
 
             return cabin;
@@ -141,7 +134,7 @@ namespace camp_sleepaway
 
                 cabinCounselor.CabinId = cabin.Id;
                 cabinCounselor.Cabin = cabin;
-                
+
                 return cabinCounselor;
             }
         }
@@ -182,7 +175,7 @@ namespace camp_sleepaway
                 .PageSize(10)
                 .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                 .AddChoices(new[] {
-                    "Edit cabin name", "Edit counselor" 
+                    "Edit cabin name", "Edit counselor"
                 }));
 
             if (editCabinMenu == "Edit cabin name")
@@ -207,14 +200,6 @@ namespace camp_sleepaway
                     cabinName = GenerateRandomCabinName();
                 }
                 cabinToEdit.CabinName = cabinName;
-            }
-            else if (editCabinMenu == "Edit counselor")
-            {
-                Counselor newCounselor = Counselor.ChooseCounselorMenu();
-
-                cabinToEdit.Counselor = newCounselor;
-
-                cabinToEdit.CounselorId = newCounselor.Id;
             }
             else if (editCabinMenu == "Edit campers")
             {
@@ -245,7 +230,7 @@ namespace camp_sleepaway
             return cabinToEdit;
         }
 
-        public static Counselor GetCounselorFromCabinId(int cabinId)
+        public static Counselor GetCounselorFromCabinId(int? cabinId)
         {
             using (var cabinContext = new CampContext())
             {
