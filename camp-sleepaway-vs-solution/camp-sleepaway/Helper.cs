@@ -70,5 +70,21 @@ namespace camp_sleepaway
 
             return true;
         }
+
+        // returns shortdate (ex: 2010-12-10) 
+        public static string FormatDate(DateTime? date)
+        {
+            string formattedDate = string.Empty;
+
+            if (date != null)
+            {
+                formattedDate = date.ToString().Substring(0, 10);
+                return formattedDate;
+            }
+            else
+            {
+                return formattedDate;
+            }
+        }
     }
 }
