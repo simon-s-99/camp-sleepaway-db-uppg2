@@ -311,8 +311,10 @@ namespace camp_sleepaway
 
                 foreach (Counselor counselor in counselors)
                 {
-                    Console.WriteLine($"{counselor.Id} | {counselor.FirstName} {counselor.LastName} | {counselor.PhoneNumber} |" +
-                        $" {counselor.WorkTitle} | {counselor.CabinId} | {counselor.HiredDate} | {counselor.TerminationDate}");
+                    Console.WriteLine($"{counselor.Id} | " +
+                        $"{counselor.FirstName} {counselor.LastName} | {counselor.PhoneNumber} |" +
+                        $" {counselor.WorkTitle} | {counselor.CabinId} | " +
+                        $"{Helper.FormatDate(counselor.HiredDate)} | {Helper.FormatDate(counselor.TerminationDate)}");
                 }
 
                 Console.Write("Enter ID for the 'counselor' you wish to select: ");
