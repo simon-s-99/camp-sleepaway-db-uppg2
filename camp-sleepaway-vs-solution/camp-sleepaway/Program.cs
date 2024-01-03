@@ -183,7 +183,7 @@ namespace camp_sleepaway
                     // Cabin
                     else if (editIndividualChoice == editIndividualChoiceOptions[3])
                     {
-                        Cabin cabin = Cabin.ChooseCabinToEdit();
+                        Cabin cabin = Cabin.ChooseCabinMenu();
                         if (cabin != null)
                         {
                             Cabin editedCabin = Cabin.EditCabinMenu(cabin);
@@ -272,7 +272,7 @@ namespace camp_sleepaway
                         }
                         else
                         {
-                            Cabin cabin = Cabin.ChooseCabinToEdit();
+                            Cabin cabin = Cabin.ChooseCabinMenu();
 
                             Counselor cabinCounselor = Cabin.GetCounselorFromCabinId(cabin.Id);
                             cabinCounselor.CabinId = null;

@@ -146,7 +146,7 @@ namespace camp_sleepaway
             }
         }
 
-        public static Cabin ChooseCabinToEdit()
+        public static Cabin ChooseCabinMenu()
         {
             using (var cabinContext = new CampContext())
             {
