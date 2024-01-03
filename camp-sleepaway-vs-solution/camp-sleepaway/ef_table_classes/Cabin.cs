@@ -152,9 +152,11 @@ namespace camp_sleepaway
             {
                 List<Cabin> cabins = cabinContext.Cabins.ToList();
 
+                Console.WriteLine("ID | Cabin Name | Counselor ID");
+
                 foreach (Cabin cabin in cabins)
                 {
-                    Console.WriteLine($"{cabin.Id} - {cabin.CabinName} - CounselorId: {cabin.CounselorId}");
+                    Console.WriteLine($"{cabin.Id} | {cabin.CabinName} | {cabin.CounselorId}");
                 }
 
                 Console.Write("Enter ID for the 'cabin' you wish to select: ");
