@@ -85,7 +85,6 @@ namespace camp_sleepaway
                     if (addIndividualChoice == addIndividualChoiceOptions[0])
                     {
                         Camper camper = Camper.InputCamperData();
-
                         camper.SaveToDb();
                     }
                     // Counselor
@@ -143,7 +142,7 @@ namespace camp_sleepaway
                         Camper camper = Camper.ChooseCamperMenu();
                         if (camper != null)
                         {
-                            Camper editedCamper = Camper.EditCamperMenu(camper);
+                            Camper editedCamper = Camper.EditCamperMenu(camper, null);
                             editedCamper.UpdateRecordInDb();
                         }
                         else
