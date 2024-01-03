@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 // This does not represent a table in Entity Framework Core
 // this is a parent class that other EF Table classes inherit from 
 
+// Samuel Lööf, Simon Sörqvist, Adam Kumlin
+
 namespace camp_sleepaway.ef_table_classes
 {
     public abstract class Person

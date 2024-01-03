@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 // Represents Cabin table in Entity Framework
 
+// Samuel Lööf, Simon Sörqvist, Adam Kumlin
+
 namespace camp_sleepaway
 {
     public class Cabin
@@ -115,7 +117,6 @@ namespace camp_sleepaway
             {
                 cabinName = GenerateRandomCabinName();
             }
-            
 
             Cabin cabin = new Cabin
             {
@@ -165,7 +166,6 @@ namespace camp_sleepaway
                 return selectedCabin;
             }
         }
-
 
         internal static Cabin EditCabinMenu(Cabin cabinToEdit)
         {
