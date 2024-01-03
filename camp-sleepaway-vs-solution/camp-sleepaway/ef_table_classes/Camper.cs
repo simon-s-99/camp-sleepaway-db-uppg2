@@ -389,27 +389,36 @@ namespace camp_sleepaway
             // edit join date (camp join date)
             else if (editCamperMenu == editCamperMenuChoices[4])
             {
-                Console.Write("Join date: ");
                 DateTime joinDate;
+                bool validDate = false;
 
-                //Try parsing the date from the console into a DateTime object, and checks if the join date
-                //is at least 7 years after the campers birth date. if true, the camper cannot join before the age of 7
-                while (!DateTime.TryParse(Console.ReadLine(), out joinDate) || joinDate < camperToEdit.DateOfBirth.AddYears(7) || joinDate > DateTime.Now)
+                while (!validDate)
                 {
-                    if (joinDate < camperToEdit.DateOfBirth.AddYears(7))
+                    Console.Write("Camp join date: ");
+                    validDate = DateTime.TryParse(Console.ReadLine(), out joinDate);
+
+                    if (validDate)
                     {
-                        Console.WriteLine("The camper cannot join before the age of 7.");
-                    }
-                    else if (joinDate > DateTime.Now)
-                    {
-                        Console.WriteLine("Join date cannot be in the future.");
+                        if (joinDate < camperToEdit.DateOfBirth.AddYears(7))
+                        {
+                            Console.WriteLine("The camper must be at least 7 years " +
+                                "old on their join date.");
+                            validDate = false;
+                        }
+                        else if (joinDate > DateTime.Now)
+                        {
+                            Console.WriteLine("Join date cannot be in the future.");
+                        }
+                        else
+                        {
+                            camperToEdit.JoinDate = joinDate;
+                            // let validDate be true so that while-loop breaks 
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid date format. Please enter a valid date.");
+                        Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
                     }
-
-                    Console.Write("Join date: ");
                 }
             }
             // edit date camper will leave / date camper left 
