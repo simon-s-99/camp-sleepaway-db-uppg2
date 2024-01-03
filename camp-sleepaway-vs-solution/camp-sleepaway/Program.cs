@@ -95,7 +95,7 @@ namespace camp_sleepaway
 
                         counselor.SaveToDb();
 
-                        if (counselor.CabinId != null)
+                        if (counselor.CabinId != null && counselor.CabinId != 0)
                         {
                             Cabin counselorCabin = Counselor.UpdateCabinWithCounselorId(counselor.CabinId, counselor);
                             counselorCabin.UpdateRecordInDb();

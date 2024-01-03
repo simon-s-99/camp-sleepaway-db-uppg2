@@ -1,7 +1,6 @@
 ﻿using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
 // Represents Cabin table in Entity Framework
 
@@ -117,12 +116,41 @@ namespace camp_sleepaway
                 cabinName = GenerateRandomCabinName();
             }
 
-            Console.Write("CounselorID: ");
-            int counselorID = int.Parse(Console.ReadLine());
+            int? counselorID = null;
+            bool validCounselorId = false;
 
-            var context = new CampContext();
+            while (!validCounselorId)
+            {
+                Console.Write("CounselorID for a free and existing counselor, or press 'Enter' to skip: ");
+                string input = Console.ReadLine();
 
-            Counselor counselor = context.Counselors.Where(c => c.Id == counselorID).FirstOrDefault();
+                if (input != "")
+                {
+                    try
+                    {
+                        counselorID = int.Parse(input);
+                        Counselor[] counselors = Counselor.GetAllFromDb();
+
+                        foreach (Counselor counselor in counselors)
+                        {
+                            if (counselorID == counselor.Id && counselor.CabinId == 0)
+                            {
+                                validCounselorId = true;
+                                break;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid integer.");
+                    }
+                }
+                else
+                {
+                    counselorID = null;
+                    validCounselorId = true;
+                }
+            }
 
             Cabin cabin = new Cabin
             {
@@ -141,7 +169,7 @@ namespace camp_sleepaway
 
                 cabinCounselor.CabinId = cabin.Id;
                 cabinCounselor.Cabin = cabin;
-                
+
                 return cabinCounselor;
             }
         }
@@ -182,7 +210,7 @@ namespace camp_sleepaway
                 .PageSize(10)
                 .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                 .AddChoices(new[] {
-                    "Edit cabin name", "Edit counselor" 
+                    "Edit cabin name", "Edit counselor"
                 }));
 
             if (editCabinMenu == "Edit cabin name")
