@@ -219,8 +219,27 @@ namespace camp_sleepaway
                 }
                 else if (Camper.GetCabinFromCabinId(cabinId).CounselorId != null)
                 {
-                    Console.WriteLine("This cabin already has a counselor!");
-                    Console.Write("Enter the ID for the cabin to associate this counselor with (press Enter to skip): ");
+                    var overrideCounselorChoice = AnsiConsole.Prompt(
+                            new SelectionPrompt<string>()
+                            .Title("[red]This cabin already has a counselor. Do you want to override the current counselor?[/]")
+                            .PageSize(10)
+                            .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                            .AddChoices(new[]
+                            {
+                                "No", "Yes"
+                            }));
+
+                    if (overrideCounselorChoice == "Yes")
+                    {
+                        Counselor previousCounselor = Cabin.GetCounselorFromCabinId(cabinId);
+                        previousCounselor.CabinId = null;
+                        previousCounselor.UpdateRecordInDb();
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Returning...");
+                    }
                 }
                 else
                 {
@@ -423,12 +442,47 @@ namespace camp_sleepaway
                     }
                     else if (cabinExists && Camper.GetCabinFromCabinId(newCabinId).CounselorId != null)
                     {
-                        Console.WriteLine("This cabin already has a counselor!");
+                        var overrideCounselorChoice = AnsiConsole.Prompt(
+                            new SelectionPrompt<string>()
+                            .Title("[red]This cabin already has a counselor. Do you want to override the current counselor?[/]")
+                            .PageSize(10)
+                            .MoreChoicesText("[grey](Move up and down to select an option)[/]")
+                            .AddChoices(new[]
+                            {
+                                "No", "Yes"
+                            }));
+
+                        if (overrideCounselorChoice == "Yes")
+                        {
+                            Counselor previousCounselor = Cabin.GetCounselorFromCabinId(newCabinId);
+                            previousCounselor.CabinId = null;
+                            previousCounselor.UpdateRecordInDb();
+
+                            Cabin previousCabin = Camper.GetCabinFromCabinId(counselorToEdit.CabinId);
+                            previousCabin.CounselorId = null;
+                            previousCabin.UpdateRecordInDb();
+
+                            counselorToEdit.CabinId = newCabinId;
+                            Console.WriteLine($"Cabin ID updated to: {newCabinId}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Returning...");
+                        }
+                    }
+                    else if (counselorToEdit.CabinId != null)
+                    {
+                        // Update the cabin ID
+                        Cabin previousCabin = Camper.GetCabinFromCabinId(counselorToEdit.CabinId);
+                        previousCabin.CounselorId = null;
+                        previousCabin.UpdateRecordInDb();
+
+                        counselorToEdit.CabinId = newCabinId;
                     }
                     else
                     {
-                        // Update the cabin ID
                         counselorToEdit.CabinId = newCabinId;
+
                         Console.WriteLine($"Cabin ID updated to: {newCabinId}");
                     }
                 }

@@ -115,47 +115,12 @@ namespace camp_sleepaway
             {
                 cabinName = GenerateRandomCabinName();
             }
-
-            int? counselorID = null;
-            bool validCounselorId = false;
-
-            while (!validCounselorId)
-            {
-                Console.Write("CounselorID for a free and existing counselor, or press 'Enter' to skip: ");
-                string input = Console.ReadLine();
-
-                if (input != "")
-                {
-                    try
-                    {
-                        counselorID = int.Parse(input);
-                        Counselor[] counselors = Counselor.GetAllFromDb();
-
-                        foreach (Counselor counselor in counselors)
-                        {
-                            if (counselorID == counselor.Id && counselor.CabinId == 0)
-                            {
-                                validCounselorId = true;
-                                break;
-                            }
-                        }
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    }
-                }
-                else
-                {
-                    counselorID = null;
-                    validCounselorId = true;
-                }
-            }
+            
 
             Cabin cabin = new Cabin
             {
                 CabinName = cabinName,
-                CounselorId = counselorID
+                CounselorId = null
             };
 
             return cabin;
@@ -236,14 +201,6 @@ namespace camp_sleepaway
                 }
                 cabinToEdit.CabinName = cabinName;
             }
-            else if (editCabinMenu == "Edit counselor")
-            {
-                Counselor newCounselor = Counselor.ChooseCounselorMenu();
-
-                cabinToEdit.Counselor = newCounselor;
-
-                cabinToEdit.CounselorId = newCounselor.Id;
-            }
             else if (editCabinMenu == "Edit campers")
             {
                 List<Camper> newCampers = null;
@@ -273,7 +230,7 @@ namespace camp_sleepaway
             return cabinToEdit;
         }
 
-        public static Counselor GetCounselorFromCabinId(int cabinId)
+        public static Counselor GetCounselorFromCabinId(int? cabinId)
         {
             using (var cabinContext = new CampContext())
             {
