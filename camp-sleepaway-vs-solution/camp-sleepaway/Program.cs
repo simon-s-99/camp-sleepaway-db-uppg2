@@ -235,9 +235,12 @@ namespace camp_sleepaway
                         Counselor[] existingCounselors = Counselor.GetAllFromDb();
                         Camper[] existingCampers = Camper.GetAllFromDb();
 
-                        if (existingCounselors.Length <= existingCampers.Length * 4)
+                        // use ceiling to always round up, if we have 13 campers we should not delete
+                        // counselor nr. 4, this would throw an error, ceiling fixes this 
+                        if (existingCounselors.Length <= Math.Ceiling((double)existingCampers.Length / 4))
                         {
-                            Console.WriteLine("You can not have less than one counselor.");
+                            Console.WriteLine("Each counselor is responsible for 1-4 campers " +
+                                "you can not remove a counselor if their campers have not yet left.");
                         }
                         else
                         {
@@ -261,9 +264,10 @@ namespace camp_sleepaway
                         Cabin[] existingCabins = Cabin.GetAllFromDb();
                         Camper[] existingCampers = Camper.GetAllFromDb();
 
-                        if (existingCabins.Length <= existingCampers.Length * 4)
+                        if (existingCabins.Length <= Math.Ceiling((double)existingCampers.Length / 4))
                         {
-                            Console.WriteLine("You can not have less than one cabin.");
+                            Console.WriteLine("Each cabin houses 1-4 campers, you can not remove a cabin " +
+                                "if it's campers have not yet left or been re-assigned.");
                         }
                         else
                         {
