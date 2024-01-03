@@ -220,7 +220,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    Camper newCamper = Camper.ChooseCamperToEdit();
+                    Camper newCamper = Camper.ChooseCamperMenu();
 
                     newCampers.Add(newCamper);
 

@@ -140,7 +140,7 @@ namespace camp_sleepaway
                     // Camper
                     if (editIndividualChoice == editIndividualChoiceOptions[0])
                     {
-                        Camper camper = Camper.ChooseCamperToEdit();
+                        Camper camper = Camper.ChooseCamperMenu();
                         if (camper != null)
                         {
                             Camper editedCamper = Camper.EditCamperMenu(camper);
@@ -223,7 +223,7 @@ namespace camp_sleepaway
                     // Camper
                     if (deleteObjectChoice == deleteObjectChoiceOptions[0])
                     {
-                        Camper camper = Camper.ChooseCamperToEdit();
+                        Camper camper = Camper.ChooseCamperMenu();
 
                         Cabin cabin = Camper.GetCabinFromCabinId(camper.CabinId);
                         cabin.Campers.Remove(camper);

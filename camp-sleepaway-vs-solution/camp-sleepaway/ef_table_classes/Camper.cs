@@ -238,7 +238,7 @@ namespace camp_sleepaway
             return camperData;
         }
 
-        public static Camper ChooseCamperToEdit()
+        public static Camper ChooseCamperMenu()
         {
             using (var camperContext = new CampContext())
             {
