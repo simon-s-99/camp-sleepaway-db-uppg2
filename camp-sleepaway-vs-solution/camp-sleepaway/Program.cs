@@ -122,7 +122,7 @@ namespace camp_sleepaway
                         }
                     }
                 }
-                // Edit individual
+                // Edit record in db 
                 else if (mainMenuChoice == mainMenuChoiceOptions[1])
                 {
                     Console.Clear();

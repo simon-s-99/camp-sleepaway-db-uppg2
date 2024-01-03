@@ -271,19 +271,23 @@ namespace camp_sleepaway
         {
             Console.Clear();
 
+            string[] editCamperMenuChoices =
+            {
+                "Edit first name", "Edit last name", "Edit phone number", 
+                "Edit birth date", "Edit joined date", "Edit leave date"
+            };
+
             var editCamperMenu = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("[red]What do you want to do[/]?")
                 .PageSize(10)
                 .MoreChoicesText("[grey](Move up and down to select an option)[/]")
-                .AddChoices(new[] {
-                    "Edit first name", "Edit last name", "Edit phone number", "Edit birth date",
-                    "Edit joined date", "Edit leave date"
-                }));
+                .AddChoices(editCamperMenuChoices));
 
             Console.Clear();
 
-            if (editCamperMenu == "Edit first name")
+            // edit first name
+            if (editCamperMenu == editCamperMenuChoices[0])
             {
                 Console.Write("Enter new first name: ");
                 string newFirstName = Console.ReadLine();
@@ -302,7 +306,8 @@ namespace camp_sleepaway
                     }
                 }
             }
-            else if (editCamperMenu == "Edit last name")
+            // edit last name
+            else if (editCamperMenu == editCamperMenuChoices[1])
             {
                 Console.Write("Enter new last name: ");
                 string newLastName = Console.ReadLine();
@@ -321,7 +326,8 @@ namespace camp_sleepaway
                     }
                 }
             }
-            else if (editCamperMenu == "Edit phone number")
+            // edit phone nr. 
+            else if (editCamperMenu == editCamperMenuChoices[2])
             {
                 string newPhoneNumber;
                 while (true)
@@ -347,7 +353,8 @@ namespace camp_sleepaway
                     }
                 }
             }
-            else if (editCamperMenu == "Edit birth date")
+            // edit date of birth
+            else if (editCamperMenu == editCamperMenuChoices[3])
             {
                 Console.Write("Birth date: ");
                 DateTime dateOfBirth;
@@ -370,7 +377,8 @@ namespace camp_sleepaway
                     Console.Write("Birth date: ");
                 }
             }
-            else if (editCamperMenu == "Edit joined date")
+            // edit join date (camp join date)
+            else if (editCamperMenu == editCamperMenuChoices[4])
             {
                 Console.Write("Join date: ");
                 DateTime joinDate;
@@ -395,7 +403,8 @@ namespace camp_sleepaway
                     Console.Write("Join date: ");
                 }
             }
-            else if (editCamperMenu == "Edit leave date")
+            // edit date camper will leave / date camper left 
+            else if (editCamperMenu == editCamperMenuChoices[5])
             {
                 Console.Write("Enter new leave date (if there is no leave date, just press 'Enter' to skip): ");
                 DateTime? leaveDate = null;
@@ -423,6 +432,7 @@ namespace camp_sleepaway
                     }
                 }
             }
+
             return camperToEdit;
         }
 
