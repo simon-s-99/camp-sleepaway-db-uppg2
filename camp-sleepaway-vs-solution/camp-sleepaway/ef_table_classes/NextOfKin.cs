@@ -163,6 +163,8 @@ namespace camp_sleepaway
             {
                 List<NextOfKin> nextOfKins = nextOfKinContext.NextOfKins.ToList();
 
+                Console.WriteLine("ID | Full Name | Phone-nr. | Related to Camper with ID | Relation Type");
+
                 foreach (NextOfKin nextOfKin in nextOfKins)
                 {
                     Console.WriteLine($"{nextOfKin.Id} | {nextOfKin.FirstName} {nextOfKin.LastName} |" +
