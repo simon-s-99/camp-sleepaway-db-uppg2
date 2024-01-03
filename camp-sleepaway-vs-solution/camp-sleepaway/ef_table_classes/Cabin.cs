@@ -146,15 +146,17 @@ namespace camp_sleepaway
             }
         }
 
-        public static Cabin ChooseCabinToEdit()
+        public static Cabin ChooseCabinMenu()
         {
             using (var cabinContext = new CampContext())
             {
                 List<Cabin> cabins = cabinContext.Cabins.ToList();
 
+                Console.WriteLine("ID | Cabin Name | Counselor ID");
+
                 foreach (Cabin cabin in cabins)
                 {
-                    Console.WriteLine($"{cabin.Id} - {cabin.CabinName} - CounselorId: {cabin.CounselorId}");
+                    Console.WriteLine($"{cabin.Id} | {cabin.CabinName} | {cabin.CounselorId}");
                 }
 
                 Console.Write("Enter ID for the 'cabin' you wish to select: ");
@@ -208,7 +210,7 @@ namespace camp_sleepaway
             }
             else if (editCabinMenu == "Edit counselor")
             {
-                Counselor newCounselor = Counselor.ChooseCounselorToEdit();
+                Counselor newCounselor = Counselor.ChooseCounselorMenu();
 
                 cabinToEdit.Counselor = newCounselor;
 
@@ -220,7 +222,7 @@ namespace camp_sleepaway
 
                 while (true)
                 {
-                    Camper newCamper = Camper.ChooseCamperToEdit();
+                    Camper newCamper = Camper.ChooseCamperMenu();
 
                     newCampers.Add(newCamper);
 

@@ -257,11 +257,14 @@ namespace camp_sleepaway
             }
         }
 
-        public static Counselor ChooseCounselorToEdit()
+        public static Counselor ChooseCounselorMenu()
         {
             using (var counselorContext = new CampContext())
             {
                 List<Counselor> counselors = counselorContext.Counselors.ToList();
+
+                Console.WriteLine("ID | Full Name | Phone-nr. | WorkTitle | Cabin ID | " +
+                    "Date Hired | Date Employment was/is Terminated");
 
                 foreach (Counselor counselor in counselors)
                 {

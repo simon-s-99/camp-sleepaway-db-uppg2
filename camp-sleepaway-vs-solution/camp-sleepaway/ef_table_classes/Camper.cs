@@ -238,16 +238,19 @@ namespace camp_sleepaway
             return camperData;
         }
 
-        public static Camper ChooseCamperToEdit()
+        public static Camper ChooseCamperMenu()
         {
             using (var camperContext = new CampContext())
             {
                 List<Camper> campers = camperContext.Campers.ToList();
 
+                Console.WriteLine("ID | Full Name | Phone-nr. | Date of Birth | " +
+                    "Joined Camp Date | Will Leave/Left Camp Date");
+
                 foreach (Camper camper in campers)
                 {
-                    Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - " +
-                    $"{camper.PhoneNumber}) - {camper.DateOfBirth} - {camper.JoinDate} - {camper.LeaveDate}");
+                    Console.WriteLine($"{camper.Id} | {camper.FirstName} {camper.LastName} | " +
+                        $"{camper.PhoneNumber} | {camper.DateOfBirth} | {camper.JoinDate} | {camper.LeaveDate}");
                 }
 
                 Console.Write("Enter ID for the 'camper' you wish to select: ");
@@ -425,16 +428,16 @@ namespace camp_sleepaway
 
         public static void SearchCamper()
         {
-            Console.Write("Search for camper by cabin, or counselor names: ");
+            Console.Write("Search for camper based on the name of the cabin or counselor they are assigned to: ");
             string searchQuery = Console.ReadLine();
             Console.WriteLine();
 
             using (var camperContext = new CampContext())
             {
+                // Return campers who satisfy one or more conditions
                 List<Camper> results = camperContext.Campers.Where(c => c.Cabin.CabinName.Contains(searchQuery) ||
                 c.Cabin.Counselor.FirstName.Contains(searchQuery) ||
                 c.Cabin.Counselor.LastName.Contains(searchQuery)).ToList();
-                // Return campers who satisfy one or more conditions
 
                 foreach (Camper result in results)
                 {
@@ -448,10 +451,10 @@ namespace camp_sleepaway
                     Cabin resultCabin = GetCabinFromCabinId(result.CabinId);
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
 
+                    // If counselor is not null then print out normally, if it is null then warn the user
                     Counselor resultCounselor = GetCounselorFromCabinId(result.CabinId);
                     Console.WriteLine(resultCounselor != null ? "Cabin counselor: " + resultCounselor.FirstName + " "
                         + resultCounselor.LastName : "Warning! This cabin has no active counselor!");
-                    // If counselor is not null then print out normally, if it is null then warn the user
 
                     Console.WriteLine();
                 }
@@ -462,8 +465,8 @@ namespace camp_sleepaway
         {
             using (var camperContext = new CampContext())
             {
-                List<Camper> campers = camperContext.Campers.OrderBy(c => c.Cabin.Id).ToList();
                 // Get every camper, and order them by CabinId
+                List<Camper> campers = camperContext.Campers.OrderBy(c => c.Cabin.Id).ToList();
 
                 foreach (Camper camper in campers)
                 {

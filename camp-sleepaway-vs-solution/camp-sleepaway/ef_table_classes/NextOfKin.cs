@@ -157,11 +157,13 @@ namespace camp_sleepaway
             }
         }
 
-        public static NextOfKin ChooseNextOfKinToEdit()
+        public static NextOfKin ChooseNextOfKinMenu()
         {
             using (var nextOfKinContext = new CampContext())
             {
                 List<NextOfKin> nextOfKins = nextOfKinContext.NextOfKins.ToList();
+
+                Console.WriteLine("ID | Full Name | Phone-nr. | Related to Camper with ID | Relation Type");
 
                 foreach (NextOfKin nextOfKin in nextOfKins)
                 {
