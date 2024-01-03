@@ -263,6 +263,9 @@ namespace camp_sleepaway
             {
                 List<Counselor> counselors = counselorContext.Counselors.ToList();
 
+                Console.WriteLine("ID | Full Name | Phone-nr. | WorkTitle | Cabin ID | " +
+                    "Date Hired | Date Employment was/is Terminated");
+
                 foreach (Counselor counselor in counselors)
                 {
                     Console.WriteLine($"{counselor.Id} | {counselor.FirstName} {counselor.LastName} | {counselor.PhoneNumber} |" +
