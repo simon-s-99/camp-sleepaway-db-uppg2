@@ -155,7 +155,7 @@ namespace camp_sleepaway
                     // Counselor
                     else if (editIndividualChoice == editIndividualChoiceOptions[1])
                     {
-                        Counselor counselor = Counselor.ChooseCounselorToEdit();
+                        Counselor counselor = Counselor.ChooseCounselorMenu();
                         if (counselor != null)
                         {
                             Counselor editedCounselor = Counselor.EditCounselorMenu(counselor);
@@ -245,7 +245,7 @@ namespace camp_sleepaway
                         }
                         else
                         {
-                            Counselor counselor = Counselor.ChooseCounselorToEdit();
+                            Counselor counselor = Counselor.ChooseCounselorMenu();
                             Cabin counselorCabin = Camper.GetCabinFromCabinId(counselor.CabinId);
                             counselorCabin.CounselorId = null;
                             counselorCabin.Counselor = null;

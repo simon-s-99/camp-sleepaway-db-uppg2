@@ -257,7 +257,7 @@ namespace camp_sleepaway
             }
         }
 
-        public static Counselor ChooseCounselorToEdit()
+        public static Counselor ChooseCounselorMenu()
         {
             using (var counselorContext = new CampContext())
             {

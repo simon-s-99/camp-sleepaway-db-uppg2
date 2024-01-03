@@ -208,7 +208,7 @@ namespace camp_sleepaway
             }
             else if (editCabinMenu == "Edit counselor")
             {
-                Counselor newCounselor = Counselor.ChooseCounselorToEdit();
+                Counselor newCounselor = Counselor.ChooseCounselorMenu();
 
                 cabinToEdit.Counselor = newCounselor;
 
