@@ -95,7 +95,7 @@ namespace camp_sleepaway
 
                         counselor.SaveToDb();
 
-                        if (counselor.CabinId != null)
+                        if (counselor.CabinId != null && counselor.CabinId != 0)
                         {
                             Cabin counselorCabin = Counselor.UpdateCabinWithCounselorId(counselor.CabinId, counselor);
                             counselorCabin.UpdateRecordInDb();
@@ -160,6 +160,12 @@ namespace camp_sleepaway
                         {
                             Counselor editedCounselor = Counselor.EditCounselorMenu(counselor);
                             editedCounselor.UpdateRecordInDb();
+
+                            if (counselor.CabinId != null && counselor.CabinId != 0)
+                            {
+                                Cabin counselorCabin = Counselor.UpdateCabinWithCounselorId(editedCounselor.CabinId, editedCounselor);
+                                counselorCabin.UpdateRecordInDb();
+                            }
                         }
                         else
                         {
