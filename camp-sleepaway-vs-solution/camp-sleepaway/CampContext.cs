@@ -1,14 +1,14 @@
-﻿using camp_sleepaway.ef_table_classes;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+
+// Samuel Lööf, Simon Sörqvist, Adam Kumlin
 
 namespace camp_sleepaway
 {
     public class CampContext : DbContext
     {
         public DbSet<Camper> Campers { get; set; }
-        public DbSet<Counselor> Counselors { get; set;}
+        public DbSet<Counselor> Counselors { get; set; }
         public DbSet<NextOfKin> NextOfKins { get; set; }
         public DbSet<Cabin> Cabins { get; set; }
 
@@ -25,12 +25,12 @@ namespace camp_sleepaway
 
             // Connect to database | code lines related to logging should be commented out/removed in final version
             optionsBuilder.UseSqlServer(connectionString);
-                //.LogTo(Console.WriteLine,
-                //new[] { DbLoggerCategory.Database.Name },
-                //LogLevel.Information)
-                //.EnableSensitiveDataLogging();
+            //.LogTo(Console.WriteLine,
+            //new[] { DbLoggerCategory.Database.Name },
+            //LogLevel.Information)
+            //.EnableSensitiveDataLogging();
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Counselor>()
@@ -50,6 +50,7 @@ namespace camp_sleepaway
 
             base.OnModelCreating(modelBuilder);
         }
+        // Using Fluent API, we create two one-to-many relations and one one-to-one relation
 
     }
 }

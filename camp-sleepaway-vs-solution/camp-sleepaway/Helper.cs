@@ -2,6 +2,8 @@
 
 namespace camp_sleepaway
 {
+    // Samuel Lööf, Simon Sörqvist, Adam Kumlin
+
     internal class Helper
     {
         public static bool IsLettersOnly(string input) // moved from NameCheck
@@ -36,6 +38,8 @@ namespace camp_sleepaway
 
             if (mustBeUnique)
             {
+                // The boolean 'mustBeUnique' determines if the input must be unique, if so, the code below will check the input against every other phone number
+                // in the database
                 using (var personContext = new CampContext())
                 {
                     List<Camper> campers = personContext.Campers.ToList();

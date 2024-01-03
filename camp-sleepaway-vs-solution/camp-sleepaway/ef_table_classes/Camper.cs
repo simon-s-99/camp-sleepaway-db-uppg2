@@ -6,9 +6,10 @@ using static camp_sleepaway.Helper;
 
 // Represents Camper table in Entity Framework
 
+// Samuel Lööf, Simon Sörqvist, Adam Kumlin
+
 namespace camp_sleepaway
 {
-
     public class Camper : Person
     {
         [Key]
@@ -162,7 +163,7 @@ namespace camp_sleepaway
             string? editCamperMenu = null;
             string[] editCamperMenuChoices =
             {
-                "Edit first name", "Edit last name", "Edit phone number", 
+                "Edit first name", "Edit last name", "Edit phone number",
                 "Edit birth date", "Edit joined date", "Edit leave date"
             };
 

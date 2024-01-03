@@ -1,11 +1,12 @@
 ﻿using camp_sleepaway.ef_table_classes;
-using static camp_sleepaway.Helper;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
+using static camp_sleepaway.Helper;
 
 // Represents NextOfKin table in Entity Framework
+
+// Samuel Lööf, Simon Sörqvist, Adam Kumlin
 
 namespace camp_sleepaway
 {
@@ -186,7 +187,6 @@ namespace camp_sleepaway
             }
         }
 
-
         internal static NextOfKin EditNextOfKinMenu(NextOfKin nextOfKinToEdit)
         {
             Console.Clear();
@@ -301,7 +301,6 @@ namespace camp_sleepaway
             }
 
             return nextOfKinToEdit;
-
         }
 
         public static NextOfKin[] GetAllFromDb()

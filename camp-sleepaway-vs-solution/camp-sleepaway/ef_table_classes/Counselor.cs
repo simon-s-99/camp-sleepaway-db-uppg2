@@ -1,11 +1,12 @@
 ﻿using camp_sleepaway.ef_table_classes;
-using static camp_sleepaway.Helper;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.ComponentModel.DataAnnotations.Schema;
+using static camp_sleepaway.Helper;
 
 // Represents Counselor table in Entity Framework
+
+// Samuel Lööf, Simon Sörqvist, Adam Kumlin
 
 namespace camp_sleepaway
 {
@@ -69,8 +70,8 @@ namespace camp_sleepaway
             string lastName;
             while (true)
             {
-            Console.Write("Last name: ");
-            lastName = Console.ReadLine();
+                Console.Write("Last name: ");
+                lastName = Console.ReadLine();
 
                 if (IsLettersOnly(lastName))
                 {
@@ -201,7 +202,7 @@ namespace camp_sleepaway
             while (true)
             {
                 string input = Console.ReadLine();
-             
+
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     cabinId = 0; // Sets a special value to indicate that we don't assign the counselor to a cabin
@@ -262,7 +263,6 @@ namespace camp_sleepaway
                 }
             }
 
-
             counselor = new Counselor
             {
                 FirstName = firstName,
@@ -288,12 +288,12 @@ namespace camp_sleepaway
 
         public static Cabin UpdateCabinWithCounselorId(int? cabinId, Counselor counselor)
         {
+            // When a councelor gets updated, also update their assigned cabin with their id
             using (var counselorContext = new CampContext())
             {
                 Cabin cabin = counselorContext.Cabins.Where(c => c.Id == cabinId).FirstOrDefault();
 
                 cabin.CounselorId = counselor.Id;
-
                 cabin.Counselor = counselor;
 
                 return cabin;
@@ -509,7 +509,6 @@ namespace camp_sleepaway
                     }
                 }
             }
-
             else if (editCounselorMenu == "Edit hire date")
             {
                 DateTime hiredDate;

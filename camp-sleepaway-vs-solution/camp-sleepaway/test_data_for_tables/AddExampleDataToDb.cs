@@ -2,11 +2,13 @@
 
 // Adds example data to database, primarily used for testing 
 
+// Samuel Lööf, Simon Sörqvist, Adam Kumlin
+
 namespace camp_sleepaway.test_data_for_tables
 {
     internal class AddExampleDataToDb
     {
-        private static readonly string _dir = 
+        private static readonly string _dir =
             Directory.GetCurrentDirectory() + "\\test_data_for_tables\\";
 
         // Adds all exampledata, returns true if successful, false if any of the methods failed
@@ -121,13 +123,13 @@ namespace camp_sleepaway.test_data_for_tables
                     int cabinId = int.Parse(l[5]);
 
                     var counselor = new Counselor
-                    { 
-                        FirstName = firstName, 
-                        LastName = lastName, 
-                        PhoneNumber = phoneNumber, 
-                        WorkTitle = workTitle, 
-                        HiredDate = dateTime, 
-                        TerminationDate = null, 
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        PhoneNumber = phoneNumber,
+                        WorkTitle = workTitle,
+                        HiredDate = dateTime,
+                        TerminationDate = null,
                         CabinId = cabinId
                     };
 
@@ -136,8 +138,8 @@ namespace camp_sleepaway.test_data_for_tables
 
                 return true;
             }
-            catch 
-            { 
+            catch
+            {
                 return false;
             }
         }
@@ -171,7 +173,7 @@ namespace camp_sleepaway.test_data_for_tables
                         JoinDate = joinDate,
                         LeaveDate = leaveDate,
                         CabinId = cabinId
-                    }; 
+                    };
 
                     camper.SaveToDb();
                 }
@@ -183,7 +185,7 @@ namespace camp_sleepaway.test_data_for_tables
                 return false;
             }
         }
-        
+
         private static bool AddNextOfKin()
         {
             string dir = _dir + "NextOfKin_Example_Data.csv";
@@ -236,7 +238,7 @@ namespace camp_sleepaway.test_data_for_tables
                 "\"\"\", Weird, line           , \"\"\""
             };
 
-            string[] expectedOutput = 
+            string[] expectedOutput =
             {
                 "hi,there,hello,test,input",
                 "Normally,formatted,line,with,nothing,weird,going,on,,",
