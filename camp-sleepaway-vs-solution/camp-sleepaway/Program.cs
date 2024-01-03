@@ -224,16 +224,23 @@ namespace camp_sleepaway
                     {
                         Camper camper = Camper.ChooseCamperToEdit();
 
+                        Cabin cabin = Camper.GetCabinFromCabinId(camper.CabinId);
+                        cabin.Campers.Remove(camper);
+                        cabin.UpdateRecordInDb();
                         camper.DeleteFromDb();
                     }
                     // Counselor
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[1])
                     {
                         Counselor[] existingCounselors = Counselor.GetAllFromDb();
+                        Camper[] existingCampers = Camper.GetAllFromDb();
 
-                        if (existingCounselors.Length <= 1)
+                        // use ceiling to always round up, if we have 13 campers we should not delete
+                        // counselor nr. 4, this would throw an error, ceiling fixes this 
+                        if (existingCounselors.Length <= Math.Ceiling((double)existingCampers.Length / 4))
                         {
-                            Console.WriteLine("You can not have less than one counselor.");
+                            Console.WriteLine("Each counselor is responsible for 1-4 campers " +
+                                "you can not remove a counselor if their campers have not yet left.");
                         }
                         else
                         {
@@ -249,25 +256,35 @@ namespace camp_sleepaway
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[2])
                     {
                         NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinToEdit();
-
                         nextOfKin.DeleteFromDb();
                     }
                     // Cabin 
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[3])
                     {
                         Cabin[] existingCabins = Cabin.GetAllFromDb();
+                        Camper[] existingCampers = Camper.GetAllFromDb();
 
-                        if (existingCabins.Length <= 1)
+                        if (existingCabins.Length <= Math.Ceiling((double)existingCampers.Length / 4))
                         {
-                            Console.WriteLine("You can not have less than one cabin.");
+                            Console.WriteLine("Each cabin houses 1-4 campers, you can not remove a cabin " +
+                                "if it's campers have not yet left or been re-assigned.");
                         }
                         else
                         {
                             Cabin cabin = Cabin.ChooseCabinToEdit();
+
                             Counselor cabinCounselor = Cabin.GetCounselorFromCabinId(cabin.Id);
                             cabinCounselor.CabinId = null;
                             cabinCounselor.Cabin = null;
                             cabinCounselor.UpdateRecordInDb();
+
+                            Camper[] cabinCampers = Cabin.GetCampersFromCabinId(cabin.Id);
+                            foreach (Camper camper in cabinCampers)
+                            {
+                                camper.CabinId = null;
+                                camper.UpdateRecordInDb();
+                            }
+
                             cabin.DeleteFromDb();
                         }
 

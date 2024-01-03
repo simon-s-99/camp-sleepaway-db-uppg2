@@ -41,12 +41,12 @@ namespace camp_sleepaway
             modelBuilder.Entity<Camper>()
                 .HasOne<Cabin>(camper => camper.Cabin)
                 .WithMany(cabin => cabin.Campers)
-                .HasForeignKey(camper => camper.CabinId).IsRequired(true);
+                .HasForeignKey(camper => camper.CabinId);
 
             modelBuilder.Entity<NextOfKin>()
                 .HasOne<Camper>(nextOfKin => nextOfKin.Camper)
                 .WithMany(camper => camper.NextOfKins)
-                .HasForeignKey(nextOfKin => nextOfKin.CamperId).IsRequired(true);
+                .HasForeignKey(nextOfKin => nextOfKin.CamperId);
 
             base.OnModelCreating(modelBuilder);
         }
