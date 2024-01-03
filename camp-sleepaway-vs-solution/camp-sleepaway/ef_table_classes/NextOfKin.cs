@@ -17,7 +17,6 @@ namespace camp_sleepaway
         public string? RelationType { get; set; }
 
         // Foreign key property to Camper
-        [Required(ErrorMessage = "Invalid camper id.")]
         [ForeignKey("CamperId")]
         public int? CamperId { get; set; }
         // Reference navigation to Camper

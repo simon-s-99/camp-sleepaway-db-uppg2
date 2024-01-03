@@ -458,6 +458,17 @@ namespace camp_sleepaway
             return counselorToEdit;
         }
 
+        public static Counselor[] GetAllFromDb()
+        {
+            var result = new List<Counselor>();
+            using (var context = new CampContext())
+            {
+                result = context.Counselors.ToList();
+            }
+
+            return result.ToArray();
+        }
+
         public void SaveToDb()
         {
             using (var counselorContext = new CampContext())

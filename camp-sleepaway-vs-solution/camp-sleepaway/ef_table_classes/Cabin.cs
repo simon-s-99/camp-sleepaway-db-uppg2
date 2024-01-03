@@ -243,6 +243,26 @@ namespace camp_sleepaway
             return cabinToEdit;
         }
 
+        public static Counselor GetCounselorFromCabinId(int cabinId)
+        {
+            using (var cabinContext = new CampContext())
+            {
+                Counselor counselor = cabinContext.Counselors.Where(c => c.CabinId == cabinId).FirstOrDefault();
+
+                return counselor;
+            }
+        }
+
+        public static Camper[] GetCampersFromCabinId(int cabinId)
+        {
+            using (var cabinContext = new CampContext())
+            {
+                Camper[] campers = cabinContext.Campers.Where(c => c.CabinId == cabinId).ToArray();
+
+                return campers;
+            }
+        }
+
         public static Cabin[] GetAllFromDb()
         {
             var result = new List<Cabin>();

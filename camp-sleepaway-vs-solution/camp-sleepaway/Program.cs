@@ -48,7 +48,7 @@ namespace camp_sleepaway
             {
                 string[] mainMenuChoiceOptions = { "Add new object", "Edit object", "Search camper",
                 "View campers and NextOfKins", "Delete object", "Exit program" };
-                
+
                 if (!firstDrawMenu)
                 {
                     Console.WriteLine("Press any key to continue.");
@@ -224,28 +224,70 @@ namespace camp_sleepaway
                     {
                         Camper camper = Camper.ChooseCamperToEdit();
 
+                        Cabin cabin = Camper.GetCabinFromCabinId(camper.CabinId);
+                        cabin.Campers.Remove(camper);
+                        cabin.UpdateRecordInDb();
                         camper.DeleteFromDb();
                     }
                     // Counselor
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[1])
                     {
-                        Counselor counselor = Counselor.ChooseCounselorToEdit();
+                        Counselor[] existingCounselors = Counselor.GetAllFromDb();
+                        Camper[] existingCampers = Camper.GetAllFromDb();
 
-                        counselor.DeleteFromDb();
+                        // use ceiling to always round up, if we have 13 campers we should not delete
+                        // counselor nr. 4, this would throw an error, ceiling fixes this 
+                        if (existingCounselors.Length <= Math.Ceiling((double)existingCampers.Length / 4))
+                        {
+                            Console.WriteLine("Each counselor is responsible for 1-4 campers " +
+                                "you can not remove a counselor if their campers have not yet left.");
+                        }
+                        else
+                        {
+                            Counselor counselor = Counselor.ChooseCounselorToEdit();
+                            Cabin counselorCabin = Camper.GetCabinFromCabinId(counselor.CabinId);
+                            counselorCabin.CounselorId = null;
+                            counselorCabin.Counselor = null;
+                            counselorCabin.UpdateRecordInDb();
+                            counselor.DeleteFromDb();
+                        }
                     }
                     // NextOfKin
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[2])
                     {
                         NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinToEdit();
-
                         nextOfKin.DeleteFromDb();
                     }
                     // Cabin 
                     else if (deleteIndividualChoice == deleteIndividualChoiceOptions[3])
                     {
-                        Cabin cabin = Cabin.ChooseCabinToEdit();
+                        Cabin[] existingCabins = Cabin.GetAllFromDb();
+                        Camper[] existingCampers = Camper.GetAllFromDb();
 
-                        cabin.DeleteFromDb();
+                        if (existingCabins.Length <= Math.Ceiling((double)existingCampers.Length / 4))
+                        {
+                            Console.WriteLine("Each cabin houses 1-4 campers, you can not remove a cabin " +
+                                "if it's campers have not yet left or been re-assigned.");
+                        }
+                        else
+                        {
+                            Cabin cabin = Cabin.ChooseCabinToEdit();
+
+                            Counselor cabinCounselor = Cabin.GetCounselorFromCabinId(cabin.Id);
+                            cabinCounselor.CabinId = null;
+                            cabinCounselor.Cabin = null;
+                            cabinCounselor.UpdateRecordInDb();
+
+                            Camper[] cabinCampers = Cabin.GetCampersFromCabinId(cabin.Id);
+                            foreach (Camper camper in cabinCampers)
+                            {
+                                camper.CabinId = null;
+                                camper.UpdateRecordInDb();
+                            }
+
+                            cabin.DeleteFromDb();
+                        }
+
                     }
                 }
                 // exit program

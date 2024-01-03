@@ -56,7 +56,6 @@ namespace camp_sleepaway.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CabinId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -139,7 +138,6 @@ namespace camp_sleepaway.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CamperId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -180,9 +178,7 @@ namespace camp_sleepaway.Migrations
                 {
                     b.HasOne("camp_sleepaway.Cabin", "Cabin")
                         .WithMany("Campers")
-                        .HasForeignKey("CabinId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CabinId");
 
                     b.Navigation("Cabin");
                 });
@@ -191,9 +187,7 @@ namespace camp_sleepaway.Migrations
                 {
                     b.HasOne("camp_sleepaway.Camper", "Camper")
                         .WithMany("NextOfKins")
-                        .HasForeignKey("CamperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CamperId");
 
                     b.Navigation("Camper");
                 });
