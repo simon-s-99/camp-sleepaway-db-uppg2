@@ -356,25 +356,34 @@ namespace camp_sleepaway
             // edit date of birth
             else if (editCamperMenu == editCamperMenuChoices[3])
             {
-                Console.Write("Birth date: ");
                 DateTime dateOfBirth;
+                bool validDate = false;
 
-                while (!DateTime.TryParse(Console.ReadLine(), out dateOfBirth) || CalculateAge(dateOfBirth) < 7
-                    || CalculateAge(dateOfBirth) > 17)
+                while (!validDate)
                 {
-                    if (CalculateAge(dateOfBirth) < 7)
+                    Console.Write("Birth date: ");
+                    validDate = DateTime.TryParse(Console.ReadLine(), out dateOfBirth);
+
+                    if (validDate)
                     {
-                        Console.WriteLine("The camper must be at least 7 years old.");
-                    }
-                    else if (CalculateAge(dateOfBirth) > 17)
-                    {
-                        Console.WriteLine("The camper cannot be older than 17 years old");
+                        int comparisonAge = CalculateAge(dateOfBirth);
+
+                        if (comparisonAge < 7 || comparisonAge > 17)
+                        {
+                            Console.WriteLine("The camper must be at least 7 years " +
+                                "old but not older than 17 years old.");
+                            validDate = false;
+                        }
+                        else
+                        {
+                            camperToEdit.DateOfBirth = dateOfBirth;
+                            // let validDate be true so that while-loop breaks 
+                        }
                     }
                     else
                     {
                         Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
                     }
-                    Console.Write("Birth date: ");
                 }
             }
             // edit join date (camp join date)
