@@ -11,7 +11,7 @@ namespace camp_sleepaway
 {
     public enum WorkTitle
     {
-        Teacher, Parent, Coach, Other
+        Teacher, Coach, Other
     }
 
     public class Counselor : Person
@@ -115,7 +115,7 @@ namespace camp_sleepaway
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                     .AddChoices(new[]
                     {
-                        "Teacher", "Parent", "Coach", "Other"
+                        "Teacher", "Coach", "Other"
                     }));
 
             Console.Clear();
@@ -123,10 +123,6 @@ namespace camp_sleepaway
             if (workTitleChoice == "Teacher")
             {
                 workTitle = WorkTitle.Teacher;
-            }
-            else if (workTitleChoice == "Parent")
-            {
-                workTitle = WorkTitle.Parent;
             }
             else if (workTitleChoice == "Coach")
             {
@@ -394,16 +390,12 @@ namespace camp_sleepaway
                         .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                         .AddChoices(new[]
                         {
-                    "Teacher", "Parent", "Coach", "Other"
+                    "Teacher", "Coach", "Other"
                         }));
 
                 if (workTitleChoice == "Teacher")
                 {
                     workTitle = WorkTitle.Teacher;
-                }
-                else if (workTitleChoice == "Parent")
-                {
-                    workTitle = WorkTitle.Parent;
                 }
                 else if (workTitleChoice == "Coach")
                 {
