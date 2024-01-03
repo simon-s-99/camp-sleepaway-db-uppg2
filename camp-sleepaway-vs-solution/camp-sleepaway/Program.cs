@@ -169,7 +169,7 @@ namespace camp_sleepaway
                     // NextOfKin
                     else if (editIndividualChoice == editIndividualChoiceOptions[2])
                     {
-                        NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinToEdit();
+                        NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinMenu();
                         if (nextOfKin != null)
                         {
                             NextOfKin editedNextOfKin = NextOfKin.EditNextOfKinMenu(nextOfKin);
@@ -256,7 +256,7 @@ namespace camp_sleepaway
                     // NextOfKin
                     else if (deleteObjectChoice == deleteObjectChoiceOptions[2])
                     {
-                        NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinToEdit();
+                        NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinMenu();
                         nextOfKin.DeleteFromDb();
                     }
                     // Cabin 

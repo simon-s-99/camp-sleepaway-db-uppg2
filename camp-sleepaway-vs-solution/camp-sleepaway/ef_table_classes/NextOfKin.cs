@@ -157,7 +157,7 @@ namespace camp_sleepaway
             }
         }
 
-        public static NextOfKin ChooseNextOfKinToEdit()
+        public static NextOfKin ChooseNextOfKinMenu()
         {
             using (var nextOfKinContext = new CampContext())
             {
