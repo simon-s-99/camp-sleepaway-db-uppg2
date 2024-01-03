@@ -480,28 +480,62 @@ namespace camp_sleepaway
                 }
             }
 
-
             else if (editCounselorMenu == "Edit hire date")
             {
-                Console.Write("Hire date: ");
                 DateTime hiredDate;
-                while (!DateTime.TryParse(Console.ReadLine(), out hiredDate))
+                bool validDate = false;
+
+                while (!validDate)
                 {
-                    Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
                     Console.Write("Hire date: ");
+                    validDate = DateTime.TryParse(Console.ReadLine(), out hiredDate);
+                    if (validDate)
+                    {
+                        if (hiredDate > counselorToEdit.TerminationDate)
+                        {
+                            Console.WriteLine("Hiring date can not be after termination date.");
+                            validDate = false;
+                        }
+                        else
+                        {
+                            counselorToEdit.HiredDate = hiredDate;
+                            // let validDate be true to break the while-loop
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
+                    }
                 }
-                counselorToEdit.HiredDate = hiredDate;
             }
+
             else if (editCounselorMenu == "Edit termination date")
             {
-                Console.Write("Termination date: ");
                 DateTime terminationDate;
-                while (!DateTime.TryParse(Console.ReadLine(), out terminationDate))
+                bool validDate = false;
+
+                while (!validDate)
                 {
-                    Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
                     Console.Write("Termination date: ");
+                    validDate = DateTime.TryParse(Console.ReadLine(), out terminationDate);
+                    if (validDate)
+                    {
+                        if (terminationDate < counselorToEdit.HiredDate)
+                        {
+                            Console.WriteLine("Termination date can not be earlier than hiring date.");
+                            validDate = false;
+                        }
+                        else
+                        {
+                            counselorToEdit.TerminationDate = terminationDate;
+                            // let validDate be true to break the while-loop
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
+                    }
                 }
-                counselorToEdit.TerminationDate = terminationDate;
             }
 
             return counselorToEdit;
