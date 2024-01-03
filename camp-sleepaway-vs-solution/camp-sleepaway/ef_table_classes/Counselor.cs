@@ -129,39 +129,59 @@ namespace camp_sleepaway
                 workTitle = WorkTitle.Coach;
             }
 
-            Console.Write("Hired date: ");
-            DateTime hiredDate;
-            while (!DateTime.TryParse(Console.ReadLine(), out hiredDate))
+            DateTime hiredDate = DateTime.Now;
+            bool validHiringDate = false;
+
+            while (!validHiringDate)
             {
-                Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
-                Console.Write("Join date: ");
+                Console.Write("Hire date: ");
+                validHiringDate = DateTime.TryParse(Console.ReadLine(), out hiredDate);
+                if (validHiringDate)
+                {
+                    // let validHiringDate be true to break the while-loop
+                }
+                else
+                {
+                    Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
+                }
             }
 
-            Console.Write("Enter termination date (if there is no termination date, just press 'Enter' to skip): ");
-            DateTime? terminationDate = null;
 
-            string TerminationDateInput = Console.ReadLine();
-            DateTime parsedTerminationDate;
+            DateTime terminationDate = new DateTime(1000, 01, 01);
+            bool validTerminationDate = false;
 
-            //Check so that the input is not empty
-            if (!string.IsNullOrEmpty(TerminationDateInput))
+            while (!validTerminationDate)
             {
-                // Looop until the user enters a valid date
-                while (!DateTime.TryParse(TerminationDateInput, out parsedTerminationDate) || parsedTerminationDate <= hiredDate)
+                Console.Write("Enter termination date (if there is no termination date, just press 'Enter' to skip): ");
+                string terminationDateInput = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(terminationDateInput))
                 {
-                    //Checking if the leave date is before or athe same day to the join date
-                    if (parsedTerminationDate <= hiredDate)
+                    validTerminationDate = true; // breaks the loop
+                }
+                else
+                {
+                    validTerminationDate = DateTime.TryParse(terminationDateInput, out terminationDate);
+                    if (validTerminationDate)
                     {
-                        Console.WriteLine("termination date must be set after the joined date");
+                        if (terminationDate < hiredDate)
+                        {
+                            Console.WriteLine("Termination date can not be earlier than hiring date.");
+                            terminationDate = new DateTime(1000, 01, 01);
+                            validTerminationDate = false;
+                        }
+                        else
+                        {
+                            // let validHiringDate be true to break the while-loop
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-MM-dd' or 'Enter' to skip.");
+                        Console.WriteLine("Invalid date format. Please enter date in this format: 'yyyy-mm-dd'");
                     }
-                    Console.Write("Termination date: ");
-                    TerminationDateInput = Console.ReadLine();
                 }
             }
+
 
             Cabin[] cabins = Cabin.GetAllFromDb();
 
@@ -184,7 +204,6 @@ namespace camp_sleepaway
              
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    
                     cabinId = 0; // Sets a special value to indicate that we don't assign the counselor to a cabin
                     break;
                 }
@@ -251,9 +270,18 @@ namespace camp_sleepaway
                 PhoneNumber = phoneNumber,
                 WorkTitle = workTitle,
                 HiredDate = hiredDate,
-                CabinId = cabinId,
-                TerminationDate = terminationDate
+                CabinId = cabinId
             };
+
+            // termination date handling
+            if (terminationDate != new DateTime(1000, 01, 01))
+            {
+                counselor.TerminationDate = terminationDate;
+            }
+            else
+            {
+                counselor.TerminationDate = null;
+            }
 
             return counselor;
         }
@@ -312,8 +340,8 @@ namespace camp_sleepaway
                     .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                     .AddChoices(new[]
                     {
-                "Edit first name", "Edit last name", "Edit phone number", "Edit work title",
-                "Edit cabin id", "Edit hire date", "Edit termination date"
+                        "Edit first name", "Edit last name", "Edit phone number", "Edit work title",
+                        "Edit cabin id", "Edit hire date", "Edit termination date"
                     }));
 
             if (editCounselorMenu == "Edit first name")
@@ -499,7 +527,7 @@ namespace camp_sleepaway
                         else
                         {
                             counselorToEdit.HiredDate = hiredDate;
-                            // let validDate be true to break the while-loop
+                            // let validHiringDate be true to break the while-loop
                         }
                     }
                     else
@@ -528,7 +556,7 @@ namespace camp_sleepaway
                         else
                         {
                             counselorToEdit.TerminationDate = terminationDate;
-                            // let validDate be true to break the while-loop
+                            // let validHiringDate be true to break the while-loop
                         }
                     }
                     else
