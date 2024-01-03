@@ -42,23 +42,24 @@ namespace camp_sleepaway
 
         internal static void ShowMainMenu()
         {
-            bool firstDrawMenu = true;
+            bool firstTimeDrawMenu = true;
 
             while (true)
             {
-                string[] mainMenuChoiceOptions = { "Add new object", "Edit object", "Search camper",
-                "View campers and NextOfKins", "Delete object", "Exit program" };
-
-                if (!firstDrawMenu)
+                // so that we do not prompt user to press any key first time main menu is shown 
+                if (!firstTimeDrawMenu)
                 {
                     Console.WriteLine("Press any key to continue.");
                     Console.ReadKey();
                     Console.Clear();
                 }
 
-                firstDrawMenu = false;
+                firstTimeDrawMenu = false;
 
-                string? mainMenuChoice = AnsiConsole.Prompt(
+                string[] mainMenuChoiceOptions = { "Add new object", "Edit object", "Search camper",
+                "View campers and NextOfKins", "Delete object", "Exit program" };
+
+                string mainMenuChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[red]What do you want to do[/]?")
                         .PageSize(10)
@@ -129,7 +130,7 @@ namespace camp_sleepaway
                     string[] editIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
                     string? editIndividualChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
-                        .Title("[red]What do you wish to edit? [/]?")
+                        .Title("[red]What do you wish to edit[/]?")
                         .PageSize(10)
                         .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                         .AddChoices(editIndividualChoiceOptions));
@@ -209,18 +210,18 @@ namespace camp_sleepaway
                 {
                     Console.Clear();
 
-                    string[] deleteIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
-                    string? deleteIndividualChoice = AnsiConsole.Prompt(
+                    string[] deleteObjectChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
+                    string? deleteObjectChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[red]Which table do you wish to delete from[/]?")
                         .PageSize(10)
                         .MoreChoicesText("[grey](Move up and down to select an option)[/]")
-                        .AddChoices(deleteIndividualChoiceOptions));
+                        .AddChoices(deleteObjectChoiceOptions));
 
                     Console.Clear();
 
                     // Camper
-                    if (deleteIndividualChoice == deleteIndividualChoiceOptions[0])
+                    if (deleteObjectChoice == deleteObjectChoiceOptions[0])
                     {
                         Camper camper = Camper.ChooseCamperToEdit();
 
@@ -230,7 +231,7 @@ namespace camp_sleepaway
                         camper.DeleteFromDb();
                     }
                     // Counselor
-                    else if (deleteIndividualChoice == deleteIndividualChoiceOptions[1])
+                    else if (deleteObjectChoice == deleteObjectChoiceOptions[1])
                     {
                         Counselor[] existingCounselors = Counselor.GetAllFromDb();
                         Camper[] existingCampers = Camper.GetAllFromDb();
@@ -253,13 +254,13 @@ namespace camp_sleepaway
                         }
                     }
                     // NextOfKin
-                    else if (deleteIndividualChoice == deleteIndividualChoiceOptions[2])
+                    else if (deleteObjectChoice == deleteObjectChoiceOptions[2])
                     {
                         NextOfKin nextOfKin = NextOfKin.ChooseNextOfKinToEdit();
                         nextOfKin.DeleteFromDb();
                     }
                     // Cabin 
-                    else if (deleteIndividualChoice == deleteIndividualChoiceOptions[3])
+                    else if (deleteObjectChoice == deleteObjectChoiceOptions[3])
                     {
                         Cabin[] existingCabins = Cabin.GetAllFromDb();
                         Camper[] existingCampers = Camper.GetAllFromDb();
