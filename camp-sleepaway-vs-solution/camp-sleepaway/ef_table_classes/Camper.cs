@@ -408,6 +408,12 @@ namespace camp_sleepaway
                         else if (joinDate > DateTime.Now)
                         {
                             Console.WriteLine("Join date cannot be in the future.");
+                            validDate = false;
+                        }
+                        else if (joinDate > camperToEdit.LeaveDate)
+                        {
+                            Console.WriteLine("Join date can not be after leave date.");
+                            validDate = false;
                         }
                         else
                         {
