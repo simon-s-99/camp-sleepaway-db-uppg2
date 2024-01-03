@@ -27,7 +27,7 @@ namespace camp_sleepaway
         //Method to check if a phone number with different variations is valid
         public static bool IsPhoneNumberValid(string number, bool mustBeUnique) // moved from IsPhoneNumber
         {
-            bool isFormattedCorrectly = Regex.Match(number, @"^(\+\d{1,3}\s?)?(\(\d{1,4}\))?[0-9\- \(\)]{7,15}$").Success;
+            bool isFormattedCorrectly = Regex.Match(number, @"^(\+\d{1,3}\s?)?(\(\d{1,4}\))?[0-9\- \(\)]{7,16}$").Success;
 
             if (!isFormattedCorrectly)
             {
