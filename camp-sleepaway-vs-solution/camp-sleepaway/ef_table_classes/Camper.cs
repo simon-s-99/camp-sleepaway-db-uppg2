@@ -1,5 +1,4 @@
 ﻿using camp_sleepaway.ef_table_classes;
-using static camp_sleepaway.Helper;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -250,7 +249,7 @@ namespace camp_sleepaway
                 foreach (Camper camper in campers)
                 {
                     Console.WriteLine($"{camper.Id} | {camper.FirstName} {camper.LastName} | " +
-                        $"{camper.PhoneNumber} | {camper.DateOfBirth} | {camper.JoinDate} | {camper.LeaveDate}");
+                        $"{camper.PhoneNumber} | {FormatDate(camper.DateOfBirth)} | {FormatDate(camper.JoinDate)} | {FormatDate(camper.LeaveDate)}");
                 }
 
                 Console.Write("Enter ID for the 'camper' you wish to select: ");
@@ -444,9 +443,9 @@ namespace camp_sleepaway
                     Console.WriteLine("Id: " + result.Id);
                     Console.WriteLine("Full name: " + result.FirstName + " " + result.LastName);
                     Console.WriteLine("Phone number: " + result.PhoneNumber);
-                    Console.WriteLine("Birth date: " + result.DateOfBirth);
-                    Console.WriteLine("Date joined: " + result.JoinDate);
-                    Console.WriteLine("Date left/date to leave: " + result.LeaveDate);
+                    Console.WriteLine("Birth date: " + FormatDate(result.DateOfBirth));
+                    Console.WriteLine("Date joined: " + FormatDate(result.JoinDate));
+                    Console.WriteLine("Date left/date to leave: " + FormatDate(result.LeaveDate));
 
                     Cabin resultCabin = GetCabinFromCabinId(result.CabinId);
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
@@ -473,9 +472,9 @@ namespace camp_sleepaway
                     Console.WriteLine("Id: " + camper.Id);
                     Console.WriteLine("Full name: " + camper.FirstName + " " + camper.LastName);
                     Console.WriteLine("Phone number: " + camper.PhoneNumber);
-                    Console.WriteLine("Birth date: " + camper.DateOfBirth);
-                    Console.WriteLine("Date joined: " + camper.JoinDate);
-                    Console.WriteLine("Date left/date to leave: " + camper.LeaveDate);
+                    Console.WriteLine("Birth date: " + FormatDate(camper.DateOfBirth));
+                    Console.WriteLine("Date joined: " + FormatDate(camper.JoinDate));
+                    Console.WriteLine("Date left/date to leave: " + FormatDate(camper.LeaveDate));
 
                     Cabin resultCabin = GetCabinFromCabinId(camper.CabinId);
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
@@ -498,6 +497,21 @@ namespace camp_sleepaway
 
                     Console.WriteLine();
                 }
+            }
+        }
+
+        public static string FormatDate(DateTime? date)
+        {
+            string formattedDate = string.Empty;
+
+            if (date != null)
+            {
+                formattedDate = date.ToString().Substring(0, 10);
+                return formattedDate;
+            }
+            else
+            {
+                return formattedDate;
             }
         }
 
