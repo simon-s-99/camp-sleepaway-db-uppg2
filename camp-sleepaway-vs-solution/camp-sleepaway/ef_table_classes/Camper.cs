@@ -244,13 +244,13 @@ namespace camp_sleepaway
             {
                 List<Camper> campers = camperContext.Campers.ToList();
 
-                Console.WriteLine("ID - Full Name - Phone-nr. - Date of Birth - " +
-                    "Joined Camp Date - Will Leave/Left Camp Date");
+                Console.WriteLine("ID | Full Name - Phone-nr. | Date of Birth | " +
+                    "Joined Camp Date | Will Leave/Left Camp Date");
 
                 foreach (Camper camper in campers)
                 {
-                    Console.WriteLine($"{camper.Id} - {camper.FirstName} {camper.LastName} - " +
-                        $"{camper.PhoneNumber}) - {camper.DateOfBirth} - {camper.JoinDate} - {camper.LeaveDate}");
+                    Console.WriteLine($"{camper.Id} | {camper.FirstName} {camper.LastName} | " +
+                        $"{camper.PhoneNumber}) | {camper.DateOfBirth} - {camper.JoinDate} | {camper.LeaveDate}");
                 }
 
                 Console.Write("Enter ID for the 'camper' you wish to select: ");
