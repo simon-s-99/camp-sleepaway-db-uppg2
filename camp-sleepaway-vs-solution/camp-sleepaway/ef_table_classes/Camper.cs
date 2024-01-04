@@ -403,12 +403,14 @@ namespace camp_sleepaway
                         }
                     }
 
+                    int nrOfCampersInCabin = GetNumberOfCampersInCabin(newCabinId);
+
                     if (!cabinDoesExist)
                     {
                         Console.WriteLine("This cabin does not exist!");
                         Console.Write("Enter the ID for the new cabin to associate this camper with: ");
                     }
-                    else if (GetCabinFromCabinId(newCabinId).Campers.Count >= 4)
+                    else if (nrOfCampersInCabin >= 4)
                     {
                         Console.WriteLine("This cabin is full!");
                         Console.Write("Enter the ID for the new cabin to associate this camper with: ");
@@ -541,6 +543,23 @@ namespace camp_sleepaway
 
                 return counselor;
             }
+        }
+
+        private static int GetNumberOfCampersInCabin(int cabinId)
+        {
+            Camper[] campers = Camper.GetAllFromDb();
+
+            int counter = 0;
+
+            foreach (Camper camper in campers)
+            {
+                if (camper.CabinId == cabinId)
+                {
+                    counter++;
+                }
+            }
+
+            return counter;
         }
 
         public static Camper[] GetAllFromDb()
