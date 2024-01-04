@@ -42,19 +42,19 @@ namespace camp_sleepaway
 
         internal static void ShowMainMenu()
         {
-            bool firstTimeDrawMenu = true;
+            bool firstTimeDrawMenuOrGoBack = true;
 
             while (true)
             {
                 // so that we do not prompt user to press any key first time main menu is shown 
-                if (!firstTimeDrawMenu)
+                if (!firstTimeDrawMenuOrGoBack)
                 {
                     Console.WriteLine("Press any key to continue.");
                     Console.ReadKey();
                     Console.Clear();
                 }
 
-                firstTimeDrawMenu = false;
+                firstTimeDrawMenuOrGoBack = false;
 
                 string[] mainMenuChoiceOptions = { "Add new object", "Edit object", "Search camper",
                 "View campers and NextOfKins", "Delete object", "Exit program" };
@@ -71,7 +71,10 @@ namespace camp_sleepaway
                 // Add new object 
                 if (mainMenuChoice == mainMenuChoiceOptions[0])
                 {
-                    string[] addIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
+                    string[] addIndividualChoiceOptions = 
+                    { 
+                        "Camper", "Counselor", "NextOfKin", "Cabin", "Go back"
+                    };
                     string? addIndividualChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[red]What type of object do you want to add[/]?")
@@ -120,13 +123,19 @@ namespace camp_sleepaway
                             cabinCounselor.UpdateRecordInDb();
                         }
                     }
+                    // go back menu choice
+                    else
+                    {
+                        // so that user does not have to press any key if they go back
+                        firstTimeDrawMenuOrGoBack = true;
+                    }
                 }
                 // Edit record in db 
                 else if (mainMenuChoice == mainMenuChoiceOptions[1])
                 {
                     Console.Clear();
 
-                    string[] editIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
+                    string[] editIndividualChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin", "Go back" };
                     string? editIndividualChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[red]What do you wish to edit[/]?")
@@ -199,6 +208,12 @@ namespace camp_sleepaway
                             Console.WriteLine("No cabin has been selected for editing. ");
                         }
                     }
+                    // go back menu choice
+                    else
+                    {
+                        // so that user does not have to press any key if they go back
+                        firstTimeDrawMenuOrGoBack = true;
+                    }
                 }
                 // Search camper
                 else if (mainMenuChoice == mainMenuChoiceOptions[2])
@@ -215,7 +230,7 @@ namespace camp_sleepaway
                 {
                     Console.Clear();
 
-                    string[] deleteObjectChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin" };
+                    string[] deleteObjectChoiceOptions = { "Camper", "Counselor", "NextOfKin", "Cabin", "Go back" };
                     string? deleteObjectChoice = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("[red]Which table do you wish to delete from[/]?")
@@ -294,6 +309,12 @@ namespace camp_sleepaway
                             cabin.DeleteFromDb();
                         }
 
+                    }
+                    // go back menu choice
+                    else
+                    {
+                        // so that user does not have to press any key if they go back
+                        firstTimeDrawMenuOrGoBack = true;
                     }
                 }
                 // exit program
