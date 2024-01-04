@@ -373,35 +373,43 @@ namespace camp_sleepaway
 
         public static void SearchCamper()
         {
-            Console.Write("Search for camper based on the name of the cabin or counselor they are assigned to: ");
+            Console.WriteLine("Search for camper based on the name of the cabin " +
+                "or counselor they are assigned to. ");
+            Console.Write("(Press enter if you want to go back) : ");
             string searchQuery = Console.ReadLine();
             Console.WriteLine();
 
-            using (var camperContext = new CampContext())
+            if (string.IsNullOrEmpty(searchQuery))
+            { // skips below code
+            }
+            else
             {
-                // Return campers who satisfy one or more conditions
-                List<Camper> results = camperContext.Campers.Where(c => c.Cabin.CabinName.Contains(searchQuery) ||
-                c.Cabin.Counselor.FirstName.Contains(searchQuery) ||
-                c.Cabin.Counselor.LastName.Contains(searchQuery)).ToList();
-
-                foreach (Camper result in results)
+                using (var camperContext = new CampContext())
                 {
-                    Console.WriteLine("Id: " + result.Id);
-                    Console.WriteLine("Full name: " + result.FirstName + " " + result.LastName);
-                    Console.WriteLine("Phone number: " + result.PhoneNumber);
-                    Console.WriteLine("Birth date: " + Helper.FormatDate(result.DateOfBirth));
-                    Console.WriteLine("Date joined: " + Helper.FormatDate(result.JoinDate));
-                    Console.WriteLine("Date left/date to leave: " + Helper.FormatDate(result.LeaveDate));
+                    // Return campers who satisfy one or more conditions
+                    List<Camper> results = camperContext.Campers.Where(c => c.Cabin.CabinName.Contains(searchQuery) ||
+                    c.Cabin.Counselor.FirstName.Contains(searchQuery) ||
+                    c.Cabin.Counselor.LastName.Contains(searchQuery)).ToList();
 
-                    Cabin resultCabin = GetCabinFromCabinId(result.CabinId);
-                    Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
+                    foreach (Camper result in results)
+                    {
+                        Console.WriteLine("Id: " + result.Id);
+                        Console.WriteLine("Full name: " + result.FirstName + " " + result.LastName);
+                        Console.WriteLine("Phone number: " + result.PhoneNumber);
+                        Console.WriteLine("Birth date: " + Helper.FormatDate(result.DateOfBirth));
+                        Console.WriteLine("Date joined: " + Helper.FormatDate(result.JoinDate));
+                        Console.WriteLine("Date left/date to leave: " + Helper.FormatDate(result.LeaveDate));
 
-                    // If counselor is not null then print out normally, if it is null then warn the user
-                    Counselor resultCounselor = GetCounselorFromCabinId(result.CabinId);
-                    Console.WriteLine(resultCounselor != null ? "Cabin counselor: " + resultCounselor.FirstName + " "
-                        + resultCounselor.LastName : "Warning! This cabin has no active counselor!");
+                        Cabin resultCabin = GetCabinFromCabinId(result.CabinId);
+                        Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
 
-                    Console.WriteLine();
+                        // If counselor is not null then print out normally, if it is null then warn the user
+                        Counselor resultCounselor = GetCounselorFromCabinId(result.CabinId);
+                        Console.WriteLine(resultCounselor != null ? "Cabin counselor: " + resultCounselor.FirstName + " "
+                            + resultCounselor.LastName : "Warning! This cabin has no active counselor!");
+
+                        Console.WriteLine();
+                    }
                 }
             }
         }
