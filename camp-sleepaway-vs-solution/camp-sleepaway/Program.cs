@@ -245,9 +245,21 @@ namespace camp_sleepaway
                     {
                         Camper camper = Camper.ChooseCamperMenu();
 
+                        // remove camper from it's cabin
                         Cabin cabin = Camper.GetCabinFromCabinId(camper.CabinId);
-                        cabin.Campers.Remove(camper);
-                        cabin.UpdateRecordInDb();
+                        if (cabin != null)
+                        {
+                            cabin.Campers.Remove(camper);
+                            cabin.UpdateRecordInDb();
+                        }
+
+                        // remove campers associated NextOfKins
+                        NextOfKin[] nextOfKins = Camper.GetNextOfKinsFromCamperID(camper.Id);
+                        foreach (NextOfKin nextOfKin in nextOfKins)
+                        {
+                            nextOfKin.DeleteFromDb();
+                        }
+
                         camper.DeleteFromDb();
                     }
                     // Counselor
