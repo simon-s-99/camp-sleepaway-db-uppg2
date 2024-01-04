@@ -300,13 +300,13 @@ namespace camp_sleepaway
                                 cabinCounselor.CabinId = null;
                                 cabinCounselor.Cabin = null;
                                 cabinCounselor.UpdateRecordInDb();
+                            }
 
-                                Camper[] cabinCampers = Cabin.GetCampersFromCabinId(cabin.Id);
-                                foreach (Camper camper in cabinCampers)
-                                {
-                                    camper.CabinId = null;
-                                    camper.UpdateRecordInDb();
-                                }
+                            Camper[] cabinCampers = Cabin.GetCampersFromCabinId(cabin.Id);
+                            foreach (Camper camper in cabinCampers)
+                            {
+                                camper.CabinId = null;
+                                camper.UpdateRecordInDb();
                             }
 
                             cabin.DeleteFromDb();
