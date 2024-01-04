@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using Microsoft.EntityFrameworkCore;
+using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -258,10 +259,31 @@ namespace camp_sleepaway
 
         public void DeleteFromDb()
         {
+            
             using (var cabinContext = new CampContext())
             {
-                cabinContext.Cabins.Remove(this);
-                cabinContext.SaveChanges();
+                // Retrieve the cabin to delete from the database, including related entities
+                var cabinToDelete = cabinContext.Cabins
+                    .Include(c => c.Counselor)   
+                    .Include(c => c.Campers)     
+                    .FirstOrDefault(c => c.Id == this.Id);
+
+                
+                if (cabinToDelete != null)
+                {
+                    // If Counselor is not null, remove the cabin reference from the Counselor
+                    if (cabinToDelete.Counselor != null)
+                    {
+                        // Remove the association from the Counselor to the Cabin
+                        cabinToDelete.Counselor.CabinId = null;
+                        cabinToDelete.Counselor.Cabin = null;
+                    }
+
+                    // Remove the cabin from the database
+                    cabinContext.Cabins.Remove(cabinToDelete);
+               
+                    cabinContext.SaveChanges();
+                }
             }
         }
     }
