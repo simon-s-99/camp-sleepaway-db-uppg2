@@ -4,13 +4,21 @@
 using camp_sleepaway.test_data_for_tables;
 using Spectre.Console;
 
+// Samuel Lööf, Simon Sörqvist, Adam Kumlin
+
 namespace camp_sleepaway
 {
     public class Program
     {
-        // Samuel Lööf, Simon Sörqvist, Adam Kumlin
         public static void Main()
         {
+            /*
+             * ATTENTION! ::
+             *                  Run command "Update-Database" 
+             *                  in Package Manager Console before
+             *                  attempting to run program. 
+            */
+
             // Checks if this is the programs first execution, adds example data if true
             IsFirstRun();
             Console.WriteLine();
