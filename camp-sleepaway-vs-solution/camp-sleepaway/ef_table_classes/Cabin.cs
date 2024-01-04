@@ -175,7 +175,7 @@ namespace camp_sleepaway
                 .PageSize(10)
                 .MoreChoicesText("[grey](Move up and down to select an option)[/]")
                 .AddChoices(new[] {
-                    "Edit cabin name", "Edit counselor"
+                    "Edit cabin name", "Go back"
                 }));
 
             if (editCabinMenu == "Edit cabin name")
@@ -201,31 +201,8 @@ namespace camp_sleepaway
                 }
                 cabinToEdit.CabinName = cabinName;
             }
-            else if (editCabinMenu == "Edit campers")
+            else // go back 
             {
-                List<Camper> newCampers = null;
-
-                while (true)
-                {
-                    Camper newCamper = Camper.ChooseCamperMenu();
-
-                    newCampers.Add(newCamper);
-
-                    string[] cabinNameChoiceOptions = { "Yes", "No" };
-                    string? cabinNameChoice = AnsiConsole.Prompt(
-                        new SelectionPrompt<string>()
-                            .Title("[red]Do you want to add another camper?[/]")
-                            .PageSize(10)
-                            .MoreChoicesText("[grey](Move up and down to select an option)[/]")
-                            .AddChoices(cabinNameChoiceOptions));
-
-                    Console.Clear();
-
-                    if (cabinNameChoice == cabinNameChoiceOptions[1])
-                    {
-                        break;
-                    }
-                }
             }
             return cabinToEdit;
         }
