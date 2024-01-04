@@ -479,8 +479,8 @@ namespace camp_sleepaway
         {
             using (var camperContext = new CampContext())
             {
-                // Get every camper, and order them by CabinId
                 List<Camper> campers = camperContext.Campers.OrderBy(c => c.Cabin.Id).ToList();
+                List<NextOfKin> nextOfKins = NextOfKin.GetAllFromDb().ToList();
 
                 foreach (Camper camper in campers)
                 {
@@ -494,26 +494,28 @@ namespace camp_sleepaway
                     Cabin resultCabin = GetCabinFromCabinId(camper.CabinId);
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
 
-                    NextOfKin[] resultNextOfKins = GetNextOfKinsFromCamperID(camper.Id);
+                    List<NextOfKin> campersNextOfKins = nextOfKins.Where(n => n.CamperId == camper.Id).ToList();
 
-                    if (resultNextOfKins.Length != 0)
+                    // Check if camper has nextofkins
+                    if (campersNextOfKins.Count() <= 0)
                     {
-                        Console.WriteLine("NextOfKins: ");
-                        foreach (NextOfKin resultNextOfKin in resultNextOfKins)
-                        {
-                            Console.WriteLine(resultNextOfKin.FirstName + " " + resultNextOfKin.LastName + " - " + resultNextOfKin.RelationType);
-                        }
-                        // Print each NextOfKin, for each camper
+                        Console.WriteLine("This camper has no NextOfKins.");
                     }
                     else
                     {
-                        Console.WriteLine("This camper has no NextOfKins.");
+                        Console.WriteLine("NextOfKins: ");
+                        foreach (NextOfKin nextOfKin in campersNextOfKins)
+                        {
+                            Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + 
+                                " - " + nextOfKin.RelationType);
+                        }
                     }
 
                     Console.WriteLine();
                 }
             }
         }
+
 
         public static NextOfKin[] GetNextOfKinsFromCamperID(int camperId)
         {
