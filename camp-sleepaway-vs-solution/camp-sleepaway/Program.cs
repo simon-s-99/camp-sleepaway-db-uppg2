@@ -71,8 +71,8 @@ namespace camp_sleepaway
                 // Add new object 
                 if (mainMenuChoice == mainMenuChoiceOptions[0])
                 {
-                    string[] addIndividualChoiceOptions = 
-                    { 
+                    string[] addIndividualChoiceOptions =
+                    {
                         "Camper", "Counselor", "NextOfKin", "Cabin", "Go back"
                     };
                     string? addIndividualChoice = AnsiConsole.Prompt(
@@ -294,10 +294,13 @@ namespace camp_sleepaway
                         {
                             Cabin cabin = Cabin.ChooseCabinMenu();
 
-                            Counselor cabinCounselor = Cabin.GetCounselorFromCabinId(cabin.Id);
-                            cabinCounselor.CabinId = null;
-                            cabinCounselor.Cabin = null;
-                            cabinCounselor.UpdateRecordInDb();
+                            if (cabin.CounselorId != null)
+                            {
+                                Counselor cabinCounselor = Cabin.GetCounselorFromCabinId(cabin.Id);
+                                cabinCounselor.CabinId = null;
+                                cabinCounselor.Cabin = null;
+                                cabinCounselor.UpdateRecordInDb();
+                            }
 
                             Camper[] cabinCampers = Cabin.GetCampersFromCabinId(cabin.Id);
                             foreach (Camper camper in cabinCampers)
