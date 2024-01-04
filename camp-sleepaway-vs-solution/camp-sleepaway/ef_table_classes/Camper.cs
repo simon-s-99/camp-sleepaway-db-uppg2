@@ -480,6 +480,7 @@ namespace camp_sleepaway
             using (var camperContext = new CampContext())
             {
                 List<Camper> campers = camperContext.Campers.OrderBy(c => c.Cabin.Id).ToList();
+                List<NextOfKin> nextOfKins = NextOfKin.GetAllFromDb().ToList();
 
                 foreach (Camper camper in campers)
                 {
@@ -493,19 +494,21 @@ namespace camp_sleepaway
                     Cabin resultCabin = GetCabinFromCabinId(camper.CabinId);
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
 
-                    // Check if NextOfKins is null
-                    if (camper.NextOfKins != null)
+                    List<NextOfKin> campersNextOfKins = nextOfKins.Where(n => n.CamperId == camper.Id).ToList();
+
+                    // Check if camper has nextofkins
+                    if (campersNextOfKins.Count() <= 0)
                     {
-                        Console.WriteLine("NextOfKins: ");
-                        foreach (NextOfKin resultNextOfKin in camper.NextOfKins)
-                        {
-                            // Display information even if resultNextOfKin is null
-                            Console.WriteLine(resultNextOfKin?.FirstName + " " + resultNextOfKin?.LastName + " - " + resultNextOfKin?.RelationType);
-                        }
+                        Console.WriteLine("This camper has no NextOfKins.");
                     }
                     else
                     {
-                        Console.WriteLine("This camper has no NextOfKins.");
+                        Console.WriteLine("NextOfKins: ");
+                        foreach (NextOfKin nextOfKin in campersNextOfKins)
+                        {
+                            Console.WriteLine(nextOfKin.FirstName + " " + nextOfKin.LastName + 
+                                " - " + nextOfKin.RelationType);
+                        }
                     }
 
                     Console.WriteLine();
