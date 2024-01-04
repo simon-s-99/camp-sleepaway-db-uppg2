@@ -479,7 +479,6 @@ namespace camp_sleepaway
         {
             using (var camperContext = new CampContext())
             {
-                // Get every camper, and order them by CabinId
                 List<Camper> campers = camperContext.Campers.OrderBy(c => c.Cabin.Id).ToList();
 
                 foreach (Camper camper in campers)
@@ -494,16 +493,15 @@ namespace camp_sleepaway
                     Cabin resultCabin = GetCabinFromCabinId(camper.CabinId);
                     Console.WriteLine("Cabin: " + resultCabin.Id + " " + resultCabin.CabinName);
 
-                    NextOfKin[] resultNextOfKins = GetNextOfKinsFromCamperID(camper.Id);
-
-                    if (resultNextOfKins.Length != 0)
+                    // Check if NextOfKins is null
+                    if (camper.NextOfKins != null)
                     {
                         Console.WriteLine("NextOfKins: ");
-                        foreach (NextOfKin resultNextOfKin in resultNextOfKins)
+                        foreach (NextOfKin resultNextOfKin in camper.NextOfKins)
                         {
-                            Console.WriteLine(resultNextOfKin.FirstName + " " + resultNextOfKin.LastName + " - " + resultNextOfKin.RelationType);
+                            // Display information even if resultNextOfKin is null
+                            Console.WriteLine(resultNextOfKin?.FirstName + " " + resultNextOfKin?.LastName + " - " + resultNextOfKin?.RelationType);
                         }
-                        // Print each NextOfKin, for each camper
                     }
                     else
                     {
@@ -514,6 +512,7 @@ namespace camp_sleepaway
                 }
             }
         }
+
 
         public static NextOfKin[] GetNextOfKinsFromCamperID(int camperId)
         {
