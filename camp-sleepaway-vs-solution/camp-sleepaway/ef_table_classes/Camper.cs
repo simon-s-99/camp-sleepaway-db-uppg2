@@ -164,7 +164,7 @@ namespace camp_sleepaway
             string[] editCamperMenuChoices =
             {
                 "Edit first name", "Edit last name", "Edit phone number",
-                "Edit birth date", "Edit joined date", "Edit leave date"
+                "Edit birth date", "Edit joined date", "Edit leave date","Edit cabin"
             };
 
             if (menuChoice.HasValue)
@@ -368,6 +368,67 @@ namespace camp_sleepaway
                 }
             }
 
+            else if (editCamperMenu == editCamperMenuChoices[6]) // Edit cabin
+            {
+                Cabin[] cabins = Cabin.GetAllFromDb();
+
+                Console.WriteLine();
+                Console.WriteLine("Cabins: ");
+
+                foreach (Cabin cabin in cabins)
+                {
+                    Console.WriteLine(cabin.Id + " " + cabin.CabinName);
+                }
+                Console.WriteLine();
+
+                Console.Write("Enter the ID for the new cabin to associate this camper with: ");
+
+                int newCabinId;
+
+                while (true)
+                {
+                    bool cabinDoesExist = false;
+
+                    while (!int.TryParse(Console.ReadLine(), out newCabinId))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid integer.");
+                        Console.Write("Enter the ID for the new cabin to associate this camper with: ");
+                    }
+
+                    foreach (Cabin cabin in cabins)
+                    {
+                        if (cabin.Id == newCabinId)
+                        {
+                            cabinDoesExist = true;
+                        }
+                    }
+
+                    int nrOfCampersInCabin = GetNumberOfCampersInCabin(newCabinId);
+
+                    if (!cabinDoesExist)
+                    {
+                        Console.WriteLine("This cabin does not exist!");
+                        Console.Write("Enter the ID for the new cabin to associate this camper with: ");
+                    }
+                    else if (nrOfCampersInCabin >= 4)
+                    {
+                        Console.WriteLine("This cabin is full!");
+                        Console.Write("Enter the ID for the new cabin to associate this camper with: ");
+                    }
+                    else if (GetCabinFromCabinId(newCabinId).CounselorId == null)
+                    {
+                        Console.WriteLine("This cabin has no active counselor. Assigning a camper to this cabin is therefore not possible.");
+                        Console.Write("Enter the ID for the new cabin to associate this camper with: ");
+                    }
+                    else
+                    {
+                        camperToEdit.CabinId = newCabinId;
+                        Console.WriteLine("Cabin successfully updated!");
+                        break;
+                    }
+                }
+            }
+
             return camperToEdit;
         }
 
@@ -482,6 +543,23 @@ namespace camp_sleepaway
 
                 return counselor;
             }
+        }
+
+        private static int GetNumberOfCampersInCabin(int cabinId)
+        {
+            Camper[] campers = Camper.GetAllFromDb();
+
+            int counter = 0;
+
+            foreach (Camper camper in campers)
+            {
+                if (camper.CabinId == cabinId)
+                {
+                    counter++;
+                }
+            }
+
+            return counter;
         }
 
         public static Camper[] GetAllFromDb()
